@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    $Id: dao-context.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<beans default-lazy-init="true">
+
+<bean id="userDao" class="org.librazur.gtd.model.dao.impl.HibernateUserDao"
+    autowire="byType"/>
+
+<bean id="taskDao" class="org.librazur.gtd.model.dao.impl.HibernateTaskDao"
+    autowire="byType"/>
+
+<bean id="categoryDao" class="org.librazur.gtd.model.dao.impl.HibernateCategoryDao"
+    autowire="byType"/>
+
+</beans>

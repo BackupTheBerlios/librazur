@@ -1,0 +1,10 @@
+This is the THANKS file for Black List Converter (BLC).
+Copyright (c) 2005 Librazur.
+http://librazur.eu.org
+
+We would like to thank all these people for the help on this project:
+
+ - Laurent LEFRANCOIS (privosquid.free.fr)
+ - Pierre-Yves CAILLIATTE (http://java-fr.org)
+
+Thanks for you help!

@@ -1,0 +1,8 @@
+{ +block \
+  -handle-as-image \
+  -set-image-blocker \
+}
+test
+192.168.0.1
+adserver
+.banners

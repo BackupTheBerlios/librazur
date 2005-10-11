@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<!--
+    $Id: struts-config.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<struts-config>
+  <form-beans>
+    <form-bean name="userForm" type="org.librazur.gtd.servlet.action.UserForm"/>
+    <form-bean name="taskForm" type="org.librazur.gtd.servlet.action.TaskForm"/>
+  </form-beans>
+
+
+  <action-mappings>
+    <action path="/hellostruts">
+      <forward name="success" path="/WEB-INF/jsp/hellostruts.jsp"/>
+    </action>
+
+    <action path="/home">
+      <forward name="success" path="/WEB-INF/jsp/home.jsp"/>
+    </action>
+
+    <action path="/logoff">
+      <forward name="success" path="/home.html" redirect="true"/>
+    </action>
+
+    <action path="/logon">
+      <forward name="success" path="/WEB-INF/jsp/logon.jsp"/>
+    </action>
+
+    <action path="/list" parameter="list">
+      <forward name="success" path="/WEB-INF/jsp/task/list.jsp"/>
+    </action>
+    
+    <action path="/add" parameter="add" name="taskForm" scope="request" input="/list.html">
+      <forward name="success" path="/list.html"/>
+      <forward name="failure" path="/list.html"/>
+    </action>
+
+    <action path="/delete" parameter="delete">
+      <forward name="success" path="/list.html"/>
+    </action>
+
+    <action path="/setdone" parameter="setDone">
+      <forward name="success" path="/list.html"/>
+    </action>
+
+    <action path="/setundone" parameter="setUndone">
+      <forward name="success" path="/list.html"/>
+    </action>
+
+    <action path="/listuserstodelete" parameter="listUsersToDelete">
+      <forward name="success" path="/WEB-INF/jsp/user/delete.jsp"/>
+    </action>
+
+    <action path="/deleteuser" parameter="delete">
+      <forward name="success" path="/listuserstodelete.html"/>
+      <forward name="failure" path="/listuserstodelete.html"/>
+    </action>
+
+    <action path="/adduser" parameter="add" name="userForm" scope="request" input="/WEB-INF/jsp/user/add.jsp">
+      <forward name="success" path="/WEB-INF/jsp/user/add.jsp"/>
+      <forward name="failure" path="/WEB-INF/jsp/user/add.jsp"/>
+    </action>
+
+    <action path="/newuser" parameter="newUser">
+      <forward name="success" path="/WEB-INF/jsp/user/add.jsp"/>
+    </action>
+
+    <action path="/editprofile" parameter="edit" name="userForm" scope="request" validate="false">
+      <forward name="success" path="/WEB-INF/jsp/user/profile.jsp"/>
+    </action>
+
+    <action path="/updateuser" parameter="update" name="userForm" scope="request" input="/WEB-INF/jsp/user/profile.jsp">
+      <forward name="success" path="/WEB-INF/jsp/user/profile.jsp"/>
+      <forward name="logout" path="/list.html" redirect="true"/>
+      <forward name="failure" path="/WEB-INF/jsp/user/profile.jsp"/>
+    </action>
+  </action-mappings>
+
+
+  <controller>
+    <set-property property="processorClass"
+      value="org.springframework.web.struts.DelegatingRequestProcessor"/>
+  </controller>
+
+
+  <message-resources parameter="org.librazur.gtd.Resources"/>
+
+
+  <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+    <set-property property="contextConfigLocation"
+      value="/WEB-INF/web-context.xml"/>
+  </plug-in>
+</struts-config>

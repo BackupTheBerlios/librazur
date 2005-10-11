@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+    $Id: decorators.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<decorators defaultdir="/WEB-INF/decorators">
+  <decorator name="main" page="main.jsp">
+    <pattern>/*</pattern>
+  </decorator>
+</decorators>

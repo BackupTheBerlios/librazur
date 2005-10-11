@@ -1,0 +1,18 @@
+This is the TODO file for Black List Converter (BLC).
+Copyright (c) 2005 Librazur.
+http://librazur.eu.org
+
+There are so many things to do for BLC! We invite you to join us,
+and participate in the development of this software.
+
+Here are some ideas that may appear in the next version:
+
+ - add a text-only interface in order to integrate BLC in scripts
+ - add some kind of profile mechanism to save user settings
+ - provide a way to add files to parse from any location (hint: URL)
+ - implement drag and drop under Linux
+
+If you can help us, don't hesitate to contact us at
+librazur@gmail.com.
+
+See you soon!

@@ -1,0 +1,28 @@
+<!--
+    $Id: dist.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<assembly>
+  <id>dist</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <includes>
+        <include>README*</include>
+        <include>LICENSE*</include>
+        <include>NOTICE*</include>
+        <include>AUTHORS*</include>
+        <include>TODO*</include>
+      </includes>
+      <lineEnding>dos</lineEnding>
+    </fileSet>
+    <fileSet>
+      <directory>target</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>gtd.war</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+</assembly>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    $Id: tx-context.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<beans>
+
+<bean id="txAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+<property name="proxyTargetClass" value="false"/>
+<property name="interceptorNames"><list><value>txInterceptor</value></list></property>
+<property name="beanNames">
+  <list>
+    <value>gtdService</value>
+  </list>
+</property>
+</bean>
+
+<bean id="txInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+<property name="transactionManager" ref="txManager"/>
+<property name="transactionAttributes">
+  <props>
+    <prop key="create*">PROPAGATION_REQUIRED</prop>
+    <prop key="update*">PROPAGATION_REQUIRED</prop>
+    <prop key="set*">PROPAGATION_REQUIRED</prop>
+    <prop key="save*">PROPAGATION_REQUIRED</prop>
+    <prop key="delete*">PROPAGATION_REQUIRED</prop>
+    <prop key="do*">PROPAGATION_REQUIRED</prop>
+    <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+  </props>
+</property>
+</bean>
+
+<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+<property name="sessionFactory"><ref bean="sessionFactory"/></property>
+</bean>
+
+</beans>

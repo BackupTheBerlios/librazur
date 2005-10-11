@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    $Id: security-context.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<beans default-lazy-init="true">
+
+<bean id="filterChainProxy" class="net.sf.acegisecurity.util.FilterChainProxy">
+<property name="filterInvocationDefinitionSource">
+  <value>
+    CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+    PATTERN_TYPE_APACHE_ANT
+    /**=httpSessionContextIntegrationFilter,authenticationProcessingFilter,anonymousProcessingFilter,securityEnforcementFilter
+  </value>
+</property>
+</bean>
+
+
+<bean id="authenticationManager" class="net.sf.acegisecurity.providers.ProviderManager">
+<property name="providers">
+  <list>
+    <ref local="daoAuthenticationProvider"/>
+    <ref local="anonymousAuthenticationProvider"/>
+  </list>
+</property>
+</bean>
+
+
+<bean id="daoAuthenticationProvider" class="net.sf.acegisecurity.providers.dao.DaoAuthenticationProvider">
+<property name="authenticationDao">
+  <bean class="org.librazur.gtd.util.AcegiSecurityAuthenticationDao">
+    <constructor-arg ref="userDao"/>
+  </bean>
+</property>
+</bean>
+
+
+<bean id="anonymousProcessingFilter" class="net.sf.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
+<property name="key"><value>librazurTodo</value></property>
+<property name="userAttribute"><value>anonymousUser,ROLE_ANONYMOUS</value></property>
+</bean>
+
+<bean id="anonymousAuthenticationProvider" class="net.sf.acegisecurity.providers.anonymous.AnonymousAuthenticationProvider">
+<property name="key"><value>librazurTodo</value></property>
+</bean>
+
+
+<bean id="httpSessionContextIntegrationFilter" class="net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter">
+<property name="context" value="net.sf.acegisecurity.context.security.SecureContextImpl"/>
+</bean>
+
+
+<bean id="securityEnforcementFilter" class="net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter">
+<property name="filterSecurityInterceptor"><ref local="filterInvocationInterceptor"/></property>
+<property name="authenticationEntryPoint"><ref local="authenticationProcessingFilterEntryPoint"/></property>
+</bean>
+
+<bean id="authenticationProcessingFilter" class="net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+<property name="authenticationManager"><ref bean="authenticationManager"/></property>
+<property name="authenticationFailureUrl"><value>/logon.html?error</value></property>
+<property name="defaultTargetUrl"><value>/list.html</value></property>
+<property name="filterProcessesUrl"><value>/j_acegi_security_check</value></property>
+</bean>
+
+
+<bean id="authenticationProcessingFilterEntryPoint" class="net.sf.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+<property name="loginFormUrl"><value>/logon.html</value></property>
+<property name="forceHttps"><value>false</value></property>
+</bean>
+
+
+<bean id="httpRequestAccessDecisionManager" class="net.sf.acegisecurity.vote.AffirmativeBased">
+<property name="allowIfAllAbstainDecisions"><value>false</value></property>
+<property name="decisionVoters">
+  <list>
+    <ref bean="roleVoter"/>
+  </list>
+</property>
+</bean>
+
+<bean id="roleVoter" class="net.sf.acegisecurity.vote.RoleVoter"/>
+
+
+<bean id="filterInvocationInterceptor" class="net.sf.acegisecurity.intercept.web.FilterSecurityInterceptor">
+<property name="authenticationManager"><ref bean="authenticationManager"/></property>
+<property name="accessDecisionManager"><ref local="httpRequestAccessDecisionManager"/></property>
+<property name="objectDefinitionSource">
+  <value>
+    CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+    PATTERN_TYPE_APACHE_ANT
+    /index.jsp=ROLE_ANONYMOUS,ROLE_USER
+    /hellostruts.html=ROLE_ANONYMOUS,ROLE_USER
+    /logon.html=ROLE_ANONYMOUS,ROLE_USER
+    /logon.html?error=ROLE_ANONYMOUS,ROLE_USER
+    /logoff.html=ROLE_ANONYMOUS,ROLE_USER
+    /home.html=ROLE_ANONYMOUS,ROLE_USER
+    /**/*.css=ROLE_ANONYMOUS,ROLE_USER
+    /**/*.js=ROLE_ANONYMOUS,ROLE_USER
+    /**/*.png=ROLE_ANONYMOUS,ROLE_USER
+    /**/*.gif=ROLE_ANONYMOUS,ROLE_USER
+    /**/*.jpg=ROLE_ANONYMOUS,ROLE_USER
+    /**=ROLE_USER
+  </value>
+</property>
+</bean>
+
+</beans>

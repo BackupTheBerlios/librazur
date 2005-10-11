@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<!--
+    $Id: web-context.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+-->
+<beans default-lazy-init="true">
+
+<bean name="/hellostruts"
+    class="org.librazur.gtd.servlet.action.HelloStrutsAction">
+  <property name="helloService" ref="helloService"/>
+</bean>
+
+<bean name="/home" class="org.librazur.gtd.servlet.action.SuccessAction"/>
+
+<bean name="/logon" class="org.librazur.gtd.servlet.action.LogonAction"/>
+
+<bean name="/logoff" class="org.librazur.gtd.servlet.action.LogoffAction"/>
+
+
+<bean id="taskAction" class="org.librazur.gtd.servlet.action.TaskAction">
+<property name="gtdService" ref="gtdService"/>
+</bean>
+
+<alias name="taskAction" alias="/list"/>
+<alias name="taskAction" alias="/add"/>
+<alias name="taskAction" alias="/delete"/>
+<alias name="taskAction" alias="/setdone"/>
+<alias name="taskAction" alias="/setundone"/>
+
+
+<bean id="userAction" class="org.librazur.gtd.servlet.action.UserAction">
+<property name="gtdService" ref="gtdService"/>
+</bean>
+
+<alias name="userAction" alias="/adduser"/>
+<alias name="userAction" alias="/listuserstodelete"/>
+<alias name="userAction" alias="/deleteuser"/>
+<alias name="userAction" alias="/editprofile"/>
+<alias name="userAction" alias="/updateuser"/>
+<alias name="userAction" alias="/newuser"/>
+
+</beans>

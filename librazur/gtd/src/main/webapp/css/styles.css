@@ -1,0 +1,365 @@
+/**
+ * $Id: styles.css,v 1.1 2005/10/11 21:21:24 romale Exp $
+ *
+ * Getting Things Done CSS styles
+ * Copyright (c) 2005 Librazur
+ */
+
+body {
+  background: white url(../images/bg.gif) repeat-x top;
+  color: black;
+  font-family: "Bitstream Vera Sans", Tahoma, Arial, serif;
+  font-size: 11px;
+  margin 0;
+  padding: 30px 2em 2em 2em;
+}
+
+
+#header {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+
+#loginbox {
+  font-size: 95%;
+  position: absolute;
+  top: 70px;
+  left: 400px;
+}
+
+#loginbox p {
+  margin: 0;
+  padding: 0;
+}
+
+#loginbox, #loginbox a {
+  color: #bbb;
+}
+
+
+#actions {
+  position: absolute;
+  top: 160px;
+  left: 2em;
+  right: 2em;
+}
+
+#actions h2 {
+  display: none;
+}
+
+/* CSS tabs taken from: http://www.simplebits.com/bits/minitabs.html */
+#actions ul {
+  margin: 0;
+  padding: 0 0 20px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#actions li {
+  margin: 0; 
+  padding: 0;
+  display: inline;
+  list-style-type: none;
+}
+	
+#actions a:link, #actions a:visited {
+  float: left;
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: bold;
+  margin: 0 10px 4px 10px;
+  padding-bottom: 2px;
+  text-decoration: none;
+  color: #aaa;
+}
+
+#actions a:hover,
+#list #menu_list,
+#profile #menu_profile,
+#adduser #menu_adduser,
+#deleteuser #menu_deleteuser {
+  border-bottom: 4px solid #ddd;
+  padding-bottom: 2px;
+  background: #fff;
+  color: #888;
+}
+
+
+h1 {
+  margin: 50px 0 0 0;
+  padding: 0;
+}
+
+
+h2 {
+  font-size: 200%;
+  margin: 0 0 1em 0;
+  padding: 0;
+  color: #7A6F63;
+}
+
+
+a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a img {
+  border: none;
+}
+
+
+#footer {
+  position: absolute;
+  top: 70px;
+  left: 2em;
+  color: #bbb;
+  font-size: 85%;
+  margin: 4em 0;
+}
+
+#footer a {
+  color: #bbb;
+}
+
+
+#messages,
+#errors,
+.info {
+  font-size: 110%;
+  margin: 2em 1em;
+}
+
+#messages ul,
+#errors ul,
+.info ul {
+  margin: 0;
+  padding: 0;
+  list-style: none inside
+}
+
+#messages li,
+#errors li,
+.info li {
+  margin: 0.5em 0;
+  padding: 0;
+  min-height: 16px;
+}
+
+#messages li {
+  background: url(../images/accept.png) no-repeat top left;
+  padding-left: 20px;
+}
+
+#errors li {
+  background: url(../images/exclamation.png) no-repeat top left;
+  padding-left: 20px;
+}
+
+.info li {
+  background: url(../images/information.png) no-repeat top left;
+  padding-left: 20px;
+}
+
+
+#content {
+  position: absolute;
+  top: 210px;
+  left: 2em;
+  right: 2em;
+}
+
+
+/*
+ * CSS form styles taken from:
+ *   http://www.picment.com/articles/css/funwithforms/
+ */
+.funform form {
+  margin: 0;
+  padding: 0;
+  width: 440px;
+}
+
+.funform input {
+  font-family: "Bitstream Vera Sans", Tahoma, Arial, serif;
+  font-size: 12px;
+}
+
+.funform fieldset {
+  background: #F6EADA;
+  border: 1px solid #ccc;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.funform fieldset label {
+  color: #666666;
+  text-align: right;
+  width: 160px;
+  float: left;
+  margin: 0;
+  margin-top: 0.3em;
+  line-height: 18px;
+}
+
+.funform fieldset .nobr {
+	display: none;
+}
+
+.funform fieldset .textfield {
+  margin: 3px;
+  height: 18px;
+  width: 220px;
+  padding: 3px 8px;
+  border: solid 0 #fff;
+  background: transparent url(../images/textfield.gif) no-repeat;
+}
+
+.funform fieldset .checkbox {
+  margin: 0.5em 0 0 163px;
+}
+
+.funform fieldset .checkboxlabel {
+  float: none !important;
+  width: 220px;
+  margin: 0.5em 3px 3px 0;
+  padding: 3px 0;
+  text-align: left;
+  display: inline;
+}
+
+.funform fieldset .buttons {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.funform fieldset .buttons input {
+  background: transparent url(../images/button.gif) no-repeat;
+  height: 20px;
+  border: solid 0 #fff;
+  font-family: "Bitstream Vera Sans", Tahoma, Arial, serif;
+  font-size: 12px;
+  color: #666;
+  width: 160px;
+}
+
+
+#deleteuser .users dl {
+  border: 1px solid #ccc;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #F6EADA;;
+  padding: 10px;
+  float: left;
+  margin-right: 1em;
+}
+
+#deleteuser .users dt {
+  text-align: center;
+}
+
+#deleteuser .users dd {
+  margin: 0;
+  padding: 0;
+}
+
+#deleteuser .users .login {
+  margin-bottom: 0.5em;
+}
+
+#deleteuser .users .actions {
+  font-size: 90%;
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+  text-align: center;
+}
+
+#deleteuser .users .actions ul {
+  margin: 0;
+  padding: 0;
+  list-style: none inside;
+}
+
+#deleteuser .users .actions li {
+  margin: 0 1em;
+  padding: 0;
+  text-align: center;
+  float: left;
+}
+
+#deleteuser .users .actions li img {
+  margin: 0 auto;
+}
+
+#deleteuser .users .actions li a {
+  display: block;
+}
+
+
+#list .tasks dl {
+  border: 1px solid #ccc;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #F6EADA;;
+  padding: 10px;
+  float: left;
+  margin-right: 1em;
+}
+
+#list .tasks dd {
+  margin: 0;
+  padding: 0;
+}
+
+#list .tasks .icon {
+  float: left;
+  margin: 10px;
+  height: 4em;
+}
+
+#list .tasks .title {
+  margin-bottom: 0.5em;
+  font-size: 120%;
+}
+
+#list .tasks .actions {
+  font-size: 90%;
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+  text-align: center;
+}
+
+#list .tasks .actions ul {
+  margin: 0;
+  padding: 0;
+  list-style: none inside;
+}
+
+#list .tasks .actions li {
+  margin: 0 1em;
+  padding: 0;
+  text-align: center;
+  float: left;
+}
+
+#list .tasks .actions li img {
+  margin: 0 auto;
+}
+
+#list .tasks .actions li a {
+  display: block;
+}
+
+
+#home #content {
+  width: 580px;
+}

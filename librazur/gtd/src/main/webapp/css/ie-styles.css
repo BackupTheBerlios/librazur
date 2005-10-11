@@ -1,0 +1,20 @@
+/**
+ * $Id: ie-styles.css,v 1.1 2005/10/11 21:21:24 romale Exp $
+ *
+ * Getting Things Done CSS styles (for IE only)
+ * Copyright (c) 2005 Librazur
+ */
+
+#actions {
+  width: 100%;
+}
+
+#messages li,
+#errors li,
+.info li {
+  padding-left: 7px;
+}
+
+#list .tasks {
+  margin-top: 1em;
+}
