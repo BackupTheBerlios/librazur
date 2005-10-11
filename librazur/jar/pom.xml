@@ -1,0 +1,34 @@
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.librazur</groupId>
+    <artifactId>librazur</artifactId>
+    <version>20051006</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.librazur</groupId>
+  <artifactId>librazur-jar</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0</version>
+  <name>Librazur Jar</name>
+
+  <scm>
+    <connection>scm:cvs:pserver:anonymous@cvs.librazur.berlios.de:/cvsroot/librazur:librazur/jar</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.librazur.berlios.de:/cvsroot/librazur:librazur/jar</developerConnection>
+    <url>http://cvs.berlios.de/cgi-bin/viewcvs.cgi/librazur/librazur/jar</url>
+  </scm>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>${basedir}/src/assembly/dist.xml</descriptor>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
