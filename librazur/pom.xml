@@ -1,0 +1,103 @@
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--
+    $Id: pom.xml,v 1.1 2005/10/11 21:00:05 romale Exp $
+-->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.librazur</groupId>
+  <artifactId>librazur</artifactId>
+  <packaging>pom</packaging>
+  <name>Librazur</name>
+  <version>20051006</version>
+  <url>http://librazur.eu.org</url>
+
+  <issueManagement>
+    <system>berlios</system>
+    <url>http://developer.berlios.de/bugs/?group_id=4852</url>
+  </issueManagement>
+
+  <scm>
+    <connection>scm:cvs:pserver:anonymous@cvs.librazur.berlios.de:/cvsroot/librazur:librazur</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.librazur.berlios.de:/cvsroot/librazur:librazur</developerConnection>
+    <url>http://cvs.berlios.de/cgi-bin/viewcvs.cgi/librazur/librazur</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>romale</id>
+      <name>Alexandre ROMAN</name>
+      <email>librazur@gmail.com</email>
+      <organization>Librazur</organization>
+      <roles>
+        <role>Project leader</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>General Public License</name>
+      <url>http://www.gnu.org/licenses/gpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Librazur</name>
+    <url>http://librazur.eu.org</url>
+  </organization>
+
+  <build>
+    <defaultGoal>package</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin><artifactId>maven-javadoc-plugin</artifactId></plugin>
+      <plugin><artifactId>maven-project-info-reports-plugin</artifactId></plugin>
+    </plugins>
+  </reporting>
+
+  <modules>
+    <module>blc</module>
+    <module>gtd</module>
+    <module>jar</module>
+    <module>util</module>
+  </modules>
+
+  <repositories>
+    <repository>
+      <id>librazur</id>
+      <name>Librazur Maven 2 repository</name>
+      <url>http://www.librazur.online.fr/maven2</url>
+    </repository>
+  </repositories>
+</project>
+
