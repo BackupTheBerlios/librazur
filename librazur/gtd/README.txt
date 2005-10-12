@@ -13,7 +13,7 @@ Spring framework and the benefits of AOP and IoC. The application is based upon
 the MVC library Struts.
 
 GTD is available in two languages: English (default), and French. Please forgive
-me there is some errors in the english version, as the french language is my
+me if there is some errors in the english version, as the french language is my
 mother tongue ;) Feel free to contribute if you want to add your language, or
 correct my errors!
 
@@ -33,7 +33,8 @@ properties:
 jdbc.driver = <your JDBC driver: org.hsqldb.jdbcDriver, org.postgresql.Driver>
 jdbc.url = <the JDBC url: jdbc:hsqldb:file:gtd, jdbc:postgresql://localhost/gtd>
 jdbc.username = <database username>
-jdbc.password = <database password> 
+jdbc.password = <database password>
+jdbc.hibernate.hbm2ddl = <create, create-drop, update>
 jdbc.hibernate.dialect = <Hibernate HSQL dialect:
   see http://www.hibernate.org/hib_docs/v3/reference/en/html/session-configuration.html#configuration-optional-dialects>
 
