@@ -1,5 +1,5 @@
 /**
- * $Id: SqlUtilsTest.java,v 1.1 2005/10/17 22:29:24 romale Exp $
+ * $Id: SqlUtilsTest.java,v 1.2 2005/10/17 22:41:02 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -83,6 +83,33 @@ public class SqlUtilsTest extends TestCase {
         control.replay();
 
         SqlUtils.close(mock);
+        control.verify();
+    }
+
+
+    public void testRollback() {
+        SqlUtils.rollback(null);
+
+        final MockControl control = MockControl.createControl(Connection.class);
+        final Connection mock = (Connection) control.getMock();
+        try {
+            mock.rollback();
+        } catch (Exception ignore) {
+        }
+        control.replay();
+
+        SqlUtils.rollback(mock);
+        control.verify();
+
+        control.reset();
+        try {
+            mock.rollback();
+        } catch (Exception ignore) {
+        }
+        control.setThrowable(new SQLException("Boo!"));
+        control.replay();
+
+        SqlUtils.rollback(mock);
         control.verify();
     }
 }

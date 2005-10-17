@@ -1,5 +1,5 @@
 /**
- * $Id: SqlUtils.java,v 1.1 2005/10/17 22:29:24 romale Exp $
+ * $Id: SqlUtils.java,v 1.2 2005/10/17 22:41:02 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -58,6 +58,20 @@ public final class SqlUtils {
         }
         try {
             stmt.close();
+        } catch (Exception e) {
+        }
+    }
+
+
+    /**
+     * Quietly does a rollback on a connection.
+     */
+    public static void rollback(Connection conn) {
+        if (conn == null) {
+            return;
+        }
+        try {
+            conn.rollback();
         } catch (Exception e) {
         }
     }
