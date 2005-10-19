@@ -1,0 +1,12 @@
+This is the CHANGELOG file for Librazur Jar.
+Copyright (c) 2005 Librazur.
+http://librazur.eu.org
+
+o 1.0.1 / 20051019
+  - added javadoc for JarLauncher.launch()
+  - fixed JarClassLoaderFactory.equals()
+  - added equals(), hashCode() and toString() in SystemClassLoaderFactory
+  - added library purpose in README.txt
+
+o 1.0 / 20051011
+  - First release! 
