@@ -1,5 +1,5 @@
 <!--
-    $Id: dist.xml,v 1.1 2005/10/11 20:53:57 romale Exp $
+    $Id: dist.xml,v 1.2 2005/10/19 16:19:33 romale Exp $
 -->
 <assembly>
   <id>dist</id>
@@ -13,6 +13,7 @@
         <include>LICENSE*</include>
         <include>NOTICE*</include>
         <include>AUTHORS*</include>
+        <include>CHANGELOG*</include>
       </includes>
       <lineEnding>dos</lineEnding>
     </fileSet>
