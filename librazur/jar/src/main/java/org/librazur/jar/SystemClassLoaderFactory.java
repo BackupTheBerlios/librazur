@@ -1,5 +1,5 @@
 /**
- * $Id: SystemClassLoaderFactory.java,v 1.1 2005/10/11 20:53:57 romale Exp $
+ * $Id: SystemClassLoaderFactory.java,v 1.2 2005/10/19 16:17:59 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -30,5 +30,26 @@ package org.librazur.jar;
 public class SystemClassLoaderFactory implements ClassLoaderFactory {
     public ClassLoader createClassLoader() {
         return getClass().getClassLoader();
+    }
+
+
+    @Override
+    public String toString() {
+        return "SystemClassLoaderFactory[]";
+    }
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof SystemClassLoaderFactory)) {
+            return false;
+        }
+        return hashCode() == obj.hashCode();
     }
 }
