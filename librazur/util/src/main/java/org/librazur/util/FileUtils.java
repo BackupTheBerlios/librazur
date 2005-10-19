@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.1 2005/10/11 21:05:19 romale Exp $
+ * $Id: FileUtils.java,v 1.2 2005/10/19 21:55:59 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -128,27 +128,46 @@ public final class FileUtils {
 
 
     /**
-     * Tries to delete a directory. The directory may not be deleted if some
-     * files have been opened by some other software (especially under platforms
-     * like Windows).
+     * Tries to delete a directory or a file. The directory or the file may not
+     * be deleted if some files have been opened by some other software
+     * (especially under platforms like Windows). If <tt>force</tt> is set to
+     * <tt>true</tt>, an <tt>IOException</tt> will be thrown if an error
+     * prevents the element to be deleted.
      */
-    public static void delete(File dir) throws IOException {
-        if (dir.isFile()) {
-            dir.delete();
+    public static void delete(File file, boolean force) throws IOException {
+        if (file.isFile()) {
+            if (!file.delete() && force) {
+                throw new IOException("Unable to delete file: "
+                        + file.getPath());
+            }
             return;
         }
 
-        final File[] files = dir.listFiles();
+        final File[] files = file.listFiles();
         if (files != null) {
-            for (final File file : files) {
-                if (file.isFile()) {
-                    file.delete();
-                } else if (file.isDirectory()) {
-                    delete(file);
+            for (final File curFile : files) {
+                if (curFile.isFile()) {
+                    if (!curFile.delete() && force) {
+                        throw new IOException("Unable to delete file: "
+                                + curFile.getPath());
+                    }
+                } else if (curFile.isDirectory()) {
+                    delete(curFile);
                 }
             }
         }
-        dir.delete();
+        if (!file.delete() && force) {
+            throw new IOException("Unable to delete directory: "
+                    + file.getPath());
+        }
+    }
+
+
+    /**
+     * Same as <tt>FileUtils.delete(file, false)</tt>.
+     */
+    public static void delete(File file) throws IOException {
+        delete(file, false);
     }
 
 
