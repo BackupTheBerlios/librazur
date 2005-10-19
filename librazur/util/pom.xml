@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.5 2005/10/19 15:04:20 romale Exp $
+    $Id: pom.xml,v 1.6 2005/10/19 23:10:48 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
@@ -15,7 +15,7 @@
   <groupId>org.librazur</groupId>
   <artifactId>librazur-util</artifactId>
   <packaging>jar</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
   <name>Librazur Utilities</name>
 
   <scm>
