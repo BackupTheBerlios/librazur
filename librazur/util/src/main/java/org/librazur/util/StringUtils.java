@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtils.java,v 1.1 2005/10/11 21:05:19 romale Exp $
+ * $Id: StringUtils.java,v 1.2 2005/10/19 21:54:04 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -60,5 +60,29 @@ public final class StringUtils {
         final String newStr = str.trim();
 
         return newStr.length() == 0 ? null : newStr;
+    }
+
+
+    /**
+     * Strip spaces at the end of a line. A space is a character as defined by
+     * <tt>Character.isSpace()</tt>.
+     */
+    public static String stripEndSpaces(String line) {
+        if (line == null || line.length() == 0) {
+            return line;
+        }
+
+        int i = line.length() - 1;
+        while (i >= 0 && Character.isWhitespace(line.charAt(i))) {
+            --i;
+        }
+
+        if (i == line.length() - 1) {
+            return line;
+        }
+
+        // use a new String to workaround a bug in String.substring():
+        // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4637640
+        return new String(line.substring(0, i + 1));
     }
 }

@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtilsTest.java,v 1.1 2005/10/11 21:05:19 romale Exp $
+ * $Id: StringUtilsTest.java,v 1.2 2005/10/19 21:54:04 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -49,5 +49,17 @@ public class StringUtilsTest extends TestCase {
         assertFalse(StringUtils.isBlank("aa"));
         assertTrue(StringUtils.isBlank("  "));
         assertFalse(StringUtils.isBlank("  aa  "));
+    }
+
+
+    public void testStripEndSpaces() {
+        assertEquals("hello", StringUtils.stripEndSpaces("hello  "));
+        assertEquals("  hello", StringUtils.stripEndSpaces("  hello  "));
+        assertEquals("hello", StringUtils.stripEndSpaces("hello"));
+        assertEquals("  hello", StringUtils.stripEndSpaces("  hello"));
+        assertEquals("", StringUtils.stripEndSpaces(""));
+        assertEquals("a", StringUtils.stripEndSpaces("a"));
+        assertEquals("", StringUtils.stripEndSpaces("  "));
+        assertNull(StringUtils.stripEndSpaces(null));
     }
 }
