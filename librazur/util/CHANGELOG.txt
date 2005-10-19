@@ -1,0 +1,16 @@
+This is the CHANGELOG file for Librazur Utilities.
+Copyright (c) 2005 Librazur.
+http://librazur.eu.org
+
+ 1.1   / 20051020
+==================
+  - added SqlUtils
+  - added FileUtils.delete(File, boolean)
+  - added StringUtils.stripEndSpaces()
+  - fixed ObjectUtils.property() to be thread-safe
+  - added library purpose in README.txt
+  - fixed some typos
+
+ 1.0   / 20051011
+==================
+  - First release!
