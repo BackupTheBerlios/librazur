@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtilsTest.java,v 1.1 2005/10/11 21:05:19 romale Exp $
+ * $Id: FileUtilsTest.java,v 1.2 2005/10/19 15:08:19 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -58,7 +58,7 @@ public class FileUtilsTest extends TestCase {
 
             final String text = FileUtils.read(file);
             assertNotNull(text);
-            assertEquals("This is a README file.\r\nThat's all.", text);
+            assertEquals("This is a README file.\nThat's all.", text);
         } finally {
             file.delete();
         }
