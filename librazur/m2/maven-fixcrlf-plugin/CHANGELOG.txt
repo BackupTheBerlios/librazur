@@ -1,0 +1,7 @@
+This is the CHANGELOG file for Maven 2 plugin fixcrlf.
+Copyright (c) 2005 Librazur.
+http://librazur.eu.org
+
+ 1.0   / 20051020
+==================
+  - First release!

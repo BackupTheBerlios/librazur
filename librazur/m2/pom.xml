@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--
+    $Id: pom.xml,v 1.1 2005/10/19 23:23:40 romale Exp $
+-->
+  <parent>
+    <groupId>org.librazur</groupId>
+    <artifactId>librazur</artifactId>
+    <version>20051020</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.librazur.maven.plugins</groupId>
+  <artifactId>maven-plugins</artifactId>
+  <packaging>pom</packaging>
+  <version>20051019</version>
+  <name>Maven 2 plugins</name>
+
+  <scm>
+    <connection>scm:cvs:pserver:anonymous@cvs.librazur.berlios.de:/cvsroot/librazur:librazur/m2</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.librazur.berlios.de:/cvsroot/librazur:librazur/m2</developerConnection>
+    <url>http://cvs.berlios.de/cgi-bin/viewcvs.cgi/librazur/librazur/m2</url>
+  </scm>
+
+  <build>
+    <defaultGoal>package</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.4</source>
+          <target>1.4</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-tools-api</artifactId>
+      <version>2.0</version>
+    </dependency>
+  </dependencies>
+
+  <modules>
+    <module>maven-fixcrlf-plugin</module>
+  </modules>
+
+  <repositories>
+    <repository>
+      <id>librazur</id>
+      <name>Librazur Maven 2 repository</name>
+      <url>http://www.librazur.online.fr/maven2</url>
+    </repository>
+  </repositories>
+</project>
+

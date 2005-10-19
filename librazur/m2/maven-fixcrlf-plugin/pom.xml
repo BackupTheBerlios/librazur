@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--
+    $Id: pom.xml,v 1.1 2005/10/19 23:26:48 romale Exp $
+-->
+  <parent>
+    <groupId>org.librazur.maven.plugins</groupId>
+    <artifactId>maven-plugins</artifactId>
+    <version>20051019</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.librazur.maven.plugins</groupId>
+  <artifactId>maven-fixcrlf-plugin</artifactId>
+  <packaging>maven-plugin</packaging>
+  <version>1.0</version>
+  <name>Maven 2 plugin to fix end-of-lines in text files</name>
+
+  <scm>
+    <connection>scm:cvs:pserver:anonymous@cvs.librazur.berlios.de:/cvsroot/librazur:librazur/m2/maven-fixcrlf-plugin</connection>
+    <developerConnection>scm:cvs:ext:${maven.username}@cvs.librazur.berlios.de:/cvsroot/librazur:librazur/m2/maven-fixcrlf-plugin</developerConnection>
+    <url>http://cvs.berlios.de/cgi-bin/viewcvs.cgi/librazur/librazur/m2/maven-fixcrlf-plugin</url>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.librazur</groupId>
+      <artifactId>librazur-util</artifactId>
+      <version>1.1</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>librazur</id>
+      <name>Librazur Maven 2 repository</name>
+      <url>http://www.librazur.online.fr/maven2</url>
+    </repository>
+  </repositories>
+</project>
