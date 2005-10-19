@@ -1,5 +1,5 @@
 /**
- * $Id: JarClassLoaderFactory.java,v 1.1 2005/10/11 20:53:57 romale Exp $
+ * $Id: JarClassLoaderFactory.java,v 1.2 2005/10/19 16:16:47 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -122,7 +122,7 @@ public class JarClassLoaderFactory implements ClassLoaderFactory {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof JarClassLoaderFactory)) {
+        if (obj == null || !(obj instanceof JarClassLoaderFactory)) {
             return false;
         }
         return hashCode() == obj.hashCode();
