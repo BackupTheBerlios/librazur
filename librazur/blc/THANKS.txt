@@ -4,7 +4,7 @@ http://librazur.eu.org
 
 We would like to thank all these people for the help on this project:
 
- - Laurent LEFRANCOIS (privosquid.free.fr)
- - Pierre-Yves CAILLIATTE (http://java-fr.org)
+ - Laurent LEFRANCOIS - http://privosquid.free.fr
+ - Pierre-Yves CAILLIATTE - http://www.java-fr.org
 
 Thanks for you help!
