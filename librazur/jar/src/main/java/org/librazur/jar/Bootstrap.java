@@ -1,5 +1,5 @@
 /**
- * $Id: Bootstrap.java,v 1.1 2005/10/11 20:53:57 romale Exp $
+ * $Id: Bootstrap.java,v 1.2 2005/10/19 20:40:54 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -32,25 +32,43 @@ import java.util.Properties;
 
 /**
  * Application bootstrap. The class reads a property file, pointed by the system
- * property "librazur.bootstrap.file", and start the bootstrapping. The property
- * file contains the following:
+ * property "librazur.bootstrap.file", and starts the bootstrapping. If the
+ * property is not set, the class tries to read a file from the current
+ * directory named "bootstrap.properties". If the file doesn't exist, then the
+ * class uses the first argument to locate the property file. The property file
+ * contains the following:
  * 
  * <pre>
- *      main = &lt;main jar to start&gt;
- *      class.X = &lt;class dir&gt;
- *      jar.Y = &lt;jar dir&gt;
+ *       main = &lt;main jar to start&gt;
+ *       class.X = &lt;class dir&gt;
+ *       jar.Y = &lt;jar&gt;
+ *       jardir.Z = &lt; directory containing jar&gt;
  * </pre>
  * 
- * There can be several class.X and jar.X as long as X and Y are unique integers
- * starting from 0.
+ * There can be several class.X, jar.Y, jardir.Z as long as X, Y, Z are unique
+ * integers starting from 0.
  */
 public class Bootstrap {
     public static void main(String[] args) {
         final String sysProp = "librazur.bootstrap.file";
-        final String propPath = System.getProperty(sysProp);
+        String propPath = System.getProperty(sysProp);
+        boolean confFromArgument = false;
         if (propPath == null) {
-            System.err.println("System property is not set: " + sysProp);
-            System.exit(5);
+            // try a file in the current directory
+            final File file = new File(System.getProperty("user.dir"),
+                    "bootstrap.properties");
+            if (file.exists() && file.isFile() && file.canRead()) {
+                propPath = file.getPath();
+            } else if (args.length > 0) {
+                // use the first argument
+                confFromArgument = true;
+                propPath = args[0].trim();
+            }
+
+            if (propPath == null) {
+                System.err.println("System property is not set: " + sysProp);
+                System.exit(5);
+            }
         }
 
         final File propFile = new File(propPath);
@@ -82,31 +100,45 @@ public class Bootstrap {
         final JarClassLoaderFactory factory = new JarClassLoaderFactory();
         factory.add(mainJar);
 
+        // add jar directories
+        final FileFilter jarFileFilter = new JarFileFilter();
         int jarIndex = 0;
-        for (String jarProp = null; (jarProp = props.getProperty("jar."
+        for (String jarProp = null; (jarProp = props.getProperty("jardir."
                 + jarIndex)) != null; ++jarIndex) {
-            System.out.println(jarProp);
 
             final File dir = new File(baseDir, jarProp);
             if (!dir.exists() || !dir.isDirectory()) {
                 continue;
             }
 
-            final File[] jars = dir.listFiles(new JarFileFilter());
+            final File[] jars = dir.listFiles(jarFileFilter);
             for (final File jar : jars) {
-                if (!jar.canRead()) {
+                if (!jar.exists() || !jar.isFile() || !jar.canRead()) {
                     continue;
                 }
                 factory.add(jar);
             }
         }
 
+        // add jar dependencies
+        jarIndex = 0;
+        for (String jarProp = null; (jarProp = props.getProperty("jar."
+                + jarIndex)) != null; ++jarIndex) {
+
+            final File file = new File(baseDir, jarProp);
+            if (!file.exists() || !file.isFile() || !file.canRead()) {
+                continue;
+            }
+            factory.add(file);
+        }
+
         final StringBuilder classBuf = new StringBuilder();
 
+        // set the java.class.path system property according to class
+        // directories
         int classIndex = 0;
         for (String classProp = null; (classProp = props.getProperty("class."
                 + classIndex)) != null; ++classIndex) {
-            System.out.println(classProp);
 
             classBuf.append(classProp).append(File.pathSeparatorChar);
         }
@@ -114,10 +146,20 @@ public class Bootstrap {
             System.setProperty("java.class.path", classBuf.toString());
         }
 
+        // build new argument array
+        if (confFromArgument) {
+            assert args.length > 0;
+        }
+        final String[] newArgs = new String[!confFromArgument ? args.length
+                : args.length - 1];
+        System.arraycopy(args, !confFromArgument ? 0 : 1, newArgs, 0,
+                newArgs.length);
+
+        // let's go!
         final JarLauncher launcher = new JarLauncher(mainJar);
         launcher.setClassLoaderFactory(factory);
         try {
-            launcher.launch(args);
+            launcher.launch(newArgs);
         } catch (Exception e) {
             System.err.println("Unable to launch application");
             e.printStackTrace();
