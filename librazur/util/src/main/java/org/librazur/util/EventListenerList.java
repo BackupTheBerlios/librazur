@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.1 2005/10/11 21:05:19 romale Exp $
+ * $Id: EventListenerList.java,v 1.2 2005/10/19 21:40:20 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -83,7 +83,7 @@ public class EventListenerList<T extends EventListener> {
 
 
     /**
-     * Fires a event on all the registererd listeners.
+     * Fires an event on all the registered listeners.
      */
     public void fireEvent(String methodName, EventObject evt) {
         if (listeners.isEmpty()) {
