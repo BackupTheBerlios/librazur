@@ -1,5 +1,5 @@
 /**
- * $Id: ObjectUtils.java,v 1.1 2005/10/11 21:05:19 romale Exp $
+ * $Id: ObjectUtils.java,v 1.2 2005/10/19 21:53:30 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -64,27 +64,29 @@ public final class ObjectUtils {
         final Class clazz = obj.getClass();
         final String key = clazz.getName() + "." + name;
 
-        Method method = methodCache.get(key);
-        if (method == null) {
-            // the method is not in the cache
-            try {
-                method = clazz.getMethod(getterName(name));
-                methodCache.put(key, method);
-            } catch (NoSuchMethodException e) {
-                throw new IllegalArgumentException(
-                        "Unable to find a getter for property " + name
-                                + " in class " + clazz.getName(), e);
+        synchronized (methodCache) {
+            Method method = methodCache.get(key);
+            if (method == null) {
+                // the method is not in the cache
+                try {
+                    method = clazz.getMethod(getterName(name));
+                    methodCache.put(key, method);
+                } catch (NoSuchMethodException e) {
+                    throw new IllegalArgumentException(
+                            "Unable to find a getter for property " + name
+                                    + " in class " + clazz.getName(), e);
+                }
             }
-        }
-        assert method != null : "method shouldn't be null";
+            assert method != null : "method shouldn't be null";
 
-        try {
-            return method.invoke(obj);
-        } catch (InvocationTargetException e) {
-            throw new IllegalStateException("Error while getting property "
-                    + name + " in class " + clazz.getName(), e);
-        } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Unexpected exception", e);
+            try {
+                return method.invoke(obj);
+            } catch (InvocationTargetException e) {
+                throw new IllegalStateException("Error while getting property "
+                        + name + " in class " + clazz.getName(), e);
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("Unexpected exception", e);
+            }
         }
     }
 }
