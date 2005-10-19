@@ -1,5 +1,5 @@
 /**
- * $Id: JarLauncher.java,v 1.1 2005/10/11 20:53:57 romale Exp $
+ * $Id: JarLauncher.java,v 1.2 2005/10/19 16:17:25 romale Exp $
  *
  * Librazur
  * http://librazur.eu.org
@@ -48,6 +48,11 @@ public class JarLauncher {
     }
 
 
+    /**
+     * Runs the jar file by invoking the <tt>main()</tt> method in the class
+     * declared by the <tt>Main-Class</tt> attribute of the jar manifest, and
+     * passing the specified arguments.
+     */
     public void launch(String... args) throws IOException,
             ClassNotFoundException, IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
