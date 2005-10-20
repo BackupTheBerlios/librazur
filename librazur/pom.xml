@@ -4,15 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.4 2005/10/19 14:52:24 romale Exp $
+    $Id: pom.xml,v 1.5 2005/10/20 22:32:35 romale Exp $
 -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur</groupId>
   <artifactId>librazur</artifactId>
   <packaging>pom</packaging>
   <name>Librazur</name>
-  <version>20051020</version>
-  <url>http://librazur.eu.org</url>
+  <version>20051021</version>
+  <url>http://librazur.info</url>
 
   <issueManagement>
     <system>berlios</system>
@@ -47,7 +47,7 @@
 
   <organization>
     <name>Librazur</name>
-    <url>http://librazur.eu.org</url>
+    <url>http://librazur.info</url>
   </organization>
 
   <build>
@@ -112,7 +112,7 @@
     <repository>
       <id>librazur-repository</id>
       <name>Librazur Maven 2 repository</name>
-      <url>http://www.librazur.online.fr/maven2</url>
+      <url>http://maven.librazur.info/maven2</url>
     </repository>
   </repositories>
 
@@ -120,7 +120,7 @@
     <pluginRepository>
       <id>librazur-plugin-repository</id>
       <name>Librazur Maven 2 plugins repository</name>
-      <url>http://www.librazur.online.fr/maven2</url>
+      <url>http://maven.librazur.info/maven2</url>
     </pluginRepository>
   </pluginRepositories>
 </project>
