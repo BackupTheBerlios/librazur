@@ -4,18 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.5 2005/10/19 20:41:27 romale Exp $
+    $Id: pom.xml,v 1.6 2005/10/20 22:36:02 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
     <artifactId>librazur</artifactId>
-    <version>20051020</version>
+    <version>20051021</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur</groupId>
   <artifactId>librazur-jar</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <name>Librazur Jar</name>
 
   <scm>
@@ -49,7 +49,7 @@
     <repository>
       <id>librazur</id>
       <name>Librazur Maven 2 repository</name>
-      <url>http://www.librazur.online.fr/maven2</url>
+      <url>http://maven.librazur.info/maven2</url>
     </repository>
   </repositories>
 </project>
