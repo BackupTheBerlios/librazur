@@ -1,6 +1,6 @@
 This is the README file for Black List Converter (BLC).
 Copyright (c) 2005 Librazur.
-http://librazur.eu.org
+http://librazur.info
 
 Please note that this application is published under the terms of the
 General Public License (GPL). See LICENSE.txt for more information.
@@ -12,11 +12,11 @@ http://java.com/download/.
 You can launch the application by running bin/blc.exe under Windows
 or bin/blc under GNU/Linux. We are currently looking for people to
 test the application under Mac OS X: if you're one of those, please
-contact us at librazur@gmail.com!
+contact us at alex@librazur.info!
 
 If you want to contribute to BLC in any way (documentation, translation,
 bug reporting, programming), feel free to contact us at
-librazur@gmail.com.
+alex@librazur.info.
 
 You can find the sources for this application in the src directory.
 You can checkout the sources from the CVS repository at

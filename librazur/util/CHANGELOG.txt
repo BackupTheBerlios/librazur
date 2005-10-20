@@ -1,6 +1,10 @@
 This is the CHANGELOG file for Librazur Utilities.
 Copyright (c) 2005 Librazur.
-http://librazur.eu.org
+http://librazur.info
+
+ CVS
+=====
+  - updated site url and emails
 
  1.1   / 20051020
 ==================

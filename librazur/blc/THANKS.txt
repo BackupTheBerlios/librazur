@@ -1,6 +1,6 @@
 This is the THANKS file for Black List Converter (BLC).
 Copyright (c) 2005 Librazur.
-http://librazur.eu.org
+http://librazur.info
 
 We would like to thank all these people for the help on this project:
 

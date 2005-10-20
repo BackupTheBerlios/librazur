@@ -1,8 +1,8 @@
 /**
- * $Id: FileTransferHandler.java,v 1.1 2005/10/11 21:17:40 romale Exp $
+ * $Id: FileTransferHandler.java,v 1.2 2005/10/20 22:44:12 romale Exp $
  *
  * Librazur
- * http://librazur.eu.org
+ * http://librazur.info
  * Copyright (c) 2005 Librazur
  *
  * This program is free software; you can redistribute it and/or modify

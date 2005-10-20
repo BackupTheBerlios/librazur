@@ -1,8 +1,8 @@
 /**
- * $Id: HibernateUserDao.java,v 1.1 2005/10/11 21:21:23 romale Exp $
+ * $Id: HibernateUserDao.java,v 1.2 2005/10/20 22:44:25 romale Exp $
  *
  * Librazur
- * http://librazur.eu.org
+ * http://librazur.info
  * Copyright (c) 2005 Librazur
  *
  * This program is free software; you can redistribute it and/or modify

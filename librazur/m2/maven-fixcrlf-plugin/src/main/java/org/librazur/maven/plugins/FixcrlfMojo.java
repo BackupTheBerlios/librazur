@@ -1,8 +1,8 @@
 /**
- * $Id: FixcrlfMojo.java,v 1.1 2005/10/19 23:26:48 romale Exp $
+ * $Id: FixcrlfMojo.java,v 1.2 2005/10/20 22:44:15 romale Exp $
  *
  * Librazur
- * http://librazur.eu.org
+ * http://librazur.info
  * Copyright (c) 2005 Librazur
  *
  * This program is free software; you can redistribute it and/or modify

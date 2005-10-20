@@ -1,6 +1,6 @@
 This is the TODO file for Getting Things Done (GTD).
 Copyright (c) 2005 Librazur.
-http://librazur.eu.org
+http://librazur.info
 
 The most important feature to add to GTD is testing!
 We need to add unit tests and integration tests, to make sure the application

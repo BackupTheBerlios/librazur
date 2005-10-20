@@ -1,8 +1,8 @@
 /**
- * $Id: SqlUtils.java,v 1.2 2005/10/17 22:41:02 romale Exp $
+ * $Id: SqlUtils.java,v 1.3 2005/10/20 22:44:31 romale Exp $
  *
  * Librazur
- * http://librazur.eu.org
+ * http://librazur.info
  * Copyright (c) 2005 Librazur
  *
  * This program is free software; you can redistribute it and/or modify
