@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.3 2005/10/20 22:44:31 romale Exp $
+ * $Id: FileUtils.java,v 1.4 2005/10/26 08:26:51 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -132,9 +132,13 @@ public final class FileUtils {
      * be deleted if some files have been opened by some other software
      * (especially under platforms like Windows). If <tt>force</tt> is set to
      * <tt>true</tt>, an <tt>IOException</tt> will be thrown if an error
-     * prevents the element to be deleted.
+     * prevents the element to be deleted. Gracefully handles <tt>null</tt>
+     * files.
      */
     public static void delete(File file, boolean force) throws IOException {
+        if (file == null) {
+            return;
+        }
         if (file.isFile()) {
             if (!file.delete() && force) {
                 throw new IOException("Unable to delete file: "
