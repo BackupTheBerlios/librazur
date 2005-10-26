@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtilsTest.java,v 1.3 2005/10/20 22:44:31 romale Exp $
+ * $Id: FileUtilsTest.java,v 1.4 2005/10/26 08:25:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -52,6 +52,7 @@ public class FileUtilsTest extends TestCase {
 
     public void testRead() throws Exception {
         final File file = File.createTempFile("FileUtils-testRead", ".txt");
+        file.deleteOnExit();
         final OutputStream output = new FileOutputStream(file);
         try {
             IOUtils.copy(getClass().getResourceAsStream("/readme.txt"), output);
@@ -67,6 +68,7 @@ public class FileUtilsTest extends TestCase {
 
     public void testWrite() throws Exception {
         final File file = File.createTempFile("FileUtils-testWrite", ".txt");
+        file.deleteOnExit();
         if (file.exists()) {
             file.delete();
         }
