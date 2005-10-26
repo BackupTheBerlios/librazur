@@ -1,5 +1,5 @@
 /**
- * $Id: Resources.java,v 1.1 2005/10/26 16:35:40 romale Exp $
+ * $Id: Resources.java,v 1.2 2005/10/26 21:16:50 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -35,6 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.librazur.util.StringUtils;
 import org.librazur.util.cache.IconCache;
+import org.librazur.util.cache.ImageCache;
 
 
 /**
@@ -44,7 +45,8 @@ public class Resources {
     private static final Log log = LogFactory.getLog(Resources.class);
     private static WeakReference<ResourceBundle> bundleRef = new WeakReference<ResourceBundle>(
             null);
-    private static IconCache iconCache = new IconCache();
+    private static ImageCache imageCache = new ImageCache();
+    private static IconCache iconCache = new IconCache(imageCache);
 
 
     private static ResourceBundle getBundle() {
@@ -87,7 +89,7 @@ public class Resources {
      * Returns an icon loaded from a resource looked up by a key.
      */
     public static Icon icon(String key) {
-        return iconCache.getIcon(i18n(key));
+        return iconCache.get(i18n(key));
     }
 
 
@@ -95,7 +97,7 @@ public class Resources {
      * Returns an image loaded from a resource looked up by a key.
      */
     public static Image image(String key) {
-        return iconCache.get(i18n(key));
+        return imageCache.get(i18n(key));
     }
 
 
