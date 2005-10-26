@@ -12,3 +12,6 @@ the l2fprod team (http://l2fprod.dev.java.net).
 
 This product includes software developed by
 the SwingFX team (http://swingfx.dev.java.net).
+
+This product includes images and/or icons designed by
+Mark James (http://www.famfamfam.com/lab/icons/silk/).
