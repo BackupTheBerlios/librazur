@@ -1,5 +1,5 @@
 <!--
-    $Id: dist.xml,v 1.1 2005/10/11 21:17:40 romale Exp $
+    $Id: dist.xml,v 1.2 2005/10/26 16:34:02 romale Exp $
 -->
 <assembly>
   <id>dist</id>
@@ -82,6 +82,8 @@
         <include>com.jgoodies:looks</include>
         <include>com.l2fprod.common:l2fprod-common-directorychooser</include>
         <include>swingfx:swingfx</include>
+        <include>picocontainer:picocontainer</include>
+        <include>org.librazur:librazur-minibus</include>
         <include>org.librazur:librazur-util</include>
       </includes>
     </dependencySet>
