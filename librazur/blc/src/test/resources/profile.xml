@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<profile version="1.0" name="Test profile">
+<parser type="org.librazur.blc.parser.SquidGuardParser" url="http://www.sdsdfsdf.df"/>
+<dumper type="org.librazur.blc.dumper.PrivoxyDumper" dir="c:/"/>
+</profile>
