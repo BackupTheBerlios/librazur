@@ -4,6 +4,8 @@ http://librazur.info
 
  CVS
 =====
+  - added new package util.cache with tools to manage generic caches:
+    added an implementation for java.awt.Image and javax.swing.Icon
   - added fix to gracefully handles null files in FileUtils.delete()
   - updated site url and emails
 
