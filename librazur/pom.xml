@@ -4,14 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.5 2005/10/20 22:32:35 romale Exp $
+    $Id: pom.xml,v 1.6 2005/10/26 09:35:50 romale Exp $
 -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur</groupId>
   <artifactId>librazur</artifactId>
   <packaging>pom</packaging>
   <name>Librazur</name>
-  <version>20051021</version>
+  <version>20051026</version>
   <url>http://librazur.info</url>
 
   <issueManagement>
@@ -29,7 +29,7 @@
     <developer>
       <id>romale</id>
       <name>Alexandre ROMAN</name>
-      <email>librazur@gmail.com</email>
+      <email>alex@librazur.info</email>
       <organization>Librazur</organization>
       <roles>
         <role>Project leader</role>
@@ -62,12 +62,6 @@
         </configuration>
       </plugin>
     </plugins>
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-         <artifactId>wagon-ftp</artifactId>
-      </extension>
-    </extensions>
   </build>
 
   <dependencies>
@@ -94,8 +88,8 @@
 
   <distributionManagement>
     <repository>
-      <id>librazur-ftp-repository</id>
-      <url>ftp://ftpperso.free.fr/maven2</url>
+      <id>librazur-sftp-repository</id>
+      <url>sftp://librazur.info/maven/maven2</url>
     </repository>
   </distributionManagement>
 
@@ -105,6 +99,7 @@
     <module>gtd</module>
     <module>jar</module>
     <module>m2</module>
+    <module>minibus</module>
     <module>util</module>
   </modules>
 
