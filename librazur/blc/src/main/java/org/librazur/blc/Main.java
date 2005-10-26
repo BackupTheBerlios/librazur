@@ -1,5 +1,5 @@
 /**
- * $Id: Main.java,v 1.2 2005/10/20 22:44:13 romale Exp $
+ * $Id: Main.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,16 +23,8 @@
 package org.librazur.blc;
 
 
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JFrame;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.librazur.blc.swing.MainFrame;
-import org.librazur.blc.swing.SplashScreenWindow;
 
 import com.jgoodies.looks.LookUtils;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
@@ -47,28 +39,13 @@ public class Main {
 
 
     public static void main(String... args) {
-        log.info(BLC.i18n("blc") + " " + BLC.version());
-        log.info(BLC.i18n("copyright"));
+        log.info(Resources.i18n("blc") + " " + Resources.version());
+        log.info(Resources.i18n("blc.copyright"));
 
         log.debug("Home: " + System.getProperty("blc.home"));
 
         installLF();
-
-        final SplashScreenWindow splash = new SplashScreenWindow(new Frame());
-        splash.setVisible(true);
-
-        log.info("Opening main frame");
-
-        final JFrame frame = new MainFrame();
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowActivated(WindowEvent evt) {
-                // once the main frame is displayed, the splashscreen is
-                // disposed
-                splash.dispose();
-            }
-        });
-        frame.setVisible(true);
+        BLC.getInstance().start();
     }
 
 

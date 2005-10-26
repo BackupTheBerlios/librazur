@@ -1,5 +1,5 @@
 /**
- * $Id: PrivoxyDumper.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: PrivoxyDumper.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,10 +28,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 
-import org.librazur.blc.BLC;
 import org.librazur.blc.Constants;
-import org.librazur.blc.model.DumpFile;
+import org.librazur.blc.Resources;
 import org.librazur.blc.model.Entry;
+import org.librazur.blc.model.MemoryFile;
 import org.librazur.util.ByteAccumulator;
 
 
@@ -40,22 +40,24 @@ import org.librazur.util.ByteAccumulator;
  */
 public class PrivoxyDumper extends AbstractDumper {
     @Override
-    protected Collection<DumpFile> doDump(Collection<Entry> entries)
+    protected Collection<MemoryFile> doDump(Collection<Entry> entries)
             throws Exception {
         final String charset = "US-ASCII";
 
-        final String header = BLC.i18n("dumper.comment", BLC.i18n("blc") + " "
-                + BLC.version(), new Date());
+        final String header = Resources.i18n("dumper.comment", Resources
+                .i18n("blc")
+                + " " + Resources.version(), new Date());
 
         final ByteAccumulator byteAcc = new ByteAccumulator(ByteBuffer
                 .allocateDirect(1024));
 
         final StringBuilder comment = new StringBuilder().append("# ").append(
                 header).append(Constants.LINE_SEPARATOR).append("# ").append(
-                BLC.i18n("copyright")).append(Constants.LINE_SEPARATOR).append(
-                "{ +block \\").append(Constants.LINE_SEPARATOR).append(
-                "  -handle-as-image \\").append(Constants.LINE_SEPARATOR)
-                .append("  -set-image-blocker \\").append(
+                Resources.i18n("blc.copyright")).append(
+                Constants.LINE_SEPARATOR).append("{ +block \\").append(
+                Constants.LINE_SEPARATOR).append("  -handle-as-image \\")
+                .append(Constants.LINE_SEPARATOR).append(
+                        "  -set-image-blocker \\").append(
                         Constants.LINE_SEPARATOR).append("}").append(
                         Constants.LINE_SEPARATOR);
         byteAcc.append(ByteBuffer.wrap(comment.toString().getBytes(charset)));
@@ -68,11 +70,11 @@ public class PrivoxyDumper extends AbstractDumper {
         // we flip the buffer so it is ready to be written to a file
         buf.flip();
 
-        return Collections.singleton(new DumpFile("user-blc.action", buf));
+        return Collections.singleton(new MemoryFile("user-blc.action", buf));
     }
 
 
     public String getName() {
-        return BLC.i18n("dumper.privoxy");
+        return Resources.i18n("dumper.privoxy");
     }
 }

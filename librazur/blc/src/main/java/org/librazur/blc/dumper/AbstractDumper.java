@@ -1,5 +1,5 @@
 /**
- * $Id: AbstractDumper.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: AbstractDumper.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,25 +28,26 @@ import java.util.Collections;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.librazur.blc.model.DumpFile;
 import org.librazur.blc.model.Entry;
+import org.librazur.blc.model.MemoryFile;
 
 
 /**
  * Abstract implementation of <tt>Dumper</tt>.
  */
-public abstract class AbstractDumper implements Dumper {
+public abstract class AbstractDumper implements Dumper,
+        Comparable<AbstractDumper> {
     protected final Log log = LogFactory.getLog(getClass());
 
 
     @SuppressWarnings("unchecked")
-    public final Collection<DumpFile> dump(Collection<Entry> entries) {
+    public final Collection<MemoryFile> dump(Collection<Entry> entries) {
         if (entries == null || entries.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
 
         try {
-            final Collection<DumpFile> dumpFiles = doDump(entries);
+            final Collection<MemoryFile> dumpFiles = doDump(entries);
             if (log.isDebugEnabled()) {
                 checkResult(dumpFiles);
             }
@@ -57,12 +58,12 @@ public abstract class AbstractDumper implements Dumper {
     }
 
 
-    private void checkResult(Collection<DumpFile> dumpFiles) {
+    private void checkResult(Collection<MemoryFile> dumpFiles) {
         if (dumpFiles == null) {
             log.warn("Result dump file collection shouldn't be null");
             return;
         }
-        for (final DumpFile dumpFile : dumpFiles) {
+        for (final MemoryFile dumpFile : dumpFiles) {
             if (dumpFile == null) {
                 log.warn("Result dump file collection shouldn't "
                         + "contain a null DumpFile");
@@ -78,6 +79,11 @@ public abstract class AbstractDumper implements Dumper {
     }
 
 
-    protected abstract Collection<DumpFile> doDump(Collection<Entry> entries)
+    protected abstract Collection<MemoryFile> doDump(Collection<Entry> entries)
             throws Exception;
+
+
+    public int compareTo(AbstractDumper o) {
+        return toString().compareTo(o.toString());
+    }
 }

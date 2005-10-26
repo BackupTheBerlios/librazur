@@ -1,5 +1,5 @@
 /**
- * $Id: AddParserAction.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: AddParserAction.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,32 +24,27 @@ package org.librazur.blc.swing.action;
 
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import org.librazur.blc.BLC;
-import org.librazur.blc.swing.MainFrame;
+import org.librazur.blc.Resources;
+import org.librazur.blc.event.PreAddingParserSourceEvent;
+import org.librazur.minibus.BusProvider;
 
 
 public class AddParserAction extends AbstractAction {
-    private final MainFrame frame;
+    private final BusProvider busProvider;
 
 
-    public AddParserAction(final MainFrame frame) {
+    public AddParserAction(final BusProvider busProvider) {
         super();
-        this.frame = frame;
-        putValue(Action.NAME, BLC.i18n("add"));
+        this.busProvider = busProvider;
+        putValue(Action.NAME, Resources.i18n("action.parser.add"));
     }
 
 
     public void actionPerformed(ActionEvent evt) {
-        final File file = BLC.selectFile(frame);
-        if (file == null) {
-            return;
-        }
-
-        frame.addFileToParse(file);
+        busProvider.getBus().post(new PreAddingParserSourceEvent(this));
     }
 }

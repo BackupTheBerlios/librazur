@@ -1,5 +1,5 @@
 /**
- * $Id: DomainParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: LoadingProfileEvent.java,v 1.1 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -20,31 +20,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.librazur.blc.parser;
+package org.librazur.blc.event;
 
 
-import java.util.Collection;
-import java.util.Collections;
-
-import org.librazur.blc.Resources;
-import org.librazur.blc.model.Entry;
-import org.librazur.blc.util.NetUtils;
+import java.io.File;
+import java.util.EventObject;
 
 
-/**
- * Domain parser.
- */
-public class DomainParser extends AbstractLineParser {
-    @Override
-    protected Collection<Entry> doParse(String line) throws Exception {
-        return Collections.singleton(new Entry(
-                NetUtils.isIPAddress(line) ? Entry.Type.IP : Entry.Type.DOMAIN,
-                line));
+public class LoadingProfileEvent extends EventObject {
+    private final File file;
+
+
+    public LoadingProfileEvent(final Object source, final File file) {
+        super(source);
+        this.file = file;
     }
 
 
-    public String getName() {
-        return Resources.i18n("parser.domain");
-
+    public File getFile() {
+        return file;
     }
 }

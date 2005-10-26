@@ -1,5 +1,5 @@
 /**
- * $Id: DomainParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: ParserSourceAddedEvent.java,v 1.1 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -20,31 +20,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.librazur.blc.parser;
+package org.librazur.blc.event;
 
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.EventObject;
 
-import org.librazur.blc.Resources;
-import org.librazur.blc.model.Entry;
-import org.librazur.blc.util.NetUtils;
+import org.librazur.blc.model.ParserSource;
 
 
-/**
- * Domain parser.
- */
-public class DomainParser extends AbstractLineParser {
-    @Override
-    protected Collection<Entry> doParse(String line) throws Exception {
-        return Collections.singleton(new Entry(
-                NetUtils.isIPAddress(line) ? Entry.Type.IP : Entry.Type.DOMAIN,
-                line));
+public class ParserSourceAddedEvent extends EventObject {
+    private final ParserSource parserSource;
+
+
+    public ParserSourceAddedEvent(final Object source,
+            final ParserSource parserSource) {
+        super(source);
+        this.parserSource = parserSource;
     }
 
 
-    public String getName() {
-        return Resources.i18n("parser.domain");
-
+    public ParserSource getParserSource() {
+        return parserSource;
     }
 }

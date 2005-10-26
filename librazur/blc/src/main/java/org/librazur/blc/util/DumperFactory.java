@@ -1,5 +1,5 @@
 /**
- * $Id: DomainParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: DumperFactory.java,v 1.1 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -20,31 +20,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.librazur.blc.parser;
+package org.librazur.blc.util;
 
 
 import java.util.Collection;
-import java.util.Collections;
 
-import org.librazur.blc.Resources;
-import org.librazur.blc.model.Entry;
-import org.librazur.blc.util.NetUtils;
+import org.librazur.blc.dumper.Dumper;
 
 
-/**
- * Domain parser.
- */
-public class DomainParser extends AbstractLineParser {
-    @Override
-    protected Collection<Entry> doParse(String line) throws Exception {
-        return Collections.singleton(new Entry(
-                NetUtils.isIPAddress(line) ? Entry.Type.IP : Entry.Type.DOMAIN,
-                line));
-    }
+public interface DumperFactory {
+    Dumper createDumper(Class<? extends Dumper> clazz);
 
 
-    public String getName() {
-        return Resources.i18n("parser.domain");
-
-    }
+    Collection<Dumper> createAllDumpers();
 }

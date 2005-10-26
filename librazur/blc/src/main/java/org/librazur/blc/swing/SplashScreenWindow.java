@@ -1,5 +1,5 @@
 /**
- * $Id: SplashScreenWindow.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: SplashScreenWindow.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,12 +29,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
-import org.librazur.blc.BLC;
+import org.librazur.blc.Resources;
 
 
 public class SplashScreenWindow extends JWindow implements MouseListener {
@@ -52,7 +51,7 @@ public class SplashScreenWindow extends JWindow implements MouseListener {
 
 
     private void buildUI() {
-        final Icon icon = new ImageIcon(BLC.image("blc.splash"));
+        final Icon icon = Resources.icon("blc.splash");
         final JLabel label = new JLabel(icon);
         label.addMouseListener(this);
 

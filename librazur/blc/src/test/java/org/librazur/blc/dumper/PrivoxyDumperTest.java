@@ -1,5 +1,5 @@
 /**
- * $Id: PrivoxyDumperTest.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: PrivoxyDumperTest.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.librazur.blc.AbstractTest;
-import org.librazur.blc.model.DumpFile;
 import org.librazur.blc.model.Entry;
+import org.librazur.blc.model.MemoryFile;
 
 
 public class PrivoxyDumperTest extends AbstractTest {
@@ -42,11 +42,11 @@ public class PrivoxyDumperTest extends AbstractTest {
         entries.add(new Entry(Entry.Type.DOMAIN, ".banners"));
 
         final Dumper dumper = new PrivoxyDumper();
-        final Collection<DumpFile> dumpFiles = dumper.dump(entries);
+        final Collection<MemoryFile> dumpFiles = dumper.dump(entries);
         assertNotNull(dumpFiles);
         assertEquals(1, dumpFiles.size());
 
-        final DumpFile dumpFile = dumpFiles.iterator().next();
+        final MemoryFile dumpFile = dumpFiles.iterator().next();
         assertEquals("user-blc.action", dumpFile.getFileName());
 
         // we remove the first two lines of the content

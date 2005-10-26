@@ -1,5 +1,5 @@
 /**
- * $Id: BrowseOutputAction.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: NewProfileAction.java,v 1.1 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,36 +23,31 @@
 package org.librazur.blc.swing.action;
 
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JTextField;
 
 import org.librazur.blc.Resources;
-import org.librazur.blc.util.FileChooserUtils;
+import org.librazur.blc.event.CreatingProfileEvent;
+import org.librazur.minibus.BusProvider;
 
 
-public class BrowseOutputAction extends AbstractAction {
-    private final JTextField field;
-    private final Component source;
+public class NewProfileAction extends AbstractAction {
+    private final BusProvider busProvider;
 
 
-    public BrowseOutputAction(final Component source, final JTextField field) {
+    public NewProfileAction(final BusProvider busProvider) {
         super();
-        this.source = source;
-        this.field = field;
-        putValue(Action.NAME, Resources.i18n("action.browse"));
+        this.busProvider = busProvider;
+        putValue(Action.NAME, Resources.i18n("action.profile.new"));
+        putValue(Action.SMALL_ICON, Resources.icon("action.profile.new.icon"));
+        putValue(Action.SHORT_DESCRIPTION, Resources
+                .i18n("action.profile.new.desc"));
     }
 
 
     public void actionPerformed(ActionEvent e) {
-        final File dir = FileChooserUtils.selectDir(source);
-        if (dir == null) {
-            return;
-        }
-        field.setText(dir.getPath());
+        busProvider.getBus().post(new CreatingProfileEvent(this));
     }
 }

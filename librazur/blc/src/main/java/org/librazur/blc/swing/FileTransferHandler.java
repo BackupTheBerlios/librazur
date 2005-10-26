@@ -1,5 +1,5 @@
 /**
- * $Id: FileTransferHandler.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: FileTransferHandler.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -34,16 +34,18 @@ import javax.swing.TransferHandler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.librazur.blc.event.PreAddingParserSourceEvent;
+import org.librazur.minibus.BusProvider;
 
 
 public class FileTransferHandler extends TransferHandler {
     private final Log log = LogFactory.getLog(getClass());
     private final DataFlavor fileFlavor = DataFlavor.javaFileListFlavor;
-    private final MainFrame frame;
+    private final BusProvider busProvider;
 
 
-    public FileTransferHandler(final MainFrame frame) {
-        this.frame = frame;
+    public FileTransferHandler(final BusProvider busProvider) {
+        this.busProvider = busProvider;
     }
 
 
@@ -57,7 +59,7 @@ public class FileTransferHandler extends TransferHandler {
         try {
             final List<File> files = (List<File>) t.getTransferData(fileFlavor);
             for (final File file : files) {
-                frame.addFileToParse(file);
+                busProvider.getBus().post(new PreAddingParserSourceEvent(this, file));
             }
         } catch (Exception e) {
             log.error("Error while importing data", e);

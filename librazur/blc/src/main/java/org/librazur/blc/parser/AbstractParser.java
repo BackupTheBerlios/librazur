@@ -1,5 +1,5 @@
 /**
- * $Id: AbstractParser.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: AbstractParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -36,7 +36,8 @@ import org.librazur.util.IOUtils;
 /**
  * Abstract implementation of <tt>Parser</tt>.
  */
-public abstract class AbstractParser implements Parser {
+public abstract class AbstractParser implements Parser,
+        Comparable<AbstractParser> {
     protected final Log log = LogFactory.getLog(getClass());
 
 
@@ -83,4 +84,9 @@ public abstract class AbstractParser implements Parser {
 
     protected abstract Collection<Entry> doParse(InputStream input)
             throws Exception;
+
+
+    public int compareTo(AbstractParser o) {
+        return toString().compareTo(o.toString());
+    }
 }

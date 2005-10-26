@@ -1,5 +1,5 @@
 /**
- * $Id: RemoveParserAction.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: RemoveParserAction.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,27 +27,24 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JTable;
 
-import org.librazur.blc.BLC;
-import org.librazur.blc.swing.ParserTableModel;
+import org.librazur.blc.Resources;
+import org.librazur.blc.event.PreRemovingParserSourceEvent;
+import org.librazur.minibus.BusProvider;
 
 
 public class RemoveParserAction extends AbstractAction {
-    private final JTable parserTable;
-    private final ParserTableModel parserTableModel;
+    private final BusProvider busProvider;
 
 
-    public RemoveParserAction(final JTable parserTable,
-            final ParserTableModel parserTableModel) {
+    public RemoveParserAction(final BusProvider busProvider) {
         super();
-        this.parserTable = parserTable;
-        this.parserTableModel = parserTableModel;
-        putValue(Action.NAME, BLC.i18n("remove"));
+        this.busProvider = busProvider;
+        putValue(Action.NAME, Resources.i18n("action.parser.remove"));
     }
 
 
     public void actionPerformed(ActionEvent e) {
-        parserTableModel.removeAll(parserTable.getSelectedRows());
+        busProvider.getBus().post(new PreRemovingParserSourceEvent(this));
     }
 }

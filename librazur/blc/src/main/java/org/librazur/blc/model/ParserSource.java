@@ -1,5 +1,5 @@
 /**
- * $Id: DomainParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: ParserSource.java,v 1.1 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -20,31 +20,36 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.librazur.blc.parser;
+package org.librazur.blc.model;
 
 
-import java.util.Collection;
-import java.util.Collections;
+import java.net.URL;
 
-import org.librazur.blc.Resources;
-import org.librazur.blc.model.Entry;
-import org.librazur.blc.util.NetUtils;
+import org.librazur.blc.parser.Parser;
 
 
-/**
- * Domain parser.
- */
-public class DomainParser extends AbstractLineParser {
-    @Override
-    protected Collection<Entry> doParse(String line) throws Exception {
-        return Collections.singleton(new Entry(
-                NetUtils.isIPAddress(line) ? Entry.Type.IP : Entry.Type.DOMAIN,
-                line));
+public class ParserSource {
+    public final Class<? extends Parser> parserClass;
+    public final URL url;
+
+
+    public ParserSource(final Class<? extends Parser> parserClass, final URL url) {
+        this.parserClass = parserClass;
+        this.url = url;
     }
 
 
-    public String getName() {
-        return Resources.i18n("parser.domain");
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof ParserSource)) {
+            return false;
+        }
+        return hashCode() == obj.hashCode();
+    }
 
+
+    @Override
+    public int hashCode() {
+        return (parserClass.getName() + "/" + url).hashCode();
     }
 }

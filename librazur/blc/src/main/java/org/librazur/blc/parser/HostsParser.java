@@ -1,5 +1,5 @@
 /**
- * $Id: HostsParser.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: HostsParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,7 +26,7 @@ package org.librazur.blc.parser;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
-import org.librazur.blc.BLC;
+import org.librazur.blc.Resources;
 import org.librazur.blc.model.Entry;
 import org.librazur.blc.util.NetUtils;
 
@@ -57,6 +57,6 @@ public class HostsParser extends AbstractLineParser {
 
 
     public String getName() {
-        return BLC.i18n("parser.hosts");
+        return Resources.i18n("parser.hosts");
     }
 }

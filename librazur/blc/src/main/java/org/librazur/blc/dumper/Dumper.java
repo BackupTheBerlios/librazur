@@ -1,5 +1,5 @@
 /**
- * $Id: Dumper.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: Dumper.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,8 +25,8 @@ package org.librazur.blc.dumper;
 
 import java.util.Collection;
 
-import org.librazur.blc.model.DumpFile;
 import org.librazur.blc.model.Entry;
+import org.librazur.blc.model.MemoryFile;
 
 
 /**
@@ -34,7 +34,7 @@ import org.librazur.blc.model.Entry;
  * <tt>Entry</tt> to a file.
  */
 public interface Dumper {
-    Collection<DumpFile> dump(Collection<Entry> entries);
+    Collection<MemoryFile> dump(Collection<Entry> entries);
 
 
     String getName();

@@ -1,5 +1,5 @@
 /**
- * $Id: MainFrame.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: MainFrame.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,40 +26,26 @@ package org.librazur.blc.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Collection;
+import java.util.EventObject;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.librazur.blc.BLC;
+import org.librazur.blc.Resources;
 import org.librazur.blc.dumper.Dumper;
-import org.librazur.blc.dumper.PrivoxyDumper;
-import org.librazur.blc.parser.DomainParser;
-import org.librazur.blc.parser.HostsParser;
-import org.librazur.blc.parser.Parser;
-import org.librazur.blc.parser.SquidGuardArchiveParser;
-import org.librazur.blc.parser.URLParser;
-import org.librazur.blc.swing.action.AddParserAction;
-import org.librazur.blc.swing.action.BrowseOutputAction;
-import org.librazur.blc.swing.action.ConvertAction;
-import org.librazur.blc.swing.action.RemoveParserAction;
+import org.librazur.blc.event.*;
+import org.librazur.blc.swing.action.*;
+import org.librazur.blc.util.DumperFactory;
+import org.librazur.blc.util.ParserFactory;
+import org.librazur.minibus.BusProvider;
+import org.librazur.minibus.EventHandler;
 
 import com.jeta.forms.components.panel.FormPanel;
 import com.jeta.forms.components.separator.TitledSeparator;
@@ -71,70 +57,94 @@ import com.jgoodies.forms.factories.Borders;
  */
 public class MainFrame extends JFrame {
     private final Log log = LogFactory.getLog(getClass());
-    private ParserTableModel parserTableModel;
+    private final BusProvider busProvider;
+    private final ParserFactory parserFactory;
+    private final DumperFactory dumperFactory;
     private PerformanceInfiniteProgressPanel infiniteProgressPanel;
     private FormPanel panel;
     private Action removeParserAction;
+    private Action convertAction;
 
 
-    public MainFrame() {
+    public MainFrame(final BusProvider busProvider,
+            final ParserFactory parserFactory, final DumperFactory dumperFactory) {
         super();
+        this.parserFactory = parserFactory;
+        this.dumperFactory = dumperFactory;
+        this.busProvider = busProvider;
+        busProvider.getBus().register(new BusHandler());
         init();
     }
 
 
     private JPanel createHeaderPanel() {
-        final JLabel title = new JLabel("<html><b>" + BLC.i18n("blc") + " "
-                + BLC.version() + "</b><br>" + BLC.i18n("copyright"));
+        final JLabel title = new JLabel("<html><b>" + Resources.i18n("blc")
+                + " " + Resources.version() + "</b><br>"
+                + Resources.i18n("blc.copyright"));
         title.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
 
-        final JLabel icon = new JLabel(new ImageIcon(BLC.image("blc.icon")));
+        final JLabel icon = new JLabel(Resources.icon("blc.icon"));
         icon.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+        final JPanel titlePanel = new JPanel(new BorderLayout());
+        titlePanel.add(title, BorderLayout.CENTER);
+        titlePanel.add(icon, BorderLayout.EAST);
+        titlePanel.add(new JSeparator(), BorderLayout.SOUTH);
+        titlePanel.setOpaque(true);
+        titlePanel.setBackground(Color.WHITE);
+
+        final JToolBar toolBar = new JToolBar();
+        toolBar.add(new NewProfileAction(busProvider));
+        toolBar.add(new LoadProfileAction(busProvider));
+        toolBar.add(new SaveProfileAction(busProvider));
+        toolBar.setFloatable(false);
+        toolBar.setBorder(Borders.DLU4_BORDER);
+
         final JPanel panel = new JPanel(new BorderLayout());
-        panel.add(title, BorderLayout.CENTER);
-        panel.add(icon, BorderLayout.EAST);
-        panel.add(new JSeparator(), BorderLayout.SOUTH);
-        panel.setOpaque(true);
-        panel.setBackground(Color.WHITE);
+        panel.add(titlePanel, BorderLayout.CENTER);
+        panel.add(toolBar, BorderLayout.SOUTH);
 
         return panel;
     }
 
 
     private void initDumperCombo(JComboBox combo) {
-        combo.setModel(new DefaultComboBoxModel(
-                new Dumper[] { new PrivoxyDumper() }));
+        final Collection<Dumper> dumpers = dumperFactory.createAllDumpers();
+        combo.setModel(new DefaultComboBoxModel(dumpers
+                .toArray(new Dumper[dumpers.size()])));
         combo.setRenderer(new DumperListCellRenderer());
     }
 
 
     private JPanel createFormPanel() {
         try {
-            panel = new FormPanel(getClass().getResourceAsStream("form.xml"));
+            panel = new FormPanel(getClass().getResourceAsStream("main.xml"));
         } catch (Exception e) {
             throw new IllegalStateException("Error while building form", e);
         }
 
+        final ParserSourceTableModel tableModel = new ParserSourceTableModel(
+                busProvider, parserFactory);
         final JTable parserTable = panel.getTable("parserTable");
-        parserTable.setModel(parserTableModel);
+        parserTable.setModel(tableModel);
         parserTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        parserTable.setTransferHandler(new FileTransferHandler(this));
+        parserTable.setTransferHandler(new FileTransferHandler(busProvider));
         parserTable.setDragEnabled(true);
 
         final JButton convertButton = (JButton) panel
                 .getButton("convertButton");
-        convertButton.setAction(new ConvertAction(this));
+        convertAction = new ConvertAction(busProvider);
+        convertAction.setEnabled(false);
+        convertButton.setAction(convertAction);
         getRootPane().setDefaultButton(convertButton);
 
-        removeParserAction = new RemoveParserAction(parserTable,
-                parserTableModel);
+        removeParserAction = new RemoveParserAction(busProvider);
         removeParserAction.setEnabled(false);
-        panel.getButton("addParserButton").setAction(new AddParserAction(this));
+        panel.getButton("addParserButton").setAction(
+                new AddParserAction(busProvider));
         panel.getButton("removeParserButton").setAction(removeParserAction);
 
         // let's localize the UI!
-
         try {
             panel.getTextField("outputField")
                     .setText(
@@ -149,57 +159,33 @@ public class MainFrame extends JFrame {
                                 .getTextField("outputField")));
         initDumperCombo(panel.getComboBox("dumperCombo"));
 
-        panel.getLabel("dumper.type").setText(BLC.i18n("dumper.type"));
-        panel.getLabel("dumper.dir").setText(BLC.i18n("output.directory"));
+        panel.getLabel("dumper.type").setText(Resources.i18n("dumper.type"));
+        panel.getLabel("dumper.dir")
+                .setText(Resources.i18n("output.directory"));
 
         final TitledSeparator parserSep = (TitledSeparator) panel
                 .getComponentByName("parser");
-        parserSep.setText(BLC.i18n("parser"));
+        parserSep.setText(Resources.i18n("parser"));
         final TitledSeparator dumperSep = (TitledSeparator) panel
                 .getComponentByName("dumper");
-        dumperSep.setText(BLC.i18n("dumper"));
+        dumperSep.setText(Resources.i18n("dumper"));
 
         return panel;
     }
 
 
-    public void addFileToParse(File file) {
-        final URL url;
-        try {
-            url = file.toURI().toURL();
-        } catch (MalformedURLException e) {
-            log.error("Unable to convert file to URL: " + file.getPath(), e);
-            return;
-        }
-        addFileToParse(url);
-    }
-
-
-    public void addFileToParse(URL file) {
-        final Parser[] parsers = { new SquidGuardArchiveParser(),
-                new HostsParser(), new DomainParser(), new URLParser() };
-        final Parser parser = (Parser) JOptionPane.showInputDialog(this, BLC
-                .i18n("add.parser.message"), BLC.i18n("add"),
-                JOptionPane.QUESTION_MESSAGE, null, parsers, parsers[0]);
-        if (parser == null) {
-            return;
-        }
-
-        parserTableModel.add(new ParsedFile(parser, file));
-
-        removeParserAction.setEnabled(true);
-    }
-
-
-    public synchronized void setFreezing(boolean freeze) {
-        infiniteProgressPanel.setVisible(freeze);
+    public void setFreezing(final boolean freeze) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                infiniteProgressPanel.setVisible(freeze);
+            }
+        });
     }
 
 
     private void init() {
         infiniteProgressPanel = new PerformanceInfiniteProgressPanel(false);
         setGlassPane(infiniteProgressPanel);
-        parserTableModel = new ParserTableModel();
 
         final JPanel formPanel = createFormPanel();
         formPanel.setBorder(Borders.DLU4_BORDER);
@@ -210,26 +196,93 @@ public class MainFrame extends JFrame {
         panel.add(createHeaderPanel(), BorderLayout.NORTH);
         panel.add(formPanel, BorderLayout.CENTER);
 
-        setTitle(BLC.i18n("blc"));
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle(Resources.i18n("blc"));
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                busProvider.getBus().post(new ExitingApplicationEvent(this));
+            }
+        });
         setContentPane(panel);
         pack();
         setLocationRelativeTo(null);
-        setIconImage(BLC.image("blc.icon"));
+        setIconImage(Resources.image("blc.icon"));
     }
 
 
-    public ParserTableModel getParserTableModel() {
-        return parserTableModel;
-    }
+    private class BusHandler implements EventHandler {
+        public EventObject onEvent(EventObject obj) throws Exception {
+            if (obj instanceof PreSavingProfileEvent) {
+                return preSavingProfile();
+            }
+            if (obj instanceof BlackListConvertedEvent) {
+                return blackListConverted();
+            }
+            if (obj instanceof ConvertingBlackListEvent) {
+                return convertingBlackList();
+            }
+            if (obj instanceof PreAddingParserSourceEvent) {
+                return preAddingParserSource((PreAddingParserSourceEvent) obj);
+            }
+            if (obj instanceof NoParserSourceEvent) {
+                return noParserSource();
+            }
+            if (obj instanceof ParserSourceAddedEvent) {
+                return parserSourceAdded();
+            }
+            if (obj instanceof PreRemovingParserSourceEvent) {
+                return preRemovingParserSource();
+            }
+            return null;
+        }
 
 
-    public Dumper getDumper() {
-        return (Dumper) panel.getComboBox("dumperCombo").getSelectedItem();
-    }
+        private EventObject preSavingProfile() {
+            return new SavingProfileEvent(this);
+        }
 
 
-    public String getOutputDir() {
-        return panel.getTextField("outputField").getText();
+        private EventObject blackListConverted() {
+            setFreezing(false);
+            return null;
+        }
+
+
+        private EventObject convertingBlackList() {
+            setFreezing(true);
+            return null;
+        }
+
+
+        private EventObject preAddingParserSource(PreAddingParserSourceEvent evt) {
+            final AddParserSourceDialog dialog = new AddParserSourceDialog(
+                    MainFrame.this, busProvider, parserFactory);
+            if (evt.getFile() != null) {
+                dialog.setFile(evt.getFile());
+            }
+            dialog.setVisible(true);
+            return null;
+        }
+
+
+        private synchronized EventObject parserSourceAdded() {
+            convertAction.setEnabled(true);
+            removeParserAction.setEnabled(true);
+            return null;
+        }
+
+
+        private EventObject noParserSource() {
+            convertAction.setEnabled(false);
+            removeParserAction.setEnabled(false);
+            return null;
+        }
+
+
+        private EventObject preRemovingParserSource() {
+            return new RemovingParserSourceEvent(this, panel.getTable(
+                    "parserTable").getSelectedRows());
+        }
     }
 }

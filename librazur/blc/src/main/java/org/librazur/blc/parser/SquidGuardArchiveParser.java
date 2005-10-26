@@ -1,5 +1,5 @@
 /**
- * $Id: SquidGuardArchiveParser.java,v 1.2 2005/10/20 22:44:12 romale Exp $
+ * $Id: SquidGuardArchiveParser.java,v 1.3 2005/10/26 16:35:40 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.zip.GZIPInputStream;
 
-import org.librazur.blc.BLC;
+import org.librazur.blc.Resources;
 import org.librazur.blc.model.Entry;
 
 import com.ice.tar.TarEntry;
@@ -82,6 +82,6 @@ public class SquidGuardArchiveParser extends AbstractParser {
 
 
     public String getName() {
-        return BLC.i18n("parser.squidguard.archive");
+        return Resources.i18n("parser.squidguard.archive");
     }
 }
