@@ -1,5 +1,5 @@
 /**
- * $Id: IconCache.java,v 1.1 2005/10/26 09:09:42 romale Exp $
+ * $Id: IconCache.java,v 1.2 2005/10/26 21:13:24 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,8 +24,6 @@ package org.librazur.util.cache;
 
 
 import java.awt.Image;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -34,25 +32,28 @@ import javax.swing.ImageIcon;
 /**
  * Swing's <tt>Icon</tt> cache.
  */
-public class IconCache extends ImageCache {
-    private final Map<String, Icon> cache = new WeakHashMap<String, Icon>(1);
+public class IconCache extends AbstractCache<Icon, String> {
+    private final ImageCache imageCache;
 
 
-    /**
-     * Gets an <tt>Icon</tt> from the image cache.
-     * 
-     * @return <tt>null</tt> if no image is available
-     */
-    public Icon getIcon(String key) {
-        Icon icon = cache.get(key);
-        if (icon == null) {
-            final Image image = get(key);
-            if (image == null) {
-                return null;
-            }
-            icon = new ImageIcon(image);
-            cache.put(key, icon);
+    public IconCache(final ImageCache imageCache) {
+        if (imageCache == null) {
+            throw new NullPointerException("imageCache");
         }
-        return icon;
+        this.imageCache = imageCache;
+    }
+
+
+    public IconCache() {
+        this(new ImageCache());
+    }
+
+
+    protected Icon load(String key) {
+        final Image image = imageCache.get(key);
+        if (image == null) {
+            return null;
+        }
+        return new ImageIcon(image);
     }
 }

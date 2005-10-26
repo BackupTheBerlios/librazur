@@ -1,5 +1,5 @@
 /**
- * $Id: IconCacheTest.java,v 1.1 2005/10/26 09:09:42 romale Exp $
+ * $Id: IconCacheTest.java,v 1.2 2005/10/26 21:13:24 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,16 +32,16 @@ public class IconCacheTest extends TestCase {
     public void testGetIcon() {
         final String path = "/linux-logo.png";
         final IconCache cache = new IconCache();
-        final Icon icon = cache.getIcon(path);
+        final Icon icon = cache.get(path);
         assertNotNull("Unable to load icon", icon);
 
-        final Icon icon2 = cache.getIcon(path);
+        final Icon icon2 = cache.get(path);
         assertSame("The icons are not the same", icon, icon2);
     }
 
 
     public void testGetIconNull() {
         final IconCache cache = new IconCache();
-        assertNull(cache.getIcon("/foo.bar"));
+        assertNull(cache.get("/foo.bar"));
     }
 }
