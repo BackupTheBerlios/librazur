@@ -7,9 +7,7 @@ and participate in the development of this software.
 
 Here are some ideas that may appear in the next version:
 
- - add a text-only interface in order to integrate BLC in scripts
- - add some kind of profile mechanism to save user settings
- - provide a way to add files to parse from any location (hint: URL)
+ - add a plugin system for parsers and dumpers (why not?)
  - implement drag and drop under Linux
 
 If you can help us, don't hesitate to contact us at
