@@ -4,6 +4,7 @@ http://librazur.info
 
  CVS
 =====
+  - added fix to gracefully handles null files in FileUtils.delete()
   - updated site url and emails
 
  1.1   / 20051020
