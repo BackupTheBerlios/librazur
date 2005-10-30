@@ -1,5 +1,5 @@
 /**
- * $Id: BlackListConverter.java,v 1.1 2005/10/26 16:35:40 romale Exp $
+ * $Id: BlackListConverter.java,v 1.2 2005/10/30 18:47:39 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -58,40 +58,42 @@ public class BlackListConverter {
 
 
     public void convert(Profile profile) throws IOException {
-        final long start = System.currentTimeMillis();
-        final Collection<Entry> entries = new LinkedHashSet<Entry>();
+        try {
+            final long start = System.currentTimeMillis();
+            final Collection<Entry> entries = new LinkedHashSet<Entry>();
 
-        for (final ParserSource source : profile.getParserSources()) {
-            URL url = source.url;
-            log.info("Parsing from URL: " + url);
-            
-            // copy the remote file to local disk for faster access
-            if (!"file".equals(url.getProtocol())) {
-                url = copyRemoteFileToLocal(url);
+            for (final ParserSource source : profile.getParserSources()) {
+                URL url = source.url;
+                log.info("Parsing from URL: " + url);
+
+                // copy the remote file to local disk for faster access
+                if (!"file".equals(url.getProtocol())) {
+                    url = copyRemoteFileToLocal(url);
+                }
+                final Parser parser = parserFactory
+                        .createParser(source.parserClass);
+                entries.addAll(parser.parse(url.openStream()));
             }
-            final Parser parser = parserFactory
-                    .createParser(source.parserClass);
-            entries.addAll(parser.parse(url.openStream()));
-        }
 
-        // dumping the output files
-        for (final DumperSink sink : profile.getDumperSinks()) {
-            final Dumper dumper = dumperFactory.createDumper(sink.dumperClass);
-            final Collection<MemoryFile> dumpFiles = dumper.dump(entries);
-            final File dir = sink.directory;
-            for (final MemoryFile dumpFile : dumpFiles) {
-                final File file = new File(dir, dumpFile.getFileName());
-                log.info("Dumping to file: " + file.getPath());
-                FileUtils.write(file, dumpFile.getContent());
+            // dumping the output files
+            for (final DumperSink sink : profile.getDumperSinks()) {
+                final Dumper dumper = dumperFactory
+                        .createDumper(sink.dumperClass);
+                final Collection<MemoryFile> dumpFiles = dumper.dump(entries);
+                final File dir = sink.directory;
+                for (final MemoryFile dumpFile : dumpFiles) {
+                    final File file = new File(dir, dumpFile.getFileName());
+                    log.info("Dumping to file: " + file.getPath());
+                    FileUtils.write(file, dumpFile.getContent());
+                }
             }
+
+            final long end = System.currentTimeMillis();
+            final long time = end - start;
+            log.info("Conversion successfully finished in " + time + " ms");
+        } finally {
+            busProvider.getBus().post(new BlackListConvertedEvent(this));
         }
-
-        final long end = System.currentTimeMillis();
-        final long time = end - start;
-
-        log.info("Conversion successfully finished in " + time + " ms");
-
-        busProvider.getBus().post(new BlackListConvertedEvent(this));
     }
 
 
