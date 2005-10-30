@@ -1,5 +1,5 @@
 /**
- * $Id: BlackListConverter.java,v 1.2 2005/10/30 18:47:39 romale Exp $
+ * $Id: BlackListConverter.java,v 1.3 2005/10/30 20:02:35 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -83,6 +83,12 @@ public class BlackListConverter {
                 final File dir = sink.directory;
                 for (final MemoryFile dumpFile : dumpFiles) {
                     final File file = new File(dir, dumpFile.getFileName());
+                    final File parent = file.getParentFile();
+                    if(parent != null) {
+                        FileUtils.ensureDirectoryExists(parent);
+                    }
+                    file.createNewFile();
+
                     log.info("Dumping to file: " + file.getPath());
                     FileUtils.write(file, dumpFile.getContent());
                 }
