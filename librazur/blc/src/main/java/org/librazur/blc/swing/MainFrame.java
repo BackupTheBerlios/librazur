@@ -1,5 +1,5 @@
 /**
- * $Id: MainFrame.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: MainFrame.java,v 1.4 2005/10/30 20:03:33 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,13 +26,32 @@ package org.librazur.blc.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Collection;
 import java.util.EventObject;
 
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 
@@ -40,8 +59,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.librazur.blc.Resources;
 import org.librazur.blc.dumper.Dumper;
-import org.librazur.blc.event.*;
-import org.librazur.blc.swing.action.*;
+import org.librazur.blc.event.BlackListConvertedEvent;
+import org.librazur.blc.event.ConvertingBlackListEvent;
+import org.librazur.blc.event.ExitingApplicationEvent;
+import org.librazur.blc.event.NoParserSourceEvent;
+import org.librazur.blc.event.ParserSourceAddedEvent;
+import org.librazur.blc.event.PreAddingParserSourceEvent;
+import org.librazur.blc.event.PreRemovingParserSourceEvent;
+import org.librazur.blc.event.PreSavingProfileEvent;
+import org.librazur.blc.event.RemovingParserSourceEvent;
+import org.librazur.blc.event.SavingProfileEvent;
+import org.librazur.blc.event.SelectingDumperSinkEvent;
+import org.librazur.blc.model.DumperSink;
+import org.librazur.blc.swing.action.AddParserAction;
+import org.librazur.blc.swing.action.BrowseOutputAction;
+import org.librazur.blc.swing.action.ConvertAction;
+import org.librazur.blc.swing.action.LoadProfileAction;
+import org.librazur.blc.swing.action.NewProfileAction;
+import org.librazur.blc.swing.action.RemoveParserAction;
+import org.librazur.blc.swing.action.SaveProfileAction;
 import org.librazur.blc.util.DumperFactory;
 import org.librazur.blc.util.ParserFactory;
 import org.librazur.minibus.BusProvider;
@@ -74,6 +110,15 @@ public class MainFrame extends JFrame {
         this.busProvider = busProvider;
         busProvider.getBus().register(new BusHandler());
         init();
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                // when the frame is displayed, update the profile with the
+                // selected dumper
+                postNewDumperSink();
+            }
+        });
     }
 
 
@@ -108,11 +153,33 @@ public class MainFrame extends JFrame {
     }
 
 
+    private void postNewDumperSink() {
+        final Dumper dumper = (Dumper) panel.getComboBox("dumperCombo")
+                .getSelectedItem();
+        final File dir = new File(panel.getTextComponent("outputField")
+                .getText());
+
+        busProvider.getBus().post(
+                new SelectingDumperSinkEvent(this, new DumperSink(dumper
+                        .getClass(), dir)), false);
+    }
+
+
     private void initDumperCombo(JComboBox combo) {
         final Collection<Dumper> dumpers = dumperFactory.createAllDumpers();
         combo.setModel(new DefaultComboBoxModel(dumpers
                 .toArray(new Dumper[dumpers.size()])));
         combo.setRenderer(new DumperListCellRenderer());
+
+        combo.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() != ItemEvent.SELECTED) {
+                    return;
+                }
+                postNewDumperSink();
+            }
+        });
+        combo.setSelectedIndex(0);
     }
 
 
@@ -144,21 +211,34 @@ public class MainFrame extends JFrame {
                 new AddParserAction(busProvider));
         panel.getButton("removeParserButton").setAction(removeParserAction);
 
-        // let's localize the UI!
+        final JTextField outputField = panel.getTextField("outputField");
         try {
-            panel.getTextField("outputField")
-                    .setText(
-                            new File(System.getProperty("user.dir"))
-                                    .getCanonicalPath());
+            outputField.setText(new File(System.getProperty("user.dir"))
+                    .getCanonicalPath());
         } catch (Exception e) {
             log.warn("Error while setting the current directory", e);
         }
+        outputField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent evt) {
+            }
+
+
+            public void insertUpdate(DocumentEvent evt) {
+                postNewDumperSink();
+            }
+
+
+            public void removeUpdate(DocumentEvent evt) {
+                postNewDumperSink();
+            }
+        });
         panel.getButton("browseOutputButton")
                 .setAction(
                         new BrowseOutputAction(this, panel
                                 .getTextField("outputField")));
         initDumperCombo(panel.getComboBox("dumperCombo"));
 
+        // let's localize the UI!
         panel.getLabel("dumper.type").setText(Resources.i18n("dumper.type"));
         panel.getLabel("dumper.dir")
                 .setText(Resources.i18n("output.directory"));

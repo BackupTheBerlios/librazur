@@ -1,5 +1,5 @@
 /**
- * $Id: BLC.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: BLC.java,v 1.4 2005/10/30 20:03:33 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,8 +28,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -38,6 +40,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.librazur.blc.dumper.Dumper;
 import org.librazur.blc.event.*;
+import org.librazur.blc.model.DumperSink;
 import org.librazur.blc.model.ParserSource;
 import org.librazur.blc.model.Profile;
 import org.librazur.blc.parser.Parser;
@@ -226,6 +229,9 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
             if (obj instanceof ConvertingBlackListEvent) {
                 return convertingBlackList();
             }
+            if (obj instanceof SelectingDumperSinkEvent) {
+                return selectingDumperSink((SelectingDumperSinkEvent) obj);
+            }
             return null;
         }
 
@@ -257,6 +263,7 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
 
 
         private EventObject newProfile() {
+            log.info("Creating new profile");
             profile = new Profile();
             return new ProfileCreatedEvent(this, profile);
         }
@@ -297,6 +304,19 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
             converter.convert(profile);
 
             return new BlackListConvertedEvent(this);
+        }
+
+
+        private EventObject selectingDumperSink(SelectingDumperSinkEvent evt) {
+            final List<DumperSink> sinks = Collections.singletonList(evt
+                    .getDumperSink());
+            profile.setDumperSinks(sinks);
+
+            if (log.isDebugEnabled()) {
+                log.debug("Using dumper sinks: " + sinks);
+            }
+
+            return new DumperSinkSelectedEvent(this, evt.getDumperSink());
         }
     }
 
