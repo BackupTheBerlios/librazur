@@ -1,5 +1,5 @@
 /**
- * $Id: DefaultBus.java,v 1.1 2005/10/26 09:56:43 romale Exp $
+ * $Id: DefaultBus.java,v 1.2 2005/10/30 18:45:17 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -60,6 +60,7 @@ public class DefaultBus implements Bus {
 
     public void post(EventObject evt, boolean asynchronous) {
         if (evt == null) {
+            // nothing to post!
             return;
         }
 
@@ -74,9 +75,14 @@ public class DefaultBus implements Bus {
                         .submit(new PostEventCall(data.eventHandler, evt));
             } else {
                 try {
-                    data.eventHandler.onEvent(evt);
+                    final EventObject result = data.eventHandler.onEvent(evt);
+                    if (result != null) {
+                        // continue the chain
+                        post(result, false);
+                    }
                 } catch (Exception e) {
                     errorHandler.onError(data.eventHandler, evt, e);
+                    // an error in synchronous mode breaks the event posting
                     break;
                 }
             }
