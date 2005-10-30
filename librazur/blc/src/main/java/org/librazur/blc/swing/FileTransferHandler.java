@@ -1,5 +1,5 @@
 /**
- * $Id: FileTransferHandler.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: FileTransferHandler.java,v 1.4 2005/10/30 18:50:22 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -59,7 +59,8 @@ public class FileTransferHandler extends TransferHandler {
         try {
             final List<File> files = (List<File>) t.getTransferData(fileFlavor);
             for (final File file : files) {
-                busProvider.getBus().post(new PreAddingParserSourceEvent(this, file));
+                busProvider.getBus().post(
+                        new PreAddingParserSourceEvent(this, file));
             }
         } catch (Exception e) {
             log.error("Error while importing data", e);
