@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.4 2005/10/26 08:26:51 romale Exp $
+ * $Id: FileUtils.java,v 1.5 2005/10/30 20:00:35 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -51,19 +51,25 @@ public final class FileUtils {
 
 
     /**
-     * Ensures that a directory exists, creating it if necessary.
+     * Ensures that a directory exists, creating it if necessary. If
+     * <tt>file</tt> is actually a file (not a directory), this method ensures
+     * the directory containg the file exists.
      */
     public static void ensureDirectoryExists(File dir) {
+        if (dir.isFile()) {
+            // get the directory containing this file
+            final File parent = dir.getParentFile();
+            if (parent != null) {
+                ensureDirectoryExists(parent);
+            }
+            return;
+        }
         if (!dir.exists()) {
             // the dir doesn't exist: let's try to create it
             if (!dir.mkdirs()) {
                 throw new IllegalStateException("Unable to create directory: "
                         + dir);
             }
-        }
-        // we know now that the dir exists, but it may be a regular file
-        if (!dir.isDirectory()) {
-            throw new IllegalStateException("Invalid directory: " + dir);
         }
     }
 
