@@ -1,5 +1,5 @@
 /**
- * $Id: Profile.java,v 1.1 2005/10/26 16:35:40 romale Exp $
+ * $Id: Profile.java,v 1.2 2005/10/30 18:48:39 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -35,42 +35,42 @@ public class Profile {
     private List<DumperSink> dumperSinks = new ArrayList<DumperSink>(1);
 
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 
 
-    public List<DumperSink> getDumperSinks() {
+    public synchronized List<DumperSink> getDumperSinks() {
         return dumperSinks;
     }
 
 
-    public void setDumperSinks(List<DumperSink> sinks) {
+    public synchronized void setDumperSinks(List<DumperSink> sinks) {
         this.dumperSinks = sinks;
     }
 
 
-    public List<ParserSource> getParserSources() {
+    public synchronized List<ParserSource> getParserSources() {
         return parserSources;
     }
 
 
-    public void setParserSources(List<ParserSource> sources) {
+    public synchronized void setParserSources(List<ParserSource> sources) {
         this.parserSources = sources;
     }
 
 
-    public File getFile() {
+    public synchronized File getFile() {
         return file;
     }
 
 
-    public void setFile(File file) {
+    public synchronized void setFile(File file) {
         this.file = file;
     }
 }
