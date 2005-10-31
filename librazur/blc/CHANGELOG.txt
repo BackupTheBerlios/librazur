@@ -7,6 +7,8 @@ http://librazur.info
   - added a profile mechanism to save preferences in XML files
   - added support for downloading files to parse from anywhere thanks
     to the use of URLs
+  - fixed the conversion process, where the output directory was not created
+    if it did not exist
   - added librazur-minibus 1.0
   - added event dispatching through the application thanks to librazur-minibus:
     components are now clearly detached
