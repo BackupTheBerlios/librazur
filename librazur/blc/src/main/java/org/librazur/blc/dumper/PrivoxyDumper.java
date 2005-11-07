@@ -1,5 +1,5 @@
 /**
- * $Id: PrivoxyDumper.java,v 1.3 2005/10/26 16:35:40 romale Exp $
+ * $Id: PrivoxyDumper.java,v 1.4 2005/11/07 09:32:46 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -62,8 +62,15 @@ public class PrivoxyDumper extends AbstractDumper {
                         Constants.LINE_SEPARATOR);
         byteAcc.append(ByteBuffer.wrap(comment.toString().getBytes(charset)));
         for (final Entry entry : entries) {
-            final String line = entry.getValue() + Constants.LINE_SEPARATOR;
-            byteAcc.append(ByteBuffer.wrap(line.getBytes(charset)));
+            final StringBuilder lineBuf = new StringBuilder();
+            
+            // we need to add a dot in front of each domain line,
+            // in case there is not dot
+            if(Entry.Type.DOMAIN.equals(entry.getType()) && !entry.getValue().startsWith(".")) {
+                lineBuf.append(".");
+            }
+            lineBuf.append(entry.getValue()).append(Constants.LINE_SEPARATOR);
+            byteAcc.append(ByteBuffer.wrap(lineBuf.toString().getBytes(charset)));
         }
 
         final ByteBuffer buf = byteAcc.get();

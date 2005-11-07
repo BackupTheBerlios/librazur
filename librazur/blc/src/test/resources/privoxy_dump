@@ -2,7 +2,7 @@
   -handle-as-image \
   -set-image-blocker \
 }
-test
+.test
 192.168.0.1
-adserver
+.adserver
 .banners
