@@ -1,5 +1,5 @@
 /**
- * $Id: ImageCache.java,v 1.1 2005/10/26 09:09:42 romale Exp $
+ * $Id: ImageCache.java,v 1.2 2005/11/11 17:24:52 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,7 +23,7 @@
 package org.librazur.util.cache;
 
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
@@ -33,10 +33,10 @@ import javax.imageio.ImageIO;
 /**
  * Image cache.
  */
-public class ImageCache extends AbstractClassPathCache<Image> {
+public class ImageCache extends AbstractClassPathCache<BufferedImage> {
     @Override
-    protected Image loadFromClassPath(URL url) {
-        final Image image;
+    protected BufferedImage loadFromClassPath(URL url) {
+        final BufferedImage image;
         try {
             image = ImageIO.read(url);
         } catch (IOException e) {
