@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
     "http://www.springframework.org/dtd/spring-beans.dtd">
 <!--
-    $Id: security-context.xml,v 1.1 2005/10/11 21:21:24 romale Exp $
+    $Id: security-context.xml,v 1.2 2005/11/11 15:04:27 romale Exp $
 -->
 <beans default-lazy-init="true">
 
@@ -46,9 +46,7 @@
 </bean>
 
 
-<bean id="httpSessionContextIntegrationFilter" class="net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter">
-<property name="context" value="net.sf.acegisecurity.context.security.SecureContextImpl"/>
-</bean>
+<bean id="httpSessionContextIntegrationFilter" class="net.sf.acegisecurity.context.HttpSessionContextIntegrationFilter"/>
 
 
 <bean id="securityEnforcementFilter" class="net.sf.acegisecurity.intercept.web.SecurityEnforcementFilter">

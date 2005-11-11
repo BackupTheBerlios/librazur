@@ -31,7 +31,7 @@
 <div id="header"><h1><a href="<c:url value='/'/>">
 <img src="<c:url value='/images/gtd.png'/>" alt="<fmt:message key="title"/>"/></a></h1></div>
 
-<c:set var="login"><authz:authentication operation="principal"/></c:set>
+<c:set var="login"><authz:authentication operation="username"/></c:set>
 <c:if test="${not empty login && login != 'anonymousUser'}">
 <%-- displayed when an user is authenticated --%>
 <div id="loginbox"><p><fmt:message key="connected.as"><fmt:param value="${login}"/></fmt:message></p>

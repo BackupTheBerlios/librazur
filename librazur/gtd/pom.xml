@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.5 2005/11/09 16:20:48 romale Exp $
+    $Id: pom.xml,v 1.6 2005/11/11 15:04:27 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
@@ -50,6 +50,11 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.1</version>
+    </dependency>
+    <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.0.4</version>
@@ -77,7 +82,45 @@
     <dependency>
       <groupId>acegisecurity</groupId>
       <artifactId>acegi-security</artifactId>
-      <version>0.8.3</version>
+      <version>0.9.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>aopalliance</groupId>
+          <artifactId>aopalliance</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>springframework</groupId>
+          <artifactId>spring-mock</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-attributes</groupId>
+          <artifactId>commons-attributes-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-attributes</groupId>
+          <artifactId>commons-attributes-compiler</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>cas</groupId>
+          <artifactId>casclient</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>jcifs</groupId>
+          <artifactId>jcifs</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>directory</groupId>
+          <artifactId>apacheds-main</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>opensymphony</groupId>
@@ -109,6 +152,11 @@
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
       <version>1.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>

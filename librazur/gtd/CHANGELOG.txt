@@ -4,6 +4,7 @@ http://librazur.info
 
  CVS
 =====
+  - updated to AcegiSecurity 0.9.0
   - updated site url and emails
 
  1.0   / 20051011

@@ -1,5 +1,5 @@
 /**
- * $Id: SecurityUtils.java,v 1.2 2005/10/20 22:44:26 romale Exp $
+ * $Id: SecurityUtils.java,v 1.3 2005/11/11 15:04:27 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,8 +24,7 @@ package org.librazur.gtd.util;
 
 
 import net.sf.acegisecurity.UserDetails;
-import net.sf.acegisecurity.context.security.SecureContext;
-import net.sf.acegisecurity.context.security.SecureContextUtils;
+import net.sf.acegisecurity.context.SecurityContextHolder;
 
 
 public final class SecurityUtils {
@@ -38,7 +37,7 @@ public final class SecurityUtils {
             return null;
         }
 
-        final Object principal = SecureContextUtils.getSecureContext()
+        final Object principal = SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             final UserDetails details = (UserDetails) principal;
@@ -49,13 +48,6 @@ public final class SecurityUtils {
 
 
     public static boolean isUserAuthenticated() {
-        final SecureContext context;
-        try {
-            context = SecureContextUtils.getSecureContext();
-        } catch (Exception e) {
-            return false;
-        }
-
-        return context.getAuthentication() != null;
+        return SecurityContextHolder.getContext().getAuthentication() != null;
     }
 }
