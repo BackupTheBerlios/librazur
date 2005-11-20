@@ -1,5 +1,5 @@
 /**
- * $Id: Bus.java,v 1.1 2005/10/26 09:56:44 romale Exp $
+ * $Id: Bus.java,v 1.2 2005/11/20 22:00:59 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,19 +26,46 @@ package org.librazur.minibus;
 import java.util.EventObject;
 
 
+/**
+ * Event bus interface.
+ */
 public interface Bus {
+    /**
+     * Registers an <tt>EventHandler</tt> on the bus. If an event object class
+     * is precised, the <tt>EventHandler</tt> would only receive event objects
+     * of this class.
+     */
     void register(EventHandler handler,
             Class<? extends EventObject>... evtClass);
 
 
+    /**
+     * Same as: <tt>post(evt, true)</tt>.
+     */
     void post(EventObject evt);
 
 
+    /**
+     * Posts an event to all registered <tt>EventHandler</tt> instances. Any
+     * error during event dispatching is handled by the registered
+     * <tt>ErrorHandler</tt>. If an error occurs in synchronous mode, the
+     * event is not dispatched to other <tt>EventHandler</tt> instances. In
+     * asynchronous mode, an error doesn't prevent the other
+     * <tt>EventHandler</tt> instances to be called. If an
+     * <tt>EventHandler</tt> instance returns a non-<tt>null</tt> <tt>EventObject</tt>,
+     * the bus must repost the event.
+     */
     void post(EventObject evt, boolean asynchronous);
 
 
+    /**
+     * Clears all registered <tt>EventHandler</tt> instances.
+     */
     void clear();
 
 
+    /**
+     * Sets an <tt>ErrorHandler</tt>.
+     */
     void setErrorHandler(ErrorHandler handler);
 }

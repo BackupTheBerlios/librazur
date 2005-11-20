@@ -1,5 +1,5 @@
 /**
- * $Id: BusProvider.java,v 1.1 2005/10/26 09:56:44 romale Exp $
+ * $Id: BusProvider.java,v 1.2 2005/11/20 22:00:59 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,6 +23,12 @@
 package org.librazur.minibus;
 
 
+/**
+ * Interface defining a bus provider object.
+ */
 public interface BusProvider {
+    /**
+     * Returns an instance of a <tt>Bus</tt>.
+     */
     Bus getBus();
 }
