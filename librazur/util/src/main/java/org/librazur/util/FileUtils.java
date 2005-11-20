@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.5 2005/10/30 20:00:35 romale Exp $
+ * $Id: FileUtils.java,v 1.6 2005/11/20 15:32:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -53,7 +53,7 @@ public final class FileUtils {
     /**
      * Ensures that a directory exists, creating it if necessary. If
      * <tt>file</tt> is actually a file (not a directory), this method ensures
-     * the directory containg the file exists.
+     * the directory containing the file exists.
      */
     public static void ensureDirectoryExists(File dir) {
         if (dir.isFile()) {
@@ -123,10 +123,6 @@ public final class FileUtils {
 
     /**
      * Writes a string to a file using encoding ISO-8859-1 (Latin 1).
-     * 
-     * @param file
-     * @param str
-     * @throws IOException
      */
     public static void write(File file, CharSequence str) throws IOException {
         write(file, str, "ISO-8859-1");
@@ -135,7 +131,7 @@ public final class FileUtils {
 
     /**
      * Tries to delete a directory or a file. The directory or the file may not
-     * be deleted if some files have been opened by some other software
+     * be deleted if some files have been opened by some other softwares
      * (especially under platforms like Windows). If <tt>force</tt> is set to
      * <tt>true</tt>, an <tt>IOException</tt> will be thrown if an error
      * prevents the element to be deleted. Gracefully handles <tt>null</tt>

@@ -1,5 +1,5 @@
 /**
- * $Id: OrFileFilter.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: OrFileFilter.java,v 1.3 2005/11/20 15:32:48 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -31,7 +31,7 @@ import java.util.Collections;
 
 
 /**
- * Composite file filter which accepts a file if one the file filters returns
+ * Composite file filter which accepts a file if one of the file filters returns
  * <tt>true</tt>.
  */
 public class OrFileFilter implements FileFilter {
