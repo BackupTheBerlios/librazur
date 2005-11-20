@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtilsTest.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: IOUtilsTest.java,v 1.3 2005/11/20 16:39:09 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,7 +24,11 @@ package org.librazur.util;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
@@ -57,5 +61,27 @@ public class IOUtilsTest extends TestCase {
         for (int i = 0; i < data.length; ++i) {
             assertEquals(data[i], testData[i]);
         }
+    }
+
+
+    public void testCopy() throws Exception {
+        final String path = "/linux-logo.png";
+        final InputStream input = getClass().getResourceAsStream(path);
+        assertNotNull(input);
+
+        final File tempFile = File.createTempFile("IOUtils-testCopy-", ".tmp");
+        tempFile.deleteOnExit();
+        final OutputStream output = new FileOutputStream(tempFile);
+
+        IOUtils.copy(input, output);
+
+        final String md5Source = ChecksumUtils.md5Hex(getClass()
+                .getResourceAsStream(path));
+        final String md5Target = ChecksumUtils.md5Hex(new FileInputStream(
+                tempFile));
+        assertEquals("MD5 for source and target files are not the same",
+                md5Source, md5Target);
+
+        tempFile.delete();
     }
 }
