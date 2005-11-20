@@ -1,5 +1,5 @@
 /**
- * $Id: ByteAccumulator.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: ByteAccumulator.java,v 1.3 2005/11/20 15:15:13 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,13 +27,17 @@ import java.nio.ByteBuffer;
 
 
 /**
- * Byte accumulator.
+ * Byte accumulator. Provides a way to add bytes to a <tt>ByteBuffer</tt>,
+ * growing automatically when it is required.
  */
 public class ByteAccumulator {
     private ByteBuffer buffer;
 
 
     public ByteAccumulator(final ByteBuffer buffer) {
+        if (buffer == null) {
+            throw new NullPointerException("buffer");
+        }
         this.buffer = buffer;
     }
 
@@ -48,6 +52,10 @@ public class ByteAccumulator {
     }
 
 
+    /**
+     * Appends some bytes into the buffer. If the buffer is too small, a new
+     * buffer with more space is created, with data from the old buffer.
+     */
     public void append(ByteBuffer buf) {
         if (buffer.remaining() < buf.remaining()) {
             // not enough space: we allocate a new buffer with more space
@@ -67,6 +75,10 @@ public class ByteAccumulator {
     }
 
 
+    /**
+     * Returns a view of the buffer. All returned buffers share the same
+     * content.
+     */
     public ByteBuffer get() {
         return buffer.duplicate();
     }
