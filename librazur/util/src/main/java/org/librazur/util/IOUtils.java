@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: IOUtils.java,v 1.3 2005/11/20 16:38:57 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,11 +23,14 @@
 package org.librazur.util;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 
 
 /**
@@ -55,16 +58,36 @@ public final class IOUtils {
 
 
     /**
+     * Reads all bytes from a channel until EOF is reached.
+     */
+    public static ByteBuffer read(ReadableByteChannel channel, ByteBuffer buffer)
+            throws IOException {
+        final ByteAccumulator acc = new ByteAccumulator();
+        buffer.clear();
+        while (channel.read(buffer) != -1) {
+            buffer.flip();
+            acc.append(buffer);
+            buffer.clear();
+        }
+
+        final ByteBuffer finalBuf = acc.get();
+        finalBuf.flip();
+
+        return finalBuf;
+    }
+
+
+    /**
      * Reads all bytes from an input stream until EOF is reached.
      */
     public static byte[] read(InputStream input, int len) throws IOException {
-        final byte[] buf = new byte[Math.max(len, 1024)];
-        final ByteArrayOutputStream data = new ByteArrayOutputStream(buf.length);
-        for (int bytesRead = 0; (bytesRead = input.read(buf)) != -1;) {
-            data.write(buf, 0, bytesRead);
-        }
+        final ByteBuffer buf = read(Channels.newChannel(input), ByteBuffer
+                .allocate(Math.max(len, 1024)));
+        final byte[] data = new byte[buf.remaining()];
+        assert buf.hasArray();
+        System.arraycopy(buf.array(), buf.arrayOffset(), data, 0, data.length);
 
-        return data.toByteArray();
+        return data;
     }
 
 
@@ -84,10 +107,36 @@ public final class IOUtils {
      */
     public static void copy(InputStream input, OutputStream output)
             throws IOException {
-        final byte[] buf = new byte[1024];
+        copy(Channels.newChannel(input), Channels.newChannel(output));
+    }
 
-        for (int bytesRead = 0; (bytesRead = input.read(buf)) != -1;) {
-            output.write(buf, 0, bytesRead);
+
+    /**
+     * Same as <tt>copy(input, output, ByteBuffer.allocate(1024))</tt>.
+     */
+    public static void copy(ReadableByteChannel input,
+            WritableByteChannel output) throws IOException {
+        copy(input, output, ByteBuffer.allocate(1024));
+    }
+
+
+    /**
+     * Copies all bytes from a input channel to an output channel until EOF is
+     * reached. The output channel is not closed nor flushed at the end of the
+     * copy.
+     */
+    public static void copy(ReadableByteChannel input,
+            WritableByteChannel output, ByteBuffer buf) throws IOException {
+        buf.clear();
+        while (input.read(buf) != -1) {
+            buf.flip();
+            output.write(buf);
+
+            if (buf.hasRemaining()) {
+                buf.compact();
+            } else {
+                buf.clear();
+            }
         }
     }
 }
