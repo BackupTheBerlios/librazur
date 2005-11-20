@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtilsTest.java,v 1.3 2005/10/20 22:44:31 romale Exp $
+ * $Id: StringUtilsTest.java,v 1.4 2005/11/20 16:37:29 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -61,5 +61,30 @@ public class StringUtilsTest extends TestCase {
         assertEquals("a", StringUtils.stripEndSpaces("a"));
         assertEquals("", StringUtils.stripEndSpaces("  "));
         assertNull(StringUtils.stripEndSpaces(null));
+    }
+
+
+    public void testBase64() throws Exception {
+        final String str = "Librazur";
+        final byte[] data = str.getBytes("UTF-8");
+        final byte[] testData = StringUtils.decodeBase64(StringUtils
+                .encodeBase64(data));
+
+        assertEquals(data.length, testData.length);
+        for (int i = 0; i < data.length; ++i) {
+            assertEquals(data[i], testData[i]);
+        }
+    }
+
+    public void testHex() throws Exception {
+        final String str = "Librazur";
+        final byte[] data = str.getBytes("UTF-8");
+        final byte[] testData = StringUtils.decodeHex(StringUtils
+                .encodeHex(data));
+
+        assertEquals(data.length, testData.length);
+        for (int i = 0; i < data.length; ++i) {
+            assertEquals(data[i], testData[i]);
+        }
     }
 }

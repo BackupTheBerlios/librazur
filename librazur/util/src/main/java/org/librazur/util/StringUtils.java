@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtils.java,v 1.4 2005/11/20 15:32:35 romale Exp $
+ * $Id: StringUtils.java,v 1.5 2005/11/20 16:37:29 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,6 +27,10 @@ package org.librazur.util;
  * String utilities.
  */
 public final class StringUtils {
+    private static final char[] hexDigits = { '0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+
     private StringUtils() {
     }
 
@@ -84,5 +88,70 @@ public final class StringUtils {
         // use a new String to workaround a bug in String.substring():
         // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4637640
         return new String(line.substring(0, i + 1));
+    }
+
+
+    /**
+     * Encodes a byte array to Base64.
+     */
+    public static String encodeBase64(byte[] data) {
+        return Base64.encodeBytes(data);
+    }
+
+
+    /**
+     * Decodes a Base64 encoded string to a byte array.
+     */
+    public static byte[] decodeBase64(String data) {
+        return Base64.decode(data);
+    }
+
+
+    /**
+     * Encodes a byte array to Hex. Implementation based on StringUtils from <a
+     * href="http://melati.org">Melati project</a>.
+     */
+    public static String encodeHex(byte[] data) {
+        StringBuffer it = new StringBuffer(data.length * 2);
+
+        for (int i = 0; i < data.length; ++i) {
+            int b = data[i];
+            it.append(hexDigits[b >> 4 & 0xF]);
+            it.append(hexDigits[b & 0xF]);
+        }
+
+        return it.toString();
+    }
+
+
+    private static byte decodeHex(char c) {
+        if ('0' <= c && c <= '9')
+            return (byte) (c - '0');
+        else if ('A' <= c && c <= 'F')
+            return (byte) (0xA + c - 'A');
+        else if ('a' <= c && c <= 'f')
+            return (byte) (0xa + c - 'a');
+        else
+            throw new IllegalArgumentException("Invalid hex digit in string");
+    }
+
+
+    /**
+     * Decodes a Hex encoded string to a byte array. Implementation based on
+     * StringUtils from <a href="http://melati.org">Melati project</a>.
+     */
+    public static byte[] decodeHex(String data) {
+        int l = data.length() / 2;
+        if (l * 2 != data.length())
+            throw new IllegalArgumentException(
+                    "Hex string has odd number of digits");
+
+        byte[] it = new byte[l];
+
+        for (int i = 0; i < l; ++i)
+            it[i] = (byte) (decodeHex(data.charAt(i * 2)) << 4 | decodeHex(data
+                    .charAt(i * 2 + 1)));
+
+        return it;
     }
 }
