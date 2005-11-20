@@ -1,5 +1,5 @@
 /**
- * $Id: AbstractBusTest.java,v 1.1 2005/10/26 09:56:44 romale Exp $
+ * $Id: AbstractBusTest.java,v 1.2 2005/11/20 22:00:19 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -61,6 +61,18 @@ public abstract class AbstractBusTest extends TestCase implements BusProvider {
         bus.post(new EventObject(this));
 
         sleep(2);
+        assertTrue("EventHandler should have been called", handler.getCalled());
+    }
+
+
+    public void testPostSynchronous() {
+        final SimpleEventHandler handler = new SimpleEventHandler();
+        assertFalse("EventHandler is not initialized", handler.getCalled());
+
+        final Bus bus = getBus();
+        bus.register(handler);
+        bus.post(new EventObject(this), false);
+
         assertTrue("EventHandler should have been called", handler.getCalled());
     }
 
