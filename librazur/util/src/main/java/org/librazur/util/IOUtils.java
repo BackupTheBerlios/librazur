@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.3 2005/11/20 16:38:57 romale Exp $
+ * $Id: IOUtils.java,v 1.4 2005/11/21 10:08:35 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -121,7 +121,7 @@ public final class IOUtils {
 
 
     /**
-     * Copies all bytes from a input channel to an output channel until EOF is
+     * Copies all bytes from an input channel to an output channel until EOF is
      * reached. The output channel is not closed nor flushed at the end of the
      * copy.
      */
