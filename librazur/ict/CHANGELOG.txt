@@ -1,0 +1,7 @@
+This is the CHANGELOG file for ICT.
+Copyright (c) 2005 Librazur.
+http://librazur.info
+
+ 1.0   / 20051121
+==================
+  - First release!

@@ -1,0 +1,12 @@
+# $Id: ict.lap,v 1.1 2005/11/21 01:30:15 romale Exp $
+
+janel.main.class=org.librazur.ict.Main
+janel.min.java.version=1.5
+janel.classpath.jars.dir=${FOUND_EXE_FOLDER}/../lib
+janel.memory.init.available.percent=50
+janel.memory.max.total.percent=90
+
+-Djava.class.path=${FOUND_EXE_FOLDER}/../conf
+-Dblc.home=${FOUND_EXE_FOLDER}/..
+-Duser.dir=${FOUND_EXE_FOLDER}/..
+-Dorg.apache.commons.logging.Log=org.grlea.log.adapters.commons.CommonsLoggingAdapter
