@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtilsTest.java,v 1.4 2005/10/26 08:25:43 romale Exp $
+ * $Id: FileUtilsTest.java,v 1.5 2005/11/21 15:35:08 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,10 +23,9 @@
 package org.librazur.util;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 
 import junit.framework.TestCase;
 
@@ -77,5 +76,41 @@ public class FileUtilsTest extends TestCase {
         FileUtils.write(file, text);
         assertEquals(text, FileUtils.read(file));
         file.delete();
+    }
+
+
+    public void testReleaseFileLock() throws Exception {
+        FileUtils.releaseLock(null);
+
+        final File tempFile = File.createTempFile("testReleaseFileLock-",
+                ".tmp");
+        tempFile.deleteOnExit();
+        tempFile.createNewFile();
+        final FileChannel chan = new FileOutputStream(tempFile).getChannel();
+        final FileLock lock = chan.lock();
+        FileUtils.releaseLock(lock);
+
+        tempFile.delete();
+    }
+
+
+    public void testCopy() throws Exception {
+        final File tempFileSrc = File.createTempFile("testCopy-", ".tmp");
+        tempFileSrc.deleteOnExit();
+        final File tempFileDst = File.createTempFile("testCopy-", ".tmp");
+        tempFileDst.deleteOnExit();
+
+        final String path = "/linux-logo.png";
+        IOUtils.copy(getClass().getResourceAsStream(path),
+                new FileOutputStream(tempFileSrc));
+        assertEquals("a2b3565b17518045517a495672b450eb", ChecksumUtils
+                .md5Hex(new FileInputStream(tempFileSrc)));
+
+        FileUtils.copy(tempFileSrc, tempFileDst);
+        assertEquals("a2b3565b17518045517a495672b450eb", ChecksumUtils
+                .md5Hex(new FileInputStream(tempFileDst)));
+
+        tempFileSrc.delete();
+        tempFileDst.delete();
     }
 }

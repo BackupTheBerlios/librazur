@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.6 2005/11/20 15:32:21 romale Exp $
+ * $Id: FileUtils.java,v 1.7 2005/11/21 15:35:08 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,18 +23,13 @@
 package org.librazur.util;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,6 +42,48 @@ import java.util.zip.ZipInputStream;
  */
 public final class FileUtils {
     private FileUtils() {
+    }
+
+
+    /**
+     * Copies a source file to a destination file. A lock for each file is
+     * acquired to ensure no concurrent access would prevent the copy to be
+     * done.
+     */
+    public static void copy(File src, File dest) throws IOException {
+        FileChannel input = null;
+        FileChannel output = null;
+        try {
+            input = new FileInputStream(src).getChannel();
+            output = new FileOutputStream(dest).getChannel();
+
+            final long len = src.length();
+            input.lock(0, len, true);
+            output.truncate(len);
+            output.lock(0, len, false);
+
+            int pos = 0;
+            while (pos < len) {
+                pos += input.transferTo(pos, len, output);
+            }
+        } finally {
+            IOUtils.close(input);
+            IOUtils.close(output);
+        }
+    }
+
+
+    /**
+     * Quietly closes a <tt>FileLock</tt>.
+     */
+    public static void releaseLock(FileLock lock) {
+        if (lock == null) {
+            return;
+        }
+        try {
+            lock.release();
+        } catch (IOException ignore) {
+        }
     }
 
 
