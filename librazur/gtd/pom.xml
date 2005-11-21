@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.9 2005/11/21 14:43:07 romale Exp $
+    $Id: pom.xml,v 1.10 2005/11/21 14:50:34 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
@@ -28,6 +28,7 @@
     <finalName>gtd</finalName>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
           <descriptor>${basedir}/src/assembly/dist.xml</descriptor>
