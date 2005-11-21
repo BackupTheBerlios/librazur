@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtilsTest.java,v 1.3 2005/11/20 16:39:09 romale Exp $
+ * $Id: IOUtilsTest.java,v 1.4 2005/11/21 16:00:20 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,12 +23,8 @@
 package org.librazur.util;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.ByteBuffer;
 
 import junit.framework.TestCase;
 
@@ -83,5 +79,55 @@ public class IOUtilsTest extends TestCase {
                 md5Source, md5Target);
 
         tempFile.delete();
+    }
+
+
+    public void testNewInputStream() throws IOException {
+        final byte[] data = new byte[] { 0, 1, 2, 3, 4 };
+        final ByteBuffer buf = ByteBuffer.wrap(data);
+        final InputStream input = IOUtils.newInputStream(buf);
+
+        for (int i = 0; i < data.length; ++i) {
+            assertEquals(data[i], input.read());
+        }
+
+        buf.rewind();
+        final byte[] tempBuf = new byte[data.length];
+        final int bytesRead = input.read(tempBuf, 0, tempBuf.length);
+        assertEquals(data.length, bytesRead);
+        for (int i = 0; i < bytesRead; ++i) {
+            assertEquals(data[i], tempBuf[i]);
+        }
+
+        assertEquals(-1, input.read());
+        assertEquals(-1, input.read(new byte[data.length], 0, data.length));
+    }
+    
+    
+    public void testNewOutputStream() throws IOException {
+        final ByteBuffer buf = ByteBuffer.allocate(5);
+        final OutputStream output = IOUtils.newOutputStream(buf);
+        
+        for(int i = 0; i < buf.capacity(); ++i) {
+            output.write(i);
+        }
+        try {
+            output.write(2);
+            fail("IOException was expected");
+        } catch(IOException e) {
+        }
+        
+        buf.clear();
+        final byte[] data = new byte[buf.capacity()];
+        for(int i = 0; i < data.length; ++i) {
+            data[i] = (byte) i;
+        }
+        output.write(data, 0, data.length);
+        assertFalse(buf.hasRemaining());
+        try {
+            output.write(new byte[] { 2 }, 0, 1);
+            fail("IOException was expected");
+        } catch(IOException e) {
+        }
     }
 }

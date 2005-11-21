@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.4 2005/11/21 10:08:35 romale Exp $
+ * $Id: IOUtils.java,v 1.5 2005/11/21 16:00:20 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -138,5 +138,76 @@ public final class IOUtils {
                 buf.clear();
             }
         }
+    }
+
+
+    /**
+     * Creates an <tt>InputStream</tt> from a <tt>ByteBuffer</tt>.
+     */
+    public static InputStream newInputStream(final ByteBuffer buf) {
+        return new InputStream() {
+            public synchronized int read() throws IOException {
+                if (!buf.hasRemaining()) {
+                    return -1;
+                }
+                try {
+                    return buf.get();
+                } catch (Exception e) {
+                    final IOException exc = new IOException(
+                            "Error while reading from ByteBuffer");
+                    exc.initCause(e);
+                    throw exc;
+                }
+            }
+
+
+            public int read(byte[] b, int off, int len) throws IOException {
+                if (!buf.hasRemaining()) {
+                    return -1;
+                }
+                final int maxLen = Math.min(len, buf.remaining());
+                try {
+                    buf.get(b, off, maxLen);
+                } catch (Exception e) {
+                    final IOException exc = new IOException(
+                            "Error while reading from ByteBuffer");
+                    exc.initCause(e);
+                    throw exc;
+                }
+                return maxLen;
+            }
+        };
+    }
+
+
+    /**
+     * Creates an <tt>OutputStream</tt> from a <tt>ByteBuffer</tt>.
+     */
+    public static OutputStream newOutputStream(final ByteBuffer buf) {
+        return new OutputStream() {
+            public synchronized void write(int b) throws IOException {
+                try {
+                    buf.put((byte) b);
+                } catch (Exception e) {
+                    final IOException exc = new IOException(
+                            "Error while writing to ByteBuffer");
+                    exc.initCause(e);
+                    throw exc;
+                }
+            }
+
+
+            public synchronized void write(byte[] b, int off, int len)
+                    throws IOException {
+                try {
+                    buf.put(b, off, len);
+                } catch (Exception e) {
+                    final IOException exc = new IOException(
+                            "Error while writing to ByteBuffer");
+                    exc.initCause(e);
+                    throw exc;
+                }
+            }
+        };
     }
 }
