@@ -1,5 +1,5 @@
 /**
- * $Id: BLC.java,v 1.4 2005/10/30 20:03:33 romale Exp $
+ * $Id: BLC.java,v 1.5 2005/11/23 11:03:32 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,13 +26,9 @@ package org.librazur.blc;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EventObject;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.JFrame;
 
@@ -46,10 +42,7 @@ import org.librazur.blc.model.Profile;
 import org.librazur.blc.parser.Parser;
 import org.librazur.blc.swing.MainFrame;
 import org.librazur.blc.swing.SplashScreenWindow;
-import org.librazur.blc.util.BlackListConverter;
-import org.librazur.blc.util.DumperFactory;
-import org.librazur.blc.util.ParserFactory;
-import org.librazur.blc.util.ProfileStore;
+import org.librazur.blc.util.*;
 import org.librazur.minibus.Bus;
 import org.librazur.minibus.BusProvider;
 import org.librazur.minibus.ErrorHandler;
@@ -217,9 +210,6 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
             if (obj instanceof RemovingParserSourceEvent) {
                 return removingParserSource((RemovingParserSourceEvent) obj);
             }
-            if (obj instanceof SavingProfileEvent) {
-                return savingProfile((SavingProfileEvent) obj);
-            }
             if (obj instanceof AddingParserSourceEvent) {
                 return addingParserSourceEvent((AddingParserSourceEvent) obj);
             }
@@ -232,6 +222,18 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
             if (obj instanceof SelectingDumperSinkEvent) {
                 return selectingDumperSink((SelectingDumperSinkEvent) obj);
             }
+            if (obj instanceof LoadingProfileEvent) {
+                return loadingProfile((LoadingProfileEvent) obj);
+            }
+            if (obj instanceof PreLoadingProfileEvent) {
+                return preLoadingProfile((PreLoadingProfileEvent) obj);
+            }
+            if (obj instanceof SavingProfileEvent) {
+                return savingProfile((SavingProfileEvent) obj);
+            }
+            if (obj instanceof PreSavingProfileEvent) {
+                return preSavingProfile((PreSavingProfileEvent) obj);
+            }
             return null;
         }
 
@@ -242,17 +244,43 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
         }
 
 
-        public EventObject loadingProfile(LoadingProfileEvent evt) {
+        private EventObject preLoadingProfile(PreLoadingProfileEvent evt) {
+            final File file = FileChooserUtils.selectFile(frame);
+            if (file == null) {
+                return null;
+            }
+            return new LoadingProfileEvent(this, file);
+        }
+
+
+        private EventObject loadingProfile(LoadingProfileEvent evt) {
             final ProfileStore store = new ProfileStore();
             profile = store.load(evt.getFile());
             return new ProfileLoadedEvent(this, profile);
         }
 
 
+        private EventObject preSavingProfile(PreSavingProfileEvent evt) {
+            String path = profile.getFilePath();
+            if (path == null) {
+                final File file = FileChooserUtils.selectFile(frame, true);
+                if (file == null) {
+                    return null;
+                }
+                path = file.getPath();
+                if (!path.toLowerCase().endsWith(".profile")) {
+                    path += ".profile";
+                }
+            }
+
+            return new SavingProfileEvent(this, profile, new File(path));
+        }
+
+
         private EventObject savingProfile(SavingProfileEvent evt) {
             final ProfileStore store = new ProfileStore();
-            store.save(profile.getFile(), profile);
-            return new ProfileSavedEvent(this, profile);
+            store.save(evt.getFile(), evt.getProfile());
+            return new ProfileSavedEvent(this, evt.getProfile());
         }
 
 

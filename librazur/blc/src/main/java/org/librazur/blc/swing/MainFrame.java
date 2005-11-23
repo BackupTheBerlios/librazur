@@ -1,5 +1,5 @@
 /**
- * $Id: MainFrame.java,v 1.4 2005/10/30 20:03:33 romale Exp $
+ * $Id: MainFrame.java,v 1.5 2005/11/23 11:03:32 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,30 +26,12 @@ package org.librazur.blc.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.util.Collection;
 import java.util.EventObject;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -59,25 +41,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.librazur.blc.Resources;
 import org.librazur.blc.dumper.Dumper;
-import org.librazur.blc.event.BlackListConvertedEvent;
-import org.librazur.blc.event.ConvertingBlackListEvent;
-import org.librazur.blc.event.ExitingApplicationEvent;
-import org.librazur.blc.event.NoParserSourceEvent;
-import org.librazur.blc.event.ParserSourceAddedEvent;
-import org.librazur.blc.event.PreAddingParserSourceEvent;
-import org.librazur.blc.event.PreRemovingParserSourceEvent;
-import org.librazur.blc.event.PreSavingProfileEvent;
-import org.librazur.blc.event.RemovingParserSourceEvent;
-import org.librazur.blc.event.SavingProfileEvent;
-import org.librazur.blc.event.SelectingDumperSinkEvent;
+import org.librazur.blc.event.*;
 import org.librazur.blc.model.DumperSink;
-import org.librazur.blc.swing.action.AddParserAction;
-import org.librazur.blc.swing.action.BrowseOutputAction;
-import org.librazur.blc.swing.action.ConvertAction;
-import org.librazur.blc.swing.action.LoadProfileAction;
-import org.librazur.blc.swing.action.NewProfileAction;
-import org.librazur.blc.swing.action.RemoveParserAction;
-import org.librazur.blc.swing.action.SaveProfileAction;
+import org.librazur.blc.model.Profile;
+import org.librazur.blc.swing.action.*;
 import org.librazur.blc.util.DumperFactory;
 import org.librazur.blc.util.ParserFactory;
 import org.librazur.minibus.BusProvider;
@@ -122,6 +89,21 @@ public class MainFrame extends JFrame {
     }
 
 
+    private JTable getParserTable() {
+        return panel.getTable("parserTable");
+    }
+
+
+    private JTextField getOutputField() {
+        return (JTextField) panel.getTextComponent("outputField");
+    }
+
+
+    private JComboBox getDumperCombo() {
+        return panel.getComboBox("dumperCombo");
+    }
+
+
     private JPanel createHeaderPanel() {
         final JLabel title = new JLabel("<html><b>" + Resources.i18n("blc")
                 + " " + Resources.version() + "</b><br>"
@@ -154,10 +136,8 @@ public class MainFrame extends JFrame {
 
 
     private void postNewDumperSink() {
-        final Dumper dumper = (Dumper) panel.getComboBox("dumperCombo")
-                .getSelectedItem();
-        final File dir = new File(panel.getTextComponent("outputField")
-                .getText());
+        final Dumper dumper = (Dumper) getDumperCombo().getSelectedItem();
+        final File dir = new File(getOutputField().getText());
 
         busProvider.getBus().post(
                 new SelectingDumperSinkEvent(this, new DumperSink(dumper
@@ -192,7 +172,7 @@ public class MainFrame extends JFrame {
 
         final ParserSourceTableModel tableModel = new ParserSourceTableModel(
                 busProvider, parserFactory);
-        final JTable parserTable = panel.getTable("parserTable");
+        final JTable parserTable = getParserTable();
         parserTable.setModel(tableModel);
         parserTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         parserTable.setTransferHandler(new FileTransferHandler(busProvider));
@@ -211,13 +191,8 @@ public class MainFrame extends JFrame {
                 new AddParserAction(busProvider));
         panel.getButton("removeParserButton").setAction(removeParserAction);
 
-        final JTextField outputField = panel.getTextField("outputField");
-        try {
-            outputField.setText(new File(System.getProperty("user.dir"))
-                    .getCanonicalPath());
-        } catch (Exception e) {
-            log.warn("Error while setting the current directory", e);
-        }
+        final JTextField outputField = getOutputField();
+        outputField.setText(getUserDir().getPath());
         outputField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent evt) {
             }
@@ -232,11 +207,9 @@ public class MainFrame extends JFrame {
                 postNewDumperSink();
             }
         });
-        panel.getButton("browseOutputButton")
-                .setAction(
-                        new BrowseOutputAction(this, panel
-                                .getTextField("outputField")));
-        initDumperCombo(panel.getComboBox("dumperCombo"));
+        panel.getButton("browseOutputButton").setAction(
+                new BrowseOutputAction(this, getOutputField()));
+        initDumperCombo(getDumperCombo());
 
         // let's localize the UI!
         panel.getLabel("dumper.type").setText(Resources.i18n("dumper.type"));
@@ -291,11 +264,41 @@ public class MainFrame extends JFrame {
     }
 
 
+    private File getUserDir() {
+        final File userDir = new File(System.getProperty("user.dir"));
+        try {
+            return userDir.getCanonicalFile();
+        } catch (Exception e) {
+            return userDir;
+        }
+    }
+
+
+    private void updateUI(Profile profile) {
+        if (profile.getDumperSinks().isEmpty()) {
+            getDumperCombo().setSelectedIndex(0);
+            getOutputField().setText(getUserDir().getPath());
+            
+            removeParserAction.setEnabled(false);
+            convertAction.setEnabled(false);
+        } else {
+            // we can only handle one dumper right now...
+            final DumperSink sink = profile.getDumperSinks().get(0);
+            getDumperCombo().setSelectedItem(
+                    dumperFactory.createDumper(sink.dumperClass));
+            getOutputField().setText(sink.directory.getPath());
+            
+            removeParserAction.setEnabled(true);
+            convertAction.setEnabled(true);
+        }
+
+        getContentPane().invalidate();
+        repaint();
+    }
+
+
     private class BusHandler implements EventHandler {
         public EventObject onEvent(EventObject obj) throws Exception {
-            if (obj instanceof PreSavingProfileEvent) {
-                return preSavingProfile();
-            }
             if (obj instanceof BlackListConvertedEvent) {
                 return blackListConverted();
             }
@@ -314,12 +317,25 @@ public class MainFrame extends JFrame {
             if (obj instanceof PreRemovingParserSourceEvent) {
                 return preRemovingParserSource();
             }
+            if (obj instanceof ProfileLoadedEvent) {
+                return profileLoaded((ProfileLoadedEvent) obj);
+            }
+            if (obj instanceof ProfileCreatedEvent) {
+                return profileCreated((ProfileCreatedEvent) obj);
+            }
             return null;
         }
 
 
-        private EventObject preSavingProfile() {
-            return new SavingProfileEvent(this);
+        private EventObject profileLoaded(ProfileLoadedEvent evt) {
+            updateUI(evt.getProfile());
+            return null;
+        }
+
+
+        private EventObject profileCreated(ProfileCreatedEvent evt) {
+            updateUI(evt.getProfile());
+            return null;
         }
 
 
@@ -361,8 +377,8 @@ public class MainFrame extends JFrame {
 
 
         private EventObject preRemovingParserSource() {
-            return new RemovingParserSourceEvent(this, panel.getTable(
-                    "parserTable").getSelectedRows());
+            return new RemovingParserSourceEvent(this, getParserTable()
+                    .getSelectedRows());
         }
     }
 }
