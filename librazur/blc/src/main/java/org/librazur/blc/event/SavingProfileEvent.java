@@ -1,5 +1,5 @@
 /**
- * $Id: SavingProfileEvent.java,v 1.1 2005/10/26 16:35:40 romale Exp $
+ * $Id: SavingProfileEvent.java,v 1.2 2005/11/23 11:02:38 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,11 +23,31 @@
 package org.librazur.blc.event;
 
 
+import java.io.File;
 import java.util.EventObject;
+
+import org.librazur.blc.model.Profile;
 
 
 public class SavingProfileEvent extends EventObject {
-    public SavingProfileEvent(final Object source) {
+    private final File file;
+    private final Profile profile;
+
+
+    public SavingProfileEvent(final Object source, final Profile profile,
+            final File file) {
         super(source);
+        this.profile = profile;
+        this.file = file;
+    }
+
+
+    public File getFile() {
+        return file;
+    }
+
+
+    public Profile getProfile() {
+        return profile;
     }
 }
