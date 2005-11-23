@@ -1,5 +1,5 @@
 /**
- * $Id: ProfileStore.java,v 1.1 2005/10/26 16:35:40 romale Exp $
+ * $Id: ProfileStore.java,v 1.2 2005/11/23 11:01:34 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,11 +23,15 @@
 package org.librazur.blc.util;
 
 
-import java.io.File;
+import java.io.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.librazur.blc.Constants;
 import org.librazur.blc.model.Profile;
+import org.librazur.util.IOUtils;
+
+import com.thoughtworks.xstream.XStream;
 
 
 public class ProfileStore {
@@ -37,8 +41,19 @@ public class ProfileStore {
     public Profile load(File file) {
         log.info("Loading profile from file: " + file.getPath());
 
-        final Profile profile = new Profile();
-        profile.setFile(file);
+        Reader reader = null;
+        final Profile profile;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            profile = (Profile) createXStream().fromXML(reader);
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                    "Error while loading profile from file: " + file.getPath(),
+                    e);
+        } finally {
+            IOUtils.close(reader);
+        }
+        profile.setFilePath(file.getPath());
 
         return profile;
     }
@@ -47,5 +62,28 @@ public class ProfileStore {
     public void save(File file, Profile profile) {
         log.info("Saving profile '" + profile.getName() + "' to file: "
                 + file.getPath());
+
+        Writer writer = null;
+        profile.setFilePath(file.getPath());
+        try {
+            final String charset = "ISO-8859-1";
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(file), charset));
+            writer.append("<?xml version='1.0' encoding='").append(charset)
+                    .append("'?>").append(Constants.LINE_SEPARATOR);
+            createXStream().toXML(profile, writer);
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                    "Error while saving profile to file: " + file.getPath(), e);
+        } finally {
+            IOUtils.close(writer);
+        }
+    }
+
+
+    private XStream createXStream() {
+        final XStream xstream = new XStream();
+
+        return xstream;
     }
 }
