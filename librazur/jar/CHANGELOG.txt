@@ -4,6 +4,7 @@ http://librazur.info
 
  CVS
 =====
+  - added JarSigner: interface to command line tool jarsigner
   - updated site url and emails
 
  1.0.1 / 20051019
