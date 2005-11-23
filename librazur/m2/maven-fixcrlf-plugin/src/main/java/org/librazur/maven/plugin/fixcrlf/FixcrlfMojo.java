@@ -1,5 +1,5 @@
 /**
- * $Id: FixcrlfMojo.java,v 1.2 2005/10/20 22:44:15 romale Exp $
+ * $Id: FixcrlfMojo.java,v 1.1 2005/11/23 10:36:09 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -20,25 +20,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.librazur.maven.plugins;
+package org.librazur.maven.plugin.fixcrlf;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -47,14 +33,15 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
+import org.librazur.util.ChecksumUtils;
 import org.librazur.util.StringUtils;
 
 
 /**
- * Fix end-of-lines in text files.
- *
+ * Fixes end-of-lines in text files.
+ * 
  * @goal fixcrlf
- * @description Fix end-of-lines in text files
+ * @description Fixes end-of-lines in text files
  */
 public class FixcrlfMojo extends AbstractMojo {
     public static final String MAC_EOL = "mac";
@@ -72,53 +59,54 @@ public class FixcrlfMojo extends AbstractMojo {
 
     /**
      * New file encoding. Default is ISO-8859-1.
-     *
+     * 
      * @parameter expression="${fixcrlf.encoding}"
      */
-    private String encoding = "ISO-8859-1";
+    public String encoding = "ISO-8859-1";
 
     /**
      * Whether to add a missing EOL to the last line of a file. Default is true.
-     *
+     * 
      * @parameter expression="${fixcrlf.fixlast}"
      */
-    private boolean fixlast = true;
+    public boolean fixlast = true;
 
     /**
      * Specifies how end-of-lines (EOL) characters are to be handled. Possible
      * values are: mac, unix, dos. Default is unix.
-     *
+     * 
      * @parameter expression="${fixcrlf.eol}"
      */
-    private String eol = "unix";
+    public String eol = "unix";
 
     /**
      * Strip spaces at the end of lines. Default is true.
      */
-    private boolean stripEndSpaces = true;
+    public boolean stripEndSpaces = true;
 
     /**
      * File masks to include. Default are : **\/*.java, **\/*.css, **\/*.js,
      * **\/*.xml, **\/*.properties, **\/*.txt.
-     *
+     * 
      * @parameter
      */
-    private List includes;
+    public List includes;
 
     /**
      * File masks to exclude. Default are : **\/*.jpg, **\/*.gif, **\/*.png,
      * **\/*.jar, **\/*.zip.
-     *
+     * 
      * @parameter
      */
-    private List excludes;
+    public List excludes;
 
     /**
      * The project whose project files to fix EOL.
-     *
+     * 
      * @parameter expression="${project}"
+     * @required
      */
-    private MavenProject project;
+    public MavenProject project;
 
 
     public FixcrlfMojo() {
@@ -212,7 +200,8 @@ public class FixcrlfMojo extends AbstractMojo {
             // read input file
             final List lines = new ArrayList();
             for (String line; (line = reader.readLine()) != null;) {
-                lines.add(stripEndSpaces ? StringUtils.stripEndSpaces(line) : line);
+                lines.add(stripEndSpaces ? StringUtils.stripEndSpaces(line)
+                        : line);
             }
 
             // create temp file
@@ -240,8 +229,17 @@ public class FixcrlfMojo extends AbstractMojo {
             // close the temp file before copying it to the source file
             IOUtil.close(writer);
 
-            // copy, and then delete temp file
-            FileUtils.copyFile(tempFile, file);
+            // we compare the new file with the old one: if there is no
+            // modifications, we don't need to copy over the old file
+            final String tempMd5 = ChecksumUtils.md5Hex(new FileInputStream(
+                    tempFile));
+            final String oldMd5 = ChecksumUtils
+                    .md5Hex(new FileInputStream(file));
+            if (!tempMd5.equals(oldMd5)) {
+                // file are different: we need to copy the temp file
+                FileUtils.copyFile(tempFile, file);
+            }
+
             tempFile.delete();
         } finally {
             // closing any opened resources
