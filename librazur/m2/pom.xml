@@ -4,18 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.4 2005/11/21 14:45:42 romale Exp $
+    $Id: pom.xml,v 1.5 2005/11/23 10:45:07 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
     <artifactId>librazur</artifactId>
-    <version>20051121</version>
+    <version>20051123</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur.maven.plugins</groupId>
   <artifactId>maven-plugins</artifactId>
   <packaging>pom</packaging>
-  <version>20051121</version>
+  <version>20051123</version>
   <name>Maven 2 plugins</name>
 
   <scm>
@@ -48,6 +48,7 @@
 
   <modules>
     <module>maven-fixcrlf-plugin</module>
+    <module>maven-signjar-plugin</module>
   </modules>
 
   <repositories>
