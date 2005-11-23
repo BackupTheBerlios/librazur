@@ -1,5 +1,5 @@
 /**
- * $Id: Profile.java,v 1.2 2005/10/30 18:48:39 romale Exp $
+ * $Id: Profile.java,v 1.3 2005/11/23 11:02:07 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,14 +23,13 @@
 package org.librazur.blc.model;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Profile {
     private String name = "default";
-    private File file;
+    private String filePath;
     private List<ParserSource> parserSources = new ArrayList<ParserSource>(1);
     private List<DumperSink> dumperSinks = new ArrayList<DumperSink>(1);
 
@@ -65,12 +64,12 @@ public class Profile {
     }
 
 
-    public synchronized File getFile() {
-        return file;
+    public synchronized String getFilePath() {
+        return filePath;
     }
 
 
-    public synchronized void setFile(File file) {
-        this.file = file;
+    public synchronized void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }
