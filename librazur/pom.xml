@@ -4,14 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.7 2005/11/21 14:37:32 romale Exp $
+    $Id: pom.xml,v 1.8 2005/11/23 10:43:21 romale Exp $
 -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur</groupId>
   <artifactId>librazur</artifactId>
   <packaging>pom</packaging>
   <name>Librazur</name>
-  <version>20051121</version>
+  <version>20051123</version>
   <url>http://librazur.info</url>
 
   <issueManagement>
@@ -105,6 +105,7 @@
     <module>bizmo</module>
     <module>blc</module>
     <module>gtd</module>
+    <module>ict</module>
     <module>jar</module>
     <module>m2</module>
     <module>minibus</module>
