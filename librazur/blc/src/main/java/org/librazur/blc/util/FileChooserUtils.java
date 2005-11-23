@@ -1,5 +1,5 @@
 /**
- * $Id: FileChooserUtils.java,v 1.1 2005/10/26 16:35:40 romale Exp $
+ * $Id: FileChooserUtils.java,v 1.2 2005/11/23 11:00:17 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -47,7 +47,7 @@ public final class FileChooserUtils {
     /**
      * Opens a dialog to select a file.
      */
-    public static File selectFile(Component parent) {
+    public static File selectFile(Component parent, boolean useSaveDialog) {
         JFileChooser fc = fileChooserRef.get();
         if (fc == null) {
             fc = new JFileChooser(lastDir);
@@ -55,12 +55,22 @@ public final class FileChooserUtils {
         }
         fc.setCurrentDirectory(lastDir);
 
-        if (fc.showOpenDialog(parent) != JFileChooser.APPROVE_OPTION) {
+        final int option = useSaveDialog ? fc.showSaveDialog(parent) : fc
+                .showOpenDialog(parent);
+        if (option != JFileChooser.APPROVE_OPTION) {
             return null;
         }
         lastDir = fc.getSelectedFile();
 
         return fc.getSelectedFile();
+    }
+
+
+    /**
+     * Opens a dialog to select a file.
+     */
+    public static File selectFile(Component parent) {
+        return selectFile(parent, false);
     }
 
 
