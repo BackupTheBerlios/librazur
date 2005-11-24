@@ -1,5 +1,5 @@
 /**
- * $Id: JarSignerTest.java,v 1.1 2005/11/23 22:31:41 romale Exp $
+ * $Id: JarSignerTest.java,v 1.2 2005/11/24 08:19:26 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -59,8 +59,7 @@ public class JarSignerTest extends TestCase {
         for (JarEntry entry; (entry = input.getNextJarEntry()) != null
                 && !signed;) {
             final String upperCaseName = entry.getName();
-            System.out.println(upperCaseName);
-            if (upperCaseName.equals("META-INF/LIBRAZUR.SF")) {
+            if (upperCaseName.equals("META-INF/TEST.SF")) {
                 signed = true;
             }
         }
