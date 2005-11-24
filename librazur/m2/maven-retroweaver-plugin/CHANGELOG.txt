@@ -1,0 +1,5 @@
+This is the CHANGELOG file for Retroweaver Maven 2 plugin.
+Copyright (c) 2005 Librazur.
+http://librazur.info
+
+(this project is still under development)
