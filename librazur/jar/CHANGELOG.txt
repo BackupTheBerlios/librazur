@@ -4,6 +4,7 @@ http://librazur.info
 
  CVS
 =====
+  - added MainClassLauncher
   - added JarSigner: interface to command line tool jarsigner
   - updated site url and emails
 
