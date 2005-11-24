@@ -1,5 +1,5 @@
 /**
- * $Id: RestrictedClassLoader.java,v 1.2 2005/10/20 22:44:09 romale Exp $
+ * $Id: RestrictedClassLoader.java,v 1.3 2005/11/24 10:10:55 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,11 +25,7 @@ package org.librazur.jar;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 
 /**

@@ -1,5 +1,5 @@
 /**
- * $Id: JarSignerTest.java,v 1.2 2005/11/24 08:19:26 romale Exp $
+ * $Id: JarSignerTest.java,v 1.3 2005/11/24 10:12:24 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,11 +23,7 @@
 package org.librazur.jar;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
