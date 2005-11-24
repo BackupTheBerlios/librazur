@@ -1,5 +1,5 @@
 /**
- * $Id: JarLauncher.java,v 1.3 2005/10/20 22:44:09 romale Exp $
+ * $Id: JarLauncher.java,v 1.4 2005/11/24 10:11:17 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,7 +26,6 @@ package org.librazur.jar;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.jar.Attributes;
 import java.util.jar.JarException;
 import java.util.jar.JarFile;
@@ -70,9 +69,7 @@ public class JarLauncher {
 
         final Class mainClass = Class.forName(mainClassName, true,
                 classLoaderFactory.createClassLoader());
-        final Method method = mainClass.getMethod("main",
-                new Class[] { String[].class });
-        method.invoke(null, new Object[] { jarArgs });
+        new MainClassLauncher(mainClass).launch(jarArgs);
     }
 
 
