@@ -1,4 +1,4 @@
-This is the README file for Maven 2 plugin fixcrlf.
+This is the README file for Fixcrlf Maven 2 plugin.
 Copyright (c) 2005 Librazur.
 http://librazur.info
 
@@ -69,4 +69,4 @@ http://maven.apache.org/maven2/guides/plugin/guide-java-plugin-development.html.
 If you have trouble using this plugin, or if you want to participate in
 Librazur development, contact me at alex@librazur.info.
 
-Thanks for your interest in fixcrlf.
+Thanks for your interest in Fixcrlf.
