@@ -1,5 +1,5 @@
 /**
- * $Id: FixcrlfMojo.java,v 1.1 2005/11/23 10:36:09 romale Exp $
+ * $Id: FixcrlfMojo.java,v 1.2 2005/11/24 13:38:18 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -164,7 +164,7 @@ public class FixcrlfMojo extends AbstractMojo {
                 final String baseDir = (String) i.next();
 
                 final File baseDirFile = new File(baseDir);
-                if (!baseDirFile.exists()) {
+                if (!baseDirFile.exists() || !baseDirFile.isDirectory()) {
                     continue;
                 }
 
