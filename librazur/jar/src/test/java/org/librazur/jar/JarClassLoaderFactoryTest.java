@@ -1,5 +1,5 @@
 /**
- * $Id: JarClassLoaderFactoryTest.java,v 1.2 2005/10/20 22:44:09 romale Exp $
+ * $Id: JarClassLoaderFactoryTest.java,v 1.3 2005/11/24 10:12:01 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,7 +23,7 @@
 package org.librazur.jar;
 
 
-public class JarClassLoaderFactoryTest extends AbstractClassLoaderFactory {
+public class JarClassLoaderFactoryTest extends AbstractClassLoaderFactoryTest {
     public void testCreateClassLoader() throws Exception {
         final JarClassLoaderFactory factory = new JarClassLoaderFactory();
         factory.add(getClass().getResource("/commons-pool-1.2.jar"));

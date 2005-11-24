@@ -1,5 +1,5 @@
 /**
- * $Id: SystemClassLoaderFactoryTest.java,v 1.3 2005/11/24 10:12:01 romale Exp $
+ * $Id: AbstractClassLoaderFactoryTest.java,v 1.1 2005/11/24 10:12:01 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,12 +23,23 @@
 package org.librazur.jar;
 
 
-public class SystemClassLoaderFactoryTest extends
-        AbstractClassLoaderFactoryTest {
-    public void testCreateClassLoader() throws Exception {
-        final SystemClassLoaderFactory factory = new SystemClassLoaderFactory();
-        final ClassLoader cl = factory.createClassLoader();
-        assertClassLoadable(cl, "java.lang.String");
-        assertClassUnloadable(cl, "foo.Bar");
+import junit.framework.TestCase;
+
+
+public abstract class AbstractClassLoaderFactoryTest extends TestCase {
+    protected void assertClassLoadable(ClassLoader cl, String className)
+            throws Exception {
+        assertEquals(className, cl.loadClass(className).getName());
+    }
+
+
+    protected void assertClassUnloadable(ClassLoader cl, String className)
+            throws Exception {
+        try {
+            cl.loadClass(className);
+            fail("Expected ClassNotFoundException");
+        } catch (ClassNotFoundException e) {
+            // this is fine if we have an error
+        }
     }
 }
