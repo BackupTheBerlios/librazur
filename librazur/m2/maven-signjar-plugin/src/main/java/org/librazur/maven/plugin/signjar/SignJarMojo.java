@@ -1,5 +1,5 @@
 /**
- * $Id: SignJarMojo.java,v 1.2 2005/11/23 17:35:28 romale Exp $
+ * $Id: SignJarMojo.java,v 1.3 2005/11/24 13:37:06 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -143,7 +143,7 @@ public class SignJarMojo extends AbstractMojo {
             // deal with the main artifact
             final File jarFile = new File(project.getBuild().getDirectory(),
                     project.getBuild().getFinalName() + ".jar");
-            if (jarFile.exists()) {
+            if (jarFile.exists() && jarFile.isFile()) {
                 signJar(jarFile, getSignedJarFile(jarFile));
             } else {
                 getLog().debug(
