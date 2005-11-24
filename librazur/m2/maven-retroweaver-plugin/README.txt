@@ -10,6 +10,31 @@ This plugin allows you to use the library Retroweaver
 under a JVM 1.2, 1.3 or 1.4. Please visit the Retroweaver website for more
 information.
 
+Don't forget to add a dependency in your project on the library retroweaver-rt,
+as you will need it at runtime to resolve some classes which are not available
+on a JVM lower than 1.5. So, add the following to your pom.xml:
+
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.retroweaver</groupId>
+      <artifactId>retroweaver-rt</artifactId>
+      <version>1.1</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
+The library retroweaver-rt 1.1 is only available in the Librazur repository
+right now. As long as there is no published version in the Maven central
+repository at Ibiblio, you will have to add theses lines to your pom.xml:
+
+  <repositories>
+    <repository>
+      <id>librazur</id>
+      <name>Librazur Maven 2 repository</name>
+      <url>http://maven.librazur.info/maven2</url>
+    </repository>
+  </repositories>
+
 In order to use this plugin, you have to add the following lines into your
 pom.xml:
 
