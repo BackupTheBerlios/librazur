@@ -1,5 +1,5 @@
 /**
- * $Id: RetroweaverMojo.java,v 1.1 2005/11/24 14:15:01 romale Exp $
+ * $Id: RetroweaverMojo.java,v 1.2 2005/11/24 16:09:51 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,19 +24,17 @@ package org.librazur.maven.plugin.retroweaver;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.project.MavenProject;
 import org.librazur.jar.MainClassLauncher;
 
 
 /**
  * Retroweaver plugin.
- *
+ * 
  * @goal retroweaver
  * @phase process-classes
  * @description Retroweaver plugin.
@@ -49,25 +47,26 @@ public class RetroweaverMojo extends AbstractMojo {
 
     /**
      * Targeted JVM version. Can be one of { 1.2, 1.3, 1.4 }. Default is 1.4.
-     *
+     * 
      * @parameter expression="${retroweaver.version}"
      */
     public String version;
 
     /**
      * If <tt>true</tt>, RetroWeaver will work in lazy mode. Default is true.
-     *
+     * 
      * @parameter expression="${retroweaver.lazy}"
      */
     public boolean lazy = true;
 
     /**
-     * The current project.
-     *
-     * @parameter expression="${project}"
+     * Compile classpath elements will be modified by Retroweaver.
+     * 
+     * @parameter expression="${project.compileClasspathElements}"
      * @required
+     * @readonly
      */
-    public MavenProject project;
+    public List classpathElements;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -84,6 +83,44 @@ public class RetroweaverMojo extends AbstractMojo {
                     "Wrong value for parameter version: " + version);
         }
 
+        for (final Iterator i = classpathElements.iterator(); i.hasNext();) {
+            final String path = (String) i.next();
+            final File dir = new File(path).getAbsoluteFile();
+
+            try {
+                launchRetroweaver(dir);
+            } catch (Exception e) {
+                throw new MojoExecutionException(
+                        "Error while launching Retroweaver", e);
+            }
+        }
+    }
+
+
+    private void launchRetroweaver(File dir) throws Exception {
+        if (!dir.exists() || !dir.isDirectory()) {
+            getLog().info(
+                    "There is no classes to \"retroweave\" "
+                            + "in this directory: " + dir.getPath());
+            return;
+        }
+
+        // build arguments
+        final List args = new ArrayList();
+        args.add("-source");
+        args.add(dir.getPath());
+        args.add("-version");
+        args.add(version);
+        if (lazy) {
+            args.add("-lazy");
+        }
+
+        getLog().info("Launching Retroweaver...");
+        getLog().info("Classes directory: " + dir.getPath());
+        getLog().info("Targeted JVM version: " + version);
+        getLog().info("Lazy mode: " + boolean2string(lazy));
+
+        // locate the main Retroweaver class
         final String weaverClassName = "com.rc.retroweaver.Weaver";
         final Class weaverClass;
         try {
@@ -93,43 +130,8 @@ public class RetroweaverMojo extends AbstractMojo {
                     "Unable to load RetroWeaver class: " + weaverClassName, e);
         }
 
-        final File classesDir;
-        try {
-            classesDir = new File(project.getBuild().getOutputDirectory())
-                    .getCanonicalFile();
-        } catch (IOException e) {
-            throw new MojoExecutionException(
-                    "Unable to find classes directory", e);
-        }
-
-        if (!classesDir.exists() || !classesDir.isDirectory()) {
-            getLog().info("There is no classes to \"retroweave\".");
-            return;
-        }
-
-        // build arguments
-        final List args = new ArrayList();
-        args.add("-source");
-        args.add(classesDir.getPath());
-        args.add("-version");
-        args.add(version);
-        if (lazy) {
-            args.add("-lazy");
-        }
-
-        getLog().info("Launching Retroweaver...");
-        getLog().info("Classes directory: " + classesDir.getPath());
-        getLog().info("Targeted JVM version: " + version);
-        getLog().info("Lazy mode: " + boolean2string(lazy));
-
-        // launch the main class with the arguments
-        try {
-            new MainClassLauncher(weaverClass).launch((String[]) args
-                    .toArray(new String[args.size()]));
-        } catch (Exception e) {
-            throw new MojoExecutionException(
-                    "Error while launching Retroweaver, using args: " + args, e);
-        }
+        new MainClassLauncher(weaverClass).launch((String[]) args
+                .toArray(new String[args.size()]));
     }
 
 
