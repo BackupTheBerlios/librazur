@@ -1,5 +1,5 @@
 /**
- * $Id: SignJarMojo.java,v 1.3 2005/11/24 13:37:06 romale Exp $
+ * $Id: SignJarMojo.java,v 1.4 2005/11/24 16:12:41 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
@@ -44,14 +45,14 @@ import org.librazur.jar.JarSigner;
 
 /**
  * Signs JAR files.
- * 
+ *
  * @goal signjar
  * @description Signs JAR files.
  */
 public class SignJarMojo extends AbstractMojo {
     /**
      * Alias to sign under.
-     * 
+     *
      * @parameter expression="${signjar.alias}"
      * @required
      */
@@ -59,7 +60,7 @@ public class SignJarMojo extends AbstractMojo {
 
     /**
      * Password for keystore integrity.
-     * 
+     *
      * @parameter expression="${signjar.storepass}"
      * @required
      */
@@ -67,49 +68,49 @@ public class SignJarMojo extends AbstractMojo {
 
     /**
      * Keystore location.
-     * 
+     *
      * @parameter expression="${signjar.keystore}"
      */
     public String keystore;
 
     /**
      * Keystore type.
-     * 
+     *
      * @parameter expression="${signjar.storetype}"
      */
     public String storeType;
 
     /**
      * Password for private key (if different).
-     * 
+     *
      * @parameter expression="${signjar.keypass}"
      */
     public String keyPass;
 
     /**
      * Name of .SF/.DSA file.
-     * 
+     *
      * @parameter expression="${signjar.sigfile}"
      */
     public String sigFile;
 
     /**
      * Verbose output when signing.
-     * 
+     *
      * @parameter expression="${signjar.verbose}"
      */
     public boolean verbose;
 
     /**
      * Include the .SF file inside the signature block.
-     * 
+     *
      * @parameter expression="${signjar.internalsf}"
      */
     public boolean internalSF;
 
     /**
      * Don't compute hash of entire manifest.
-     * 
+     *
      * @parameter expression="${signjar.sectionsonly}"
      */
     public boolean sectionsOnly;
@@ -117,21 +118,21 @@ public class SignJarMojo extends AbstractMojo {
     /**
      * Flag to control whether the presence of a signature file means a JAR is
      * signed.
-     * 
+     *
      * @parameter expression="${signjar.lazy}"
      */
     public boolean lazy;
 
     /**
      * Whether to sign dependencies or not.
-     * 
+     *
      * @parameter expression="${signjar.signdependencies}"
      */
     public boolean signDependencies = true;
 
     /**
      * The project containing JAR files to sign.
-     * 
+     *
      * @parameter expression="${project}"
      * @required
      */
@@ -189,13 +190,24 @@ public class SignJarMojo extends AbstractMojo {
         final JarSigner jarSigner = new JarSigner(storePass, alias);
 
         if (StringUtils.isNotEmpty(keystore)) {
-            final File keystoreFile = new File(project.getBasedir(), keystore);
+            // try with a relative path to the project basedir
+            File keystoreFile = new File(project.getBasedir(), keystore);
             try {
                 if (keystoreFile.exists()) {
                     jarSigner.setKeystore(keystoreFile.toURI().toURL());
                 } else {
-                    // keystore is an URL (I hope so...)
-                    jarSigner.setKeystore(new URL(keystore));
+                    // try with an absolute path
+                    keystoreFile = new File(keystore);
+
+                    if (keystoreFile.exists()) {
+                        jarSigner.setKeystore(keystoreFile.toURI().toURL());
+                    } else {
+                        getLog().debug(
+                                "Keystore does not exist as a local file: "
+                                        + "assuming it is an URL");
+                        // keystore is an URL (I hope so...)
+                        jarSigner.setKeystore(new URL(keystore));
+                    }
                 }
             } catch (MalformedURLException e) {
                 throw new MojoExecutionException(
