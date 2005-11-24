@@ -1,5 +1,5 @@
 /**
- * $Id: JarSigner.java,v 1.1 2005/11/23 17:32:27 romale Exp $
+ * $Id: JarSigner.java,v 1.2 2005/11/24 09:05:30 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,6 +25,8 @@ package org.librazur.jar;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -61,43 +63,55 @@ public class JarSigner {
      * <tt>RuntimeException is thrown.
      */
     public void sign(File jarFile, File signedJarFile) throws Exception {
-        final StringBuffer buf = new StringBuffer("jarsigner");
+        final List<String> args = new ArrayList<String>();
+        args.add("jarsigner");
 
         if (keystore != null) {
-            buf.append(" -keystore ").append(keystore);
+            args.add("-keystore");
+            args.add(keystore.toString());
         }
         if (!isStringEmpty(storePass)) {
-            buf.append(" -storepass ").append(storePass);
+            args.add("-storepass");
+            args.add(storePass);
         }
         if (!isStringEmpty(storeType)) {
-            buf.append(" -storetype ").append(storeType);
+            args.add("-storetype");
+            args.add(storeType);
         }
         if (!isStringEmpty(keyPass)) {
-            buf.append(" -keypass ").append(keyPass);
+            args.add("-keypass");
+            args.add(keyPass);
         }
         if (sigFile != null) {
-            buf.append(" -sigfile \"").append(sigFile.getPath()).append('"');
+            args.add("-sigfile");
+            args.add(sigFile.getPath());
         }
         if (internalSF) {
-            buf.append(" internalsf");
+            args.add("-internalsf");
         }
         if (sectionsOnly) {
-            buf.append(" -sectionsonly");
+            args.add("-sectionsonly");
         }
         if (verbose) {
-            buf.append(" -verbose");
+            args.add("-verbose");
         }
-        buf.append(" -signedjar \"").append(signedJarFile.getPath()).append(
-                "\" \"").append(jarFile.getPath()).append("\" ").append(alias);
+        args.add("-signedjar");
+        args.add(signedJarFile.getPath());
+        args.add(jarFile.getPath());
+        args.add(alias);
 
-        final String cmd = buf.toString();
-        final Process proc = Runtime.getRuntime().exec(cmd);
+        final Process proc = Runtime.getRuntime().exec(
+                args.toArray(new String[args.size()]));
         final int errorCode = proc.waitFor();
         if (errorCode != 0) {
+            final StringBuilder cmd = new StringBuilder();
+            for (final String arg : args) {
+                cmd.append(arg).append(" ");
+            }
             throw new IllegalStateException(
-                    "jarsigner was not able to sign the JAR file '"
+                    "jarsigner was not able to sign the JAR file: "
                             + jarFile.getPath() + "\nError code: " + errorCode
-                            + "\nCommand: " + cmd);
+                            + "\nCommand: " + cmd.toString().trim());
         }
     }
 
