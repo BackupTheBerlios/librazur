@@ -1,5 +1,5 @@
 /**
- * $Id: ImageUtils.java,v 1.1 2005/11/21 01:30:15 romale Exp $
+ * $Id: ImageUtils.java,v 1.2 2005/11/25 22:47:44 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -31,7 +31,7 @@ import java.awt.image.BufferedImage;
 /**
  * Image utilities.
  */
-public class ImageUtils {
+public final class ImageUtils {
     private ImageUtils() {
     }
 
