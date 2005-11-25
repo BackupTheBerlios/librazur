@@ -1,5 +1,5 @@
 /**
- * $Id: FixcrlfMojo.java,v 1.2 2005/11/24 13:38:18 romale Exp $
+ * $Id: FixcrlfMojo.java,v 1.3 2005/11/25 13:58:48 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -60,14 +60,14 @@ public class FixcrlfMojo extends AbstractMojo {
     /**
      * New file encoding. Default is ISO-8859-1.
      * 
-     * @parameter expression="${fixcrlf.encoding}"
+     * @parameter expression="${fixcrlf.encoding}" default-value="ISO-8859-1"
      */
-    public String encoding = "ISO-8859-1";
+    public String encoding = DEFAULT_ENCODING;
 
     /**
      * Whether to add a missing EOL to the last line of a file. Default is true.
      * 
-     * @parameter expression="${fixcrlf.fixlast}"
+     * @parameter expression="${fixcrlf.fixlast}" default-value="true"
      */
     public boolean fixlast = true;
 
@@ -75,12 +75,14 @@ public class FixcrlfMojo extends AbstractMojo {
      * Specifies how end-of-lines (EOL) characters are to be handled. Possible
      * values are: mac, unix, dos. Default is unix.
      * 
-     * @parameter expression="${fixcrlf.eol}"
+     * @parameter expression="${fixcrlf.eol}" default-value="unix"
      */
-    public String eol = "unix";
+    public String eol = DEFAULT_EOL;
 
     /**
      * Strip spaces at the end of lines. Default is true.
+     * 
+     * @parameter expression="${fixcrlf.stripendspaces}" default-value="true"
      */
     public boolean stripEndSpaces = true;
 
