@@ -1,5 +1,5 @@
 /**
- * $Id: ProfileStore.java,v 1.2 2005/11/23 11:01:34 romale Exp $
+ * $Id: ProfileStore.java,v 1.3 2005/11/28 16:04:32 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -72,6 +72,7 @@ public class ProfileStore {
             writer.append("<?xml version='1.0' encoding='").append(charset)
                     .append("'?>").append(Constants.LINE_SEPARATOR);
             createXStream().toXML(profile, writer);
+            writer.flush();
         } catch (IOException e) {
             throw new IllegalStateException(
                     "Error while saving profile to file: " + file.getPath(), e);
