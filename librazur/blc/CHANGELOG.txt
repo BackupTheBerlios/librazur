@@ -5,6 +5,7 @@ http://librazur.info
  CVS
 =====
   - fixed PrivoxyDumper to prepend a dot in front of each domain line
+  - added support for command line: use blc-cl
   - added a profile mechanism to save preferences in XML files
   - added support for downloading files to parse from anywhere thanks
     to the use of URLs
