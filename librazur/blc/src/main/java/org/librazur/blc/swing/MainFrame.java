@@ -1,5 +1,5 @@
 /**
- * $Id: MainFrame.java,v 1.5 2005/11/23 11:03:32 romale Exp $
+ * $Id: MainFrame.java,v 1.6 2005/11/28 16:05:19 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -37,8 +37,6 @@ import javax.swing.event.DocumentListener;
 
 import net.java.swingfx.waitwithstyle.PerformanceInfiniteProgressPanel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.librazur.blc.Resources;
 import org.librazur.blc.dumper.Dumper;
 import org.librazur.blc.event.*;
@@ -59,7 +57,6 @@ import com.jgoodies.forms.factories.Borders;
  * Main frame.
  */
 public class MainFrame extends JFrame {
-    private final Log log = LogFactory.getLog(getClass());
     private final BusProvider busProvider;
     private final ParserFactory parserFactory;
     private final DumperFactory dumperFactory;
@@ -293,7 +290,7 @@ public class MainFrame extends JFrame {
         }
 
         getContentPane().invalidate();
-        repaint();
+        getContentPane().repaint();
     }
 
 
