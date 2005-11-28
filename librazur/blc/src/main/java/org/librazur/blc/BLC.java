@@ -1,5 +1,5 @@
 /**
- * $Id: BLC.java,v 1.5 2005/11/23 11:03:32 romale Exp $
+ * $Id: BLC.java,v 1.6 2005/11/28 16:08:16 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -267,7 +268,17 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
                 if (file == null) {
                     return null;
                 }
-                path = file.getPath();
+
+                if (file.exists()) {
+                    if (JOptionPane.showConfirmDialog(frame, Resources.i18n(
+                            "file.overwrite", file.getName()), Resources
+                            .i18n("action.profile.save"),
+                            JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                        return null;
+                    }
+                }
+
+                path = file.getAbsolutePath();
                 if (!path.toLowerCase().endsWith(".profile")) {
                     path += ".profile";
                 }
@@ -341,7 +352,8 @@ public final class BLC implements ParserFactory, DumperFactory, BusProvider {
             profile.setDumperSinks(sinks);
 
             if (log.isDebugEnabled()) {
-                log.debug("Using dumper sinks: " + sinks);
+                log.debug("Using dumper sink: "
+                        + evt.getDumperSink().dumperClass.getName());
             }
 
             return new DumperSinkSelectedEvent(this, evt.getDumperSink());
