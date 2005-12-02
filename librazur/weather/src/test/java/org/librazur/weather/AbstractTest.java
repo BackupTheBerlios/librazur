@@ -1,5 +1,5 @@
 /**
- * $Id: AbstractTest.java,v 1.1 2005/12/01 23:50:25 romale Exp $
+ * $Id: AbstractTest.java,v 1.2 2005/12/02 09:14:41 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,7 +26,7 @@ package org.librazur.weather;
 import junit.framework.TestCase;
 
 
-public class AbstractTest extends TestCase {
+public abstract class AbstractTest extends TestCase {
     protected void assertDoubleEquals(double expected, double test,
             double epsilon) {
         assertTrue("Assertion failed: abs(abs(" + expected + ") - abs(" + test
