@@ -1,5 +1,5 @@
 /**
- * $Id: StationMapFactory.java,v 1.1 2005/12/01 23:50:25 romale Exp $
+ * $Id: StationMapFactory.java,v 1.2 2005/12/02 09:17:28 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,10 +25,12 @@ package org.librazur.weather;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.URL;
-import java.text.ParseException;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.librazur.util.IOUtils;
 import org.librazur.util.StringUtils;
@@ -40,6 +42,9 @@ import org.librazur.util.StringUtils;
 public class StationMapFactory {
     private static final String DEFAULT_STATION_RESOURCE = "stations.dat";
     private final URL url;
+    private WeakReference<Map<String, Station>> stationsRef = new WeakReference<Map<String, Station>>(
+            null);
+    private long lastModified;
 
 
     /**
@@ -70,55 +75,56 @@ public class StationMapFactory {
 
 
     /**
-     * Creates a map of available stations. A <code>RuntimeException</code>
-     * may be thrown if any errors occured.
+     * Creates a map of available stations.
      */
-    public Map<String, Station> create() {
-        try {
-            return doCreate();
-        } catch (ParseException e) {
-            throw new IllegalStateException("Error while creating station map",
-                    e);
-        }
-    }
+    public Map<String, Station> create() throws ParseException {
+        Map<String, Station> stations = null;
 
-
-    private Map<String, Station> doCreate() throws ParseException {
-        final Map<String, Station> stations = new HashMap<String, Station>();
-        final Map<String, Country> countries = new HashMap<String, Country>();
-
-        int lineNumber = 1;
-        BufferedReader reader = null;
+        int lineNumber = -1;
         String line = null;
+        BufferedReader reader = null;
+
         try {
-            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            final URLConnection conn = url.openConnection();
+            final long connLastModified = conn.getLastModified();
+            if (connLastModified > lastModified) {
+                stations = stationsRef.get();
+            }
+            if (stations == null) {
+                stations = new WeakHashMap<String, Station>();
+                stationsRef = new WeakReference<Map<String, Station>>(stations);
+                lastModified = connLastModified;
 
-            for (; (line = reader.readLine()) != null; ++lineNumber) {
-                final String[] tokens = line.split(";");
+                reader = new BufferedReader(new InputStreamReader(conn
+                        .getInputStream()));
+                lineNumber = 1;
 
-                final String code = StringUtils.trimToNull(tokens[0]);
-                final String countryName = StringUtils.trimToNull(tokens[5]);
-                Country country = countries.get(countryName);
-                if (country == null) {
-                    country = new Country(countryName);
-                    countries.put(countryName, country);
+                final Map<String, Country> countries = new HashMap<String, Country>();
+
+                for (; (line = reader.readLine()) != null; ++lineNumber) {
+                    final String[] tokens = line.split(";");
+
+                    final String code = StringUtils.trimToNull(tokens[0]);
+                    final String countryName = StringUtils
+                            .trimToNull(tokens[5]);
+                    Country country = countries.get(countryName);
+                    if (country == null) {
+                        country = new Country(countryName);
+                        countries.put(countryName, country);
+                    }
+
+                    final Station station = new Station(code, country);
+                    station.setLatitude(GeoUtils.dmsLatitudeToDd(StringUtils
+                            .trimToNull(tokens[7])));
+                    station.setLongitude(GeoUtils.dmsLongitudeToDd(StringUtils
+                            .trimToNull(tokens[8])));
+                    station.setLocation(StringUtils.trimToNull(tokens[3]));
+
+                    stations.put(code, station);
                 }
-
-                final Station station = new Station(code, country);
-                station.setLatitude(GeoUtils.dmsLatitudeToDd(StringUtils
-                        .trimToNull(tokens[7])));
-                station.setLongitude(GeoUtils.dmsLongitudeToDd(StringUtils
-                        .trimToNull(tokens[8])));
-                station.setLocation(StringUtils.trimToNull(tokens[3]));
-
-                stations.put(code, station);
             }
         } catch (Exception e) {
-            final ParseException newExc = new ParseException(
-                    "Error while parsing line " + lineNumber + ": " + line,
-                    lineNumber);
-            newExc.initCause(e);
-            throw newExc;
+            throw new ParseException(url, lineNumber, line, e);
         } finally {
             IOUtils.close(reader);
         }
