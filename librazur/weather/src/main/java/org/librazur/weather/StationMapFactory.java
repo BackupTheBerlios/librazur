@@ -1,5 +1,5 @@
 /**
- * $Id: StationMapFactory.java,v 1.2 2005/12/02 09:17:28 romale Exp $
+ * $Id: StationMapFactory.java,v 1.3 2005/12/02 11:10:57 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -37,7 +37,7 @@ import org.librazur.util.StringUtils;
 
 
 /**
- * Factory for creating maps with all available stations.
+ * Factory for creating maps with available {@link Station} instances.
  */
 public class StationMapFactory {
     private static final String DEFAULT_STATION_RESOURCE = "stations.dat";
@@ -75,7 +75,7 @@ public class StationMapFactory {
 
 
     /**
-     * Creates a map of available stations.
+     * Creates a map of available {@link Station} instances.
      */
     public Map<String, Station> create() throws ParseException {
         Map<String, Station> stations = null;

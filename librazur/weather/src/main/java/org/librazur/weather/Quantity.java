@@ -1,5 +1,5 @@
 /**
- * $Id: Quantity.java,v 1.2 2005/12/02 09:15:44 romale Exp $
+ * $Id: Quantity.java,v 1.3 2005/12/02 11:10:57 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,7 +24,7 @@ package org.librazur.weather;
 
 
 /**
- * Quantity, with an unit.
+ * Quantity, associated with an {@link Unit}.
  */
 public class Quantity {
     private final Unit unit;

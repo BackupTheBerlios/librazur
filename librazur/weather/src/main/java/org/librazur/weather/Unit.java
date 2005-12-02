@@ -1,5 +1,5 @@
 /**
- * $Id: Unit.java,v 1.1 2005/12/01 23:50:25 romale Exp $
+ * $Id: Unit.java,v 1.2 2005/12/02 11:10:57 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,6 +23,10 @@
 package org.librazur.weather;
 
 
+/**
+ * Unit values.
+ */
 public enum Unit {
-    MILES_PER_SECOND, MILES_PER_HOUR, KILOMETER_PER_HOUR, KNOT, CELSIUS, FAHRENHEIT, PERCENT, HECTO_PASCAL, FEET, METER
+    MILES_PER_SECOND, MILES_PER_HOUR, KILOMETER_PER_HOUR, KNOT, CELSIUS,
+    FAHRENHEIT, PERCENT, HECTO_PASCAL, FEET, METER
 }
