@@ -1,5 +1,5 @@
 /**
- * $Id: TemperatureUtils.java,v 1.1 2005/12/01 23:50:25 romale Exp $
+ * $Id: TemperatureUtils.java,v 1.2 2005/12/02 09:15:44 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,11 +32,17 @@ final class TemperatureUtils {
     }
 
 
+    /**
+     * Converts a value in Celsius to Fahrenheit.
+     */
     public static double toFahrenheit(double celsius) {
         return 32 + 9 * celsius / 5d;
     }
 
 
+    /**
+     * Converts a value in Fahrenheit to Celsius.
+     */
     public static double toCelsius(double fahrenheit) {
         return 5 * (fahrenheit - 32) / 9d;
     }

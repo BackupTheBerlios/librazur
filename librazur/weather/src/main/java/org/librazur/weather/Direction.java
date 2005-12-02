@@ -1,5 +1,5 @@
 /**
- * $Id: Direction.java,v 1.1 2005/12/01 23:50:25 romale Exp $
+ * $Id: Direction.java,v 1.2 2005/12/02 09:15:44 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,6 +23,9 @@
 package org.librazur.weather;
 
 
+/**
+ * Cardinal points.
+ */
 public enum Direction {
     NORTH, SOUTH, EAST, WEST, NORTH_EAST, SOUTH_EAST, NORTH_WEST, SOUTH_WEST
 }

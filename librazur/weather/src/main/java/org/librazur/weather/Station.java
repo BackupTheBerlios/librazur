@@ -1,5 +1,5 @@
 /**
- * $Id: Station.java,v 1.1 2005/12/01 23:50:25 romale Exp $
+ * $Id: Station.java,v 1.2 2005/12/02 09:15:44 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,6 +26,9 @@ package org.librazur.weather;
 import org.librazur.util.StringUtils;
 
 
+/**
+ * Meteo station.
+ */
 public class Station implements Comparable<Station> {
     private final String code;
     private final Country country;
