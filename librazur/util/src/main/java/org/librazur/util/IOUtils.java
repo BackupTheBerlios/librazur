@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.5 2005/11/21 16:00:20 romale Exp $
+ * $Id: IOUtils.java,v 1.6 2005/12/02 11:04:25 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,10 +23,7 @@
 package org.librazur.util;
 
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -88,6 +85,27 @@ public final class IOUtils {
         System.arraycopy(buf.array(), buf.arrayOffset(), data, 0, data.length);
 
         return data;
+    }
+
+
+    /**
+     * Reads from an input stream and returns a {@link String}.
+     */
+    public static String readString(InputStream input) throws IOException {
+        final StringBuilder buf = new StringBuilder();
+
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(input);
+            char[] charBuf = new char[512];
+            for (int charsRead = 0; (charsRead = reader.read(charBuf)) != -1;) {
+                buf.append(charBuf, 0, charsRead);
+            }
+        } finally {
+            close(reader);
+        }
+
+        return buf.toString();
     }
 
 
