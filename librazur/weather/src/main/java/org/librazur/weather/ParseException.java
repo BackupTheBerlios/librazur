@@ -1,5 +1,5 @@
 /**
- * $Id: ParseException.java,v 1.1 2005/12/02 09:17:58 romale Exp $
+ * $Id: ParseException.java,v 1.2 2005/12/02 11:10:24 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -45,6 +45,16 @@ public class ParseException extends Exception {
         this.url = url;
         this.lineNumber = lineNumber;
         this.line = line;
+    }
+
+
+    public ParseException(final URL url, final int lineNumber, final String line) {
+        this(url, lineNumber, line, null);
+    }
+
+
+    public ParseException(final URL url) {
+        this(url, -1, null);
     }
 
 
