@@ -1,5 +1,5 @@
 /**
- * $Id: WeatherFetcherTest.java,v 1.1 2005/12/02 09:17:58 romale Exp $
+ * $Id: WeatherFetcherTest.java,v 1.2 2005/12/02 11:11:58 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -30,5 +30,17 @@ public class WeatherFetcherTest extends AbstractTest {
             fail("IllegalArgumentException was expected");
         } catch (IllegalArgumentException e) {
         }
+    }
+
+
+    public void testFetch() throws Exception {
+        final String stationCode = "LFTH";
+        final Weather weather = new WeatherFetcher().fetch(stationCode);
+        assertNotNull(weather);
+        assertNotNull(weather.getDate());
+        assertEquals(stationCode, weather.getStation().getCode());
+
+        System.out.println("Got weather from " + weather.getStation().getCode()
+                + " at " + weather.getDate());
     }
 }
