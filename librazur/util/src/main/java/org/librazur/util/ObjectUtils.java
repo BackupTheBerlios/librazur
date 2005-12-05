@@ -1,5 +1,5 @@
 /**
- * $Id: ObjectUtils.java,v 1.3 2005/10/20 22:44:31 romale Exp $
+ * $Id: ObjectUtils.java,v 1.4 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -31,6 +31,8 @@ import java.util.WeakHashMap;
 
 /**
  * Object utilities.
+ * 
+ * @since 1.0
  */
 public final class ObjectUtils {
     private static Map<String, Method> methodCache = new WeakHashMap<String, Method>(

@@ -1,5 +1,5 @@
 /**
- * $Id: AssertUtils.java,v 1.1 2005/12/05 14:26:49 romale Exp $
+ * $Id: AssertUtils.java,v 1.2 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,6 +25,8 @@ package org.librazur.util;
 
 /**
  * Assertion utilities.
+ * 
+ * @since 1.3
  */
 public final class AssertUtils {
     private AssertUtils() {

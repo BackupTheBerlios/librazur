@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.7 2005/11/21 15:35:08 romale Exp $
+ * $Id: FileUtils.java,v 1.8 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -39,6 +39,8 @@ import java.util.zip.ZipInputStream;
 
 /**
  * File utilities.
+ * 
+ * @since 1.0
  */
 public final class FileUtils {
     private FileUtils() {
@@ -49,6 +51,8 @@ public final class FileUtils {
      * Copies a source file to a destination file. A lock for each file is
      * acquired to ensure no concurrent access would prevent the copy to be
      * done.
+     * 
+     * @since 1.3
      */
     public static void copy(File src, File dest) throws IOException {
         FileChannel input = null;
@@ -75,6 +79,8 @@ public final class FileUtils {
 
     /**
      * Quietly closes a <tt>FileLock</tt>.
+     * 
+     * @since 1.3
      */
     public static void releaseLock(FileLock lock) {
         if (lock == null) {
@@ -173,6 +179,8 @@ public final class FileUtils {
      * <tt>true</tt>, an <tt>IOException</tt> will be thrown if an error
      * prevents the element to be deleted. Gracefully handles <tt>null</tt>
      * files.
+     * 
+     * @since 1.1
      */
     public static void delete(File file, boolean force) throws IOException {
         if (file == null) {

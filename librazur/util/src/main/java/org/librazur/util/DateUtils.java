@@ -1,5 +1,5 @@
 /**
- * $Id: DateUtils.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: DateUtils.java,v 1.3 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -30,6 +30,8 @@ import java.util.GregorianCalendar;
 
 /**
  * Date utilities.
+ * 
+ * @since 1.0
  */
 public final class DateUtils {
     private DateUtils() {

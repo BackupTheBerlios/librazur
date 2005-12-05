@@ -1,5 +1,5 @@
 /**
- * $Id: ReversedIterator.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: ReversedIterator.java,v 1.3 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -33,6 +33,7 @@ import java.util.List;
  * Reverse the order of an <tt>Iterator</tt>.
  * 
  * @param <T> type of the object we iterate on
+ * @since 1.0
  */
 public class ReversedIterator<T> implements Iterator<T> {
     private final Iterator<T> i;

@@ -1,5 +1,5 @@
 /**
- * $Id: SqlUtils.java,v 1.3 2005/10/20 22:44:31 romale Exp $
+ * $Id: SqlUtils.java,v 1.4 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,6 +29,8 @@ import java.sql.Statement;
 
 /**
  * SQL utilities.
+ * 
+ * @since 1.1
  */
 public final class SqlUtils {
     private SqlUtils() {

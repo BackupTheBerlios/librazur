@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtils.java,v 1.5 2005/11/20 16:37:29 romale Exp $
+ * $Id: StringUtils.java,v 1.6 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,6 +25,8 @@ package org.librazur.util;
 
 /**
  * String utilities.
+ * 
+ * @since 1.0
  */
 public final class StringUtils {
     private static final char[] hexDigits = { '0', '1', '2', '3', '4', '5',
@@ -70,6 +72,8 @@ public final class StringUtils {
     /**
      * Strips spaces at the end of a line. A space is a character as defined by
      * <tt>Character.isSpace()</tt>.
+     * 
+     * @since 1.1
      */
     public static String stripEndSpaces(String line) {
         if (line == null || line.length() == 0) {
@@ -93,6 +97,8 @@ public final class StringUtils {
 
     /**
      * Encodes a byte array to Base64.
+     * 
+     * @since 1.2
      */
     public static String encodeBase64(byte[] data) {
         return Base64.encodeBytes(data);
@@ -101,6 +107,8 @@ public final class StringUtils {
 
     /**
      * Decodes a Base64 encoded string to a byte array.
+     * 
+     * @since 1.2
      */
     public static byte[] decodeBase64(String data) {
         return Base64.decode(data);
@@ -110,6 +118,8 @@ public final class StringUtils {
     /**
      * Encodes a byte array to Hex. Implementation based on StringUtils from <a
      * href="http://melati.org">Melati project</a>.
+     * 
+     * @since 1.2
      */
     public static String encodeHex(byte[] data) {
         StringBuffer it = new StringBuffer(data.length * 2);
@@ -139,6 +149,8 @@ public final class StringUtils {
     /**
      * Decodes a Hex encoded string to a byte array. Implementation based on
      * StringUtils from <a href="http://melati.org">Melati project</a>.
+     * 
+     * @since 1.2
      */
     public static byte[] decodeHex(String data) {
         int l = data.length() / 2;

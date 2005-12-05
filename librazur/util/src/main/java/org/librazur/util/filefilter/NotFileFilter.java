@@ -1,5 +1,5 @@
 /**
- * $Id: NotFileFilter.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: NotFileFilter.java,v 1.3 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,6 +29,8 @@ import java.io.FileFilter;
 
 /**
  * File filter adapter which inverts the result of a <tt>FileFilter</tt>.
+ * 
+ * @since 1.0
  */
 public class NotFileFilter implements FileFilter {
     private final FileFilter fileFilter;

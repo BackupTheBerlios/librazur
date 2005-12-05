@@ -1,5 +1,5 @@
 /**
- * $Id: FileScanner.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: FileScanner.java,v 1.3 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -37,6 +37,8 @@ import org.librazur.util.filefilter.TrueFileFilter;
 
 /**
  * File scanner.
+ * 
+ * @since 1.0
  */
 public class FileScanner {
     private final File dir;

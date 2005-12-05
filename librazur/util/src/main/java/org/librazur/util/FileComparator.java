@@ -1,5 +1,5 @@
 /**
- * $Id: FileComparator.java,v 1.3 2005/11/20 15:31:54 romale Exp $
+ * $Id: FileComparator.java,v 1.4 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -30,16 +30,26 @@ import java.util.Comparator;
 /**
  * Comparator for files. Sort two files against their name (case sensitive by
  * default).
+ * 
+ * @since 1.0
  */
 public class FileComparator implements Comparator<File> {
     private boolean caseSensitive;
 
 
+    /**
+     * Constructor.
+     */
     public FileComparator() {
         this(true);
     }
 
 
+    /**
+     * Constructor.
+     * 
+     * @since 1.2
+     */
     public FileComparator(final boolean caseSensitive) {
         this.caseSensitive = caseSensitive;
     }

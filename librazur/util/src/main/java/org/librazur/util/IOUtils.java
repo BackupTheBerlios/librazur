@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.6 2005/12/02 11:04:25 romale Exp $
+ * $Id: IOUtils.java,v 1.7 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,6 +32,8 @@ import java.nio.channels.WritableByteChannel;
 
 /**
  * I/O utilities.
+ * 
+ * @since 1.0
  */
 public final class IOUtils {
     private IOUtils() {
@@ -56,6 +58,8 @@ public final class IOUtils {
 
     /**
      * Reads all bytes from a channel until EOF is reached.
+     * 
+     * @since 1.2
      */
     public static ByteBuffer read(ReadableByteChannel channel, ByteBuffer buffer)
             throws IOException {
@@ -90,6 +94,8 @@ public final class IOUtils {
 
     /**
      * Reads from an input stream and returns a {@link String}.
+     * 
+     * @since 1.3
      */
     public static String readString(InputStream input) throws IOException {
         final StringBuilder buf = new StringBuilder();
@@ -131,6 +137,8 @@ public final class IOUtils {
 
     /**
      * Same as <tt>copy(input, output, ByteBuffer.allocate(1024))</tt>.
+     * 
+     * @since 1.2
      */
     public static void copy(ReadableByteChannel input,
             WritableByteChannel output) throws IOException {
@@ -142,6 +150,8 @@ public final class IOUtils {
      * Copies all bytes from an input channel to an output channel until EOF is
      * reached. The output channel is not closed nor flushed at the end of the
      * copy.
+     * 
+     * @since 1.2
      */
     public static void copy(ReadableByteChannel input,
             WritableByteChannel output, ByteBuffer buf) throws IOException {
@@ -161,6 +171,8 @@ public final class IOUtils {
 
     /**
      * Creates an <tt>InputStream</tt> from a <tt>ByteBuffer</tt>.
+     * 
+     * @since 1.3
      */
     public static InputStream newInputStream(final ByteBuffer buf) {
         return new InputStream() {
@@ -200,6 +212,8 @@ public final class IOUtils {
 
     /**
      * Creates an <tt>OutputStream</tt> from a <tt>ByteBuffer</tt>.
+     * 
+     * @since 1.3
      */
     public static OutputStream newOutputStream(final ByteBuffer buf) {
         return new OutputStream() {

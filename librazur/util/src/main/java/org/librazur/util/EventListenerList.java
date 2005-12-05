@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.4 2005/12/05 14:28:36 romale Exp $
+ * $Id: EventListenerList.java,v 1.5 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -33,6 +33,7 @@ import java.util.*;
  * Event listener list, with dynamic capabilities.
  * 
  * @param <T> <tt>EventListener</tt> type
+ * @since 1.0
  */
 public class EventListenerList<T extends EventListener> {
     private final List<T> listeners = new LinkedList<T>();

@@ -1,5 +1,5 @@
 /**
- * $Id: ImageCache.java,v 1.2 2005/11/11 17:24:52 romale Exp $
+ * $Id: ImageCache.java,v 1.3 2005/12/05 14:48:43 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,6 +32,8 @@ import javax.imageio.ImageIO;
 
 /**
  * Image cache.
+ * 
+ * @since 1.2
  */
 public class ImageCache extends AbstractClassPathCache<BufferedImage> {
     @Override
