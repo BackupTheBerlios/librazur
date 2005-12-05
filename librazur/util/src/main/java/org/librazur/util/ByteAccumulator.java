@@ -1,5 +1,5 @@
 /**
- * $Id: ByteAccumulator.java,v 1.3 2005/11/20 15:15:13 romale Exp $
+ * $Id: ByteAccumulator.java,v 1.4 2005/12/05 14:28:16 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,8 +27,8 @@ import java.nio.ByteBuffer;
 
 
 /**
- * Byte accumulator. Provides a way to add bytes to a <tt>ByteBuffer</tt>,
- * growing automatically when it is required.
+ * Byte accumulator. Provides a way to add bytes to a
+ * {@link java.nio.ByteBuffer}, growing automatically when it is required.
  */
 public class ByteAccumulator {
     private ByteBuffer buffer;

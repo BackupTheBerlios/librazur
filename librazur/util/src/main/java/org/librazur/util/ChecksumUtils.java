@@ -1,5 +1,5 @@
 /**
- * $Id: ChecksumUtils.java,v 1.1 2005/11/20 16:36:42 romale Exp $
+ * $Id: ChecksumUtils.java,v 1.2 2005/12/05 14:28:17 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,7 +32,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Checksum utilities. This class simply delegates to instances of
- * <tt>java.security.MessageDigest</tt>.
+ * {@link java.security.MessageDigest}.
  */
 public final class ChecksumUtils {
     private ChecksumUtils() {
