@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtilsTest.java,v 1.4 2005/11/21 16:00:20 romale Exp $
+ * $Id: IOUtilsTest.java,v 1.5 2005/12/05 14:28:36 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -102,24 +102,24 @@ public class IOUtilsTest extends TestCase {
         assertEquals(-1, input.read());
         assertEquals(-1, input.read(new byte[data.length], 0, data.length));
     }
-    
-    
+
+
     public void testNewOutputStream() throws IOException {
         final ByteBuffer buf = ByteBuffer.allocate(5);
         final OutputStream output = IOUtils.newOutputStream(buf);
-        
-        for(int i = 0; i < buf.capacity(); ++i) {
+
+        for (int i = 0; i < buf.capacity(); ++i) {
             output.write(i);
         }
         try {
             output.write(2);
             fail("IOException was expected");
-        } catch(IOException e) {
+        } catch (IOException e) {
         }
-        
+
         buf.clear();
         final byte[] data = new byte[buf.capacity()];
-        for(int i = 0; i < data.length; ++i) {
+        for (int i = 0; i < data.length; ++i) {
             data[i] = (byte) i;
         }
         output.write(data, 0, data.length);
@@ -127,7 +127,7 @@ public class IOUtilsTest extends TestCase {
         try {
             output.write(new byte[] { 2 }, 0, 1);
             fail("IOException was expected");
-        } catch(IOException e) {
+        } catch (IOException e) {
         }
     }
 }

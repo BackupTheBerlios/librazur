@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.3 2005/10/20 22:44:31 romale Exp $
+ * $Id: EventListenerList.java,v 1.4 2005/12/05 14:28:36 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,12 +26,7 @@ package org.librazur.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.EventListener;
-import java.util.EventObject;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.*;
 
 
 /**

@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtilsTest.java,v 1.4 2005/11/20 16:37:29 romale Exp $
+ * $Id: StringUtilsTest.java,v 1.5 2005/12/05 14:28:36 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -75,6 +75,7 @@ public class StringUtilsTest extends TestCase {
             assertEquals(data[i], testData[i]);
         }
     }
+
 
     public void testHex() throws Exception {
         final String str = "Librazur";
