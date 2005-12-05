@@ -4,6 +4,7 @@ http://librazur.info
 
  CVS
 =====
+  - added AssertUtils
   - added IOUtils.readString()
   - added IOUtils.newInputStream() and IOUtils.newOutputStream()
   - added FileUtils.copy() and FileUtils.releaseLock()
