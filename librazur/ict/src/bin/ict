@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# $Id: ict,v 1.1 2005/11/21 01:30:15 romale Exp $
+# $Id: ict,v 1.2 2005/12/06 08:58:32 romale Exp $
 #
-# Black List Converter
+# Image Convolution Tester
 # Copyright (c) 2005 Librazur
 #
 # Starter script, taken from Maven2.
