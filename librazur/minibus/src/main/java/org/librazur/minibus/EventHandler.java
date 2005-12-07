@@ -1,5 +1,5 @@
 /**
- * $Id: EventHandler.java,v 1.3 2005/11/21 13:54:38 romale Exp $
+ * $Id: EventHandler.java,v 1.4 2005/12/07 15:00:17 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,9 +32,9 @@ import java.util.EventObject;
  */
 public interface EventHandler extends EventListener {
     /**
-     * This method is called by the <tt>Bus</tt> when an event has been
-     * posted. If an <tt>EventObject</tt> is returned, the <tt>Bus</tt> must
-     * repost it. Otherwise, this method should return <tt>null</tt>.
+     * This method is called by the {@link Bus} when an event has been posted.
+     * If an {@link EventObject} is returned, the {@link Bus} must repost it.
+     * Otherwise, this method should return <code>null</code>.
      */
     EventObject onEvent(EventObject evt) throws Exception;
 }

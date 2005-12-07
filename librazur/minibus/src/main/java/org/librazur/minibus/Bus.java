@@ -1,5 +1,5 @@
 /**
- * $Id: Bus.java,v 1.2 2005/11/20 22:00:59 romale Exp $
+ * $Id: Bus.java,v 1.3 2005/12/07 15:00:16 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -31,9 +31,9 @@ import java.util.EventObject;
  */
 public interface Bus {
     /**
-     * Registers an <tt>EventHandler</tt> on the bus. If an event object class
-     * is precised, the <tt>EventHandler</tt> would only receive event objects
-     * of this class.
+     * Registers an {@link EventHandler} on the bus. If an event object class is
+     * precised, the {@link EventHandler} would only receive event objects of
+     * this class.
      */
     void register(EventHandler handler,
             Class<? extends EventObject>... evtClass);
@@ -46,26 +46,26 @@ public interface Bus {
 
 
     /**
-     * Posts an event to all registered <tt>EventHandler</tt> instances. Any
+     * Posts an event to all registered {@link EventHandler} instances. Any
      * error during event dispatching is handled by the registered
-     * <tt>ErrorHandler</tt>. If an error occurs in synchronous mode, the
-     * event is not dispatched to other <tt>EventHandler</tt> instances. In
+     * {@link ErrorHandler}. If an error occurs in synchronous mode, the event
+     * is not dispatched to other {@link EventHandler} instances. In
      * asynchronous mode, an error doesn't prevent the other
-     * <tt>EventHandler</tt> instances to be called. If an
-     * <tt>EventHandler</tt> instance returns a non-<tt>null</tt> <tt>EventObject</tt>,
-     * the bus must repost the event.
+     * {@link EventHandler} instances to be called. If an {@link EventHandler}
+     * instance returns a non-<code>null</code> {@link EventObject}, the bus
+     * must repost the event.
      */
     void post(EventObject evt, boolean asynchronous);
 
 
     /**
-     * Clears all registered <tt>EventHandler</tt> instances.
+     * Clears all registered {@link EventHandler} instances.
      */
     void clear();
 
 
     /**
-     * Sets an <tt>ErrorHandler</tt>.
+     * Sets an {@link ErrorHandler}.
      */
     void setErrorHandler(ErrorHandler handler);
 }
