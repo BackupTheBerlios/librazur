@@ -1,5 +1,5 @@
 /**
- * $Id: AssertTest.java,v 1.2 2005/12/07 14:47:02 romale Exp $
+ * $Id: AssertTest.java,v 1.3 2005/12/07 20:56:34 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -203,6 +203,8 @@ public class AssertTest extends TestCase {
 
     public void testIsInstanceOf() {
         Assert.isInstanceOf(CharSequence.class, String.class);
+        Assert.isInstanceOf(Object.class, Object.class);
+        Assert.isInstanceOf(Class.class, Class.class);
 
         try {
             Assert.isInstanceOf(CharSequence.class, Number.class);
