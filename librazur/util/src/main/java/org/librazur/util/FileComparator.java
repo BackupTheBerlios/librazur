@@ -1,5 +1,5 @@
 /**
- * $Id: FileComparator.java,v 1.4 2005/12/05 14:48:43 romale Exp $
+ * $Id: FileComparator.java,v 1.5 2005/12/07 10:34:07 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,6 +24,7 @@ package org.librazur.util;
 
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Comparator;
 
 
@@ -33,7 +34,7 @@ import java.util.Comparator;
  * 
  * @since 1.0
  */
-public class FileComparator implements Comparator<File> {
+public class FileComparator implements Comparator<File>, Serializable {
     private boolean caseSensitive;
 
 
