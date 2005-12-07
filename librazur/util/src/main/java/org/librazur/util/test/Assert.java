@@ -1,5 +1,5 @@
 /**
- * $Id: Assert.java,v 1.2 2005/12/07 14:47:02 romale Exp $
+ * $Id: Assert.java,v 1.3 2005/12/07 20:56:08 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -194,10 +194,11 @@ public class Assert {
     }
 
 
-    public static void isInstanceOf(Class<?> ref, Class<?> tested) {
+    @SuppressWarnings("unchecked")
+    public static void isInstanceOf(Class ref, Class tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
-
+        
         if (!ref.isAssignableFrom(tested)) {
             throw new AssertionFailedException("Class "
                     + tested.getClass().getName()
