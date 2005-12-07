@@ -1,5 +1,5 @@
 /**
- * $Id: ByteAccumulator.java,v 1.5 2005/12/05 14:48:43 romale Exp $
+ * $Id: ByteAccumulator.java,v 1.6 2005/12/07 14:35:32 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,6 +25,8 @@ package org.librazur.util;
 
 import java.nio.ByteBuffer;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * Byte accumulator. Provides a way to add bytes to a
@@ -37,9 +39,7 @@ public class ByteAccumulator {
 
 
     public ByteAccumulator(final ByteBuffer buffer) {
-        if (buffer == null) {
-            throw new NullPointerException("buffer");
-        }
+        Assert.isNotNull("buffer", buffer);
         this.buffer = buffer;
     }
 
@@ -59,6 +59,9 @@ public class ByteAccumulator {
      * buffer with more space is created, with data from the old buffer.
      */
     public void append(ByteBuffer buf) {
+        if (buf == null) {
+            return;
+        }
         if (buffer.remaining() < buf.remaining()) {
             // not enough space: we allocate a new buffer with more space
             final int position = buffer.position();
