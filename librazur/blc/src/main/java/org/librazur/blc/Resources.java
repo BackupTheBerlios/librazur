@@ -1,5 +1,5 @@
 /**
- * $Id: Resources.java,v 1.2 2005/10/26 21:16:50 romale Exp $
+ * $Id: Resources.java,v 1.3 2005/12/07 16:00:19 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -86,7 +86,7 @@ public class Resources {
 
 
     /**
-     * Returns an icon loaded from a resource looked up by a key.
+     * Returns an {@link Icon} loaded from a resource looked up by a key.
      */
     public static Icon icon(String key) {
         return iconCache.get(i18n(key));
@@ -94,7 +94,7 @@ public class Resources {
 
 
     /**
-     * Returns an image loaded from a resource looked up by a key.
+     * Returns an {@link Image} loaded from a resource looked up by a key.
      */
     public static Image image(String key) {
         return imageCache.get(i18n(key));

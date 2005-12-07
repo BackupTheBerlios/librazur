@@ -1,5 +1,5 @@
 /**
- * $Id: Resources.java,v 1.1 2005/11/21 01:30:15 romale Exp $
+ * $Id: Resources.java,v 1.2 2005/12/07 16:00:18 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,6 +23,7 @@
 package org.librazur.ict;
 
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
@@ -82,7 +83,7 @@ public class Resources {
 
 
     /**
-     * Returns an icon loaded from a resource looked up by a key.
+     * Returns an {@link Icon} loaded from a resource looked up by a key.
      */
     public static Icon icon(String key) {
         return ICON_CACHE.get(i18n(key));
@@ -90,7 +91,7 @@ public class Resources {
 
 
     /**
-     * Returns an image loaded from a resource looked up by a key.
+     * Returns an {@link Image} loaded from a resource looked up by a key.
      */
     public static BufferedImage image(String key) {
         return IMAGE_CACHE.get(i18n(key));
@@ -98,7 +99,7 @@ public class Resources {
 
 
     /**
-     * Returns the application version, or an empty string if unknown.
+     * Returns the application version, or an empty {@link String} if unknown.
      */
     public static String version() {
         final Package pkg = ICT.class.getPackage();
