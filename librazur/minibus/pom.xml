@@ -4,12 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.4 2005/11/21 15:23:08 romale Exp $
+    $Id: pom.xml,v 1.5 2005/12/07 16:01:30 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
     <artifactId>librazur</artifactId>
-    <version>20051121</version>
+    <version>20051207</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur</groupId>
