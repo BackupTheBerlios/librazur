@@ -1,5 +1,5 @@
 /**
- * $Id: AssertUtils.java,v 1.2 2005/12/05 14:48:43 romale Exp $
+ * $Id: AssertUtils.java,v 1.3 2005/12/07 14:34:26 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,11 +23,17 @@
 package org.librazur.util;
 
 
+import org.librazur.util.test.Assert;
+
+
 /**
  * Assertion utilities.
  * 
  * @since 1.3
+ * @deprecated As of 1.3.1, this class is deprecated: use {@link Assert}
+ *             instead. This class will be removed in 1.4.
  */
+@Deprecated
 public final class AssertUtils {
     private AssertUtils() {
     }
