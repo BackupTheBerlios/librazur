@@ -1,5 +1,5 @@
 /**
- * $Id: OrFileFilter.java,v 1.5 2005/12/07 14:47:21 romale Exp $
+ * $Id: OrFileFilter.java,v 1.6 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -33,8 +33,8 @@ import org.librazur.util.test.Assert;
 
 
 /**
- * Composite file filter which accepts a file if one of the file filters returns
- * <tt>true</tt>.
+ * Composite {@link FileFilter} which accepts a file if one of the file filters
+ * returns <code>true</code>.
  * 
  * @since 1.0
  */

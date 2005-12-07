@@ -1,5 +1,5 @@
 /**
- * $Id: ImageCache.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: ImageCache.java,v 1.4 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,6 +23,7 @@
 package org.librazur.util.cache;
 
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -31,7 +32,7 @@ import javax.imageio.ImageIO;
 
 
 /**
- * Image cache.
+ * {@link Image} {@link Cache}.
  * 
  * @since 1.2
  */

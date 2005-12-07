@@ -1,5 +1,5 @@
 /**
- * $Id: Cache.java,v 1.2 2005/12/05 14:48:43 romale Exp $
+ * $Id: Cache.java,v 1.3 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,16 +24,18 @@ package org.librazur.util.cache;
 
 
 /**
- * Generic cache object. <tt>T</tt> is the cached object type, and <tt>K</tt>
- * is the key type to reference an object.
+ * Generic cache object.
  * 
  * @since 1.2
+ * @param <T> cached object type
+ * @param <K> key type to reference the object
  */
 public interface Cache<T, K> {
     /**
      * Gets an object from the cache.
      * 
-     * @return <tt>null</tt> if the object couldn't be loaded from the cache
+     * @return <code>null</code> if the object couldn't be loaded from the
+     *         cache
      */
     T get(K key);
 }

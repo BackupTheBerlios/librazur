@@ -1,5 +1,5 @@
 /**
- * $Id: NotFileFilter.java,v 1.4 2005/12/07 14:47:21 romale Exp $
+ * $Id: NotFileFilter.java,v 1.5 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -30,7 +30,7 @@ import org.librazur.util.test.Assert;
 
 
 /**
- * File filter adapter which inverts the result of a <tt>FileFilter</tt>.
+ * {@link FileFilter} adapter which inverts the result of a {@link FileFilter}.
  * 
  * @since 1.0
  */

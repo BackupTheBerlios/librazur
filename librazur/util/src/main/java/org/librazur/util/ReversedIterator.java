@@ -1,5 +1,5 @@
 /**
- * $Id: ReversedIterator.java,v 1.4 2005/12/07 14:47:21 romale Exp $
+ * $Id: ReversedIterator.java,v 1.5 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,7 +32,7 @@ import org.librazur.util.test.Assert;
 
 
 /**
- * Reverse the order of an <tt>Iterator</tt>.
+ * Reverse the order of an {@link Iterator}.
  * 
  * @param <T> type of the object we iterate on
  * @since 1.0

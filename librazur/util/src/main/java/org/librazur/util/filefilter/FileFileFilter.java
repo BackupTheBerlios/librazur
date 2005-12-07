@@ -1,5 +1,5 @@
 /**
- * $Id: FileFileFilter.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: FileFileFilter.java,v 1.4 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,7 +28,7 @@ import java.io.FileFilter;
 
 
 /**
- * File filter for files. Only accepts files.
+ * {@link FileFilter} for files. Only accepts files.
  * 
  * @since 1.0
  */

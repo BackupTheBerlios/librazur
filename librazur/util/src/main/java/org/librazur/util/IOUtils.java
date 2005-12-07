@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.8 2005/12/07 14:47:21 romale Exp $
+ * $Id: IOUtils.java,v 1.9 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -25,6 +25,7 @@ package org.librazur.util;
 
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.nio.channels.Channel;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
@@ -59,7 +60,8 @@ public final class IOUtils {
 
 
     /**
-     * Reads all bytes from a channel until EOF is reached.
+     * Reads all bytes from a {@link Channel} until <code>EOF</code> is
+     * reached.
      * 
      * @since 1.2
      */
@@ -84,7 +86,8 @@ public final class IOUtils {
 
 
     /**
-     * Reads all bytes from an input stream until EOF is reached.
+     * Reads all bytes from an {@link InputStream} until <code>EOF</code> is
+     * reached.
      */
     public static byte[] read(InputStream input, int len) throws IOException {
         Assert.isNotNull("input", input);
@@ -100,7 +103,7 @@ public final class IOUtils {
 
 
     /**
-     * Reads from an input stream and returns a {@link String}.
+     * Reads from an {@link InputStream} and returns a {@link String}.
      * 
      * @since 1.3
      */
@@ -125,8 +128,8 @@ public final class IOUtils {
 
 
     /**
-     * Reads all bytes from an input stream until EOF is reached, using a buffer
-     * with 1024 bytes.
+     * Reads all bytes from an {@link InputStream} until <code>EOF</code> is
+     * reached, using a buffer with 1024 bytes.
      */
     public static byte[] read(InputStream input) throws IOException {
         return read(input, 1024);
@@ -134,9 +137,9 @@ public final class IOUtils {
 
 
     /**
-     * Copies all bytes from an input stream to an output stream until EOF is
-     * reached. The output stream is not closed nor flushed at the end of the
-     * copy.
+     * Copies all bytes from an {@link InputStream} to an {@link OutputStream}
+     * until <code>EOF</code> is reached. The {@link OutputStream} is not
+     * closed nor flushed at the end of the copy.
      */
     public static void copy(InputStream input, OutputStream output)
             throws IOException {
@@ -148,7 +151,7 @@ public final class IOUtils {
 
 
     /**
-     * Same as <tt>copy(input, output, ByteBuffer.allocate(1024))</tt>.
+     * Same as <code>copy(input, output, ByteBuffer.allocate(1024))</code>.
      * 
      * @since 1.2
      */
@@ -159,9 +162,9 @@ public final class IOUtils {
 
 
     /**
-     * Copies all bytes from an input channel to an output channel until EOF is
-     * reached. The output channel is not closed nor flushed at the end of the
-     * copy.
+     * Copies all bytes from an input {@link Channel} to an output
+     * {@link Channel} until <code>EOF</code> is reached. The output
+     * {@link Channel} is not closed nor flushed at the end of the copy.
      * 
      * @since 1.2
      */
@@ -186,7 +189,7 @@ public final class IOUtils {
 
 
     /**
-     * Creates an <tt>InputStream</tt> from a <tt>ByteBuffer</tt>.
+     * Creates an {@link InputStream} from a {@link ByteBuffer}.
      * 
      * @since 1.3
      */
@@ -229,7 +232,7 @@ public final class IOUtils {
 
 
     /**
-     * Creates an <tt>OutputStream</tt> from a <tt>ByteBuffer</tt>.
+     * Creates an {@link OutputStream} from a {@link ByteBuffer}.
      * 
      * @since 1.3
      */

@@ -1,5 +1,5 @@
 /**
- * $Id: ExtensionFileFilter.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: ExtensionFileFilter.java,v 1.4 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,8 +28,8 @@ import java.io.FileFilter;
 
 
 /**
- * File filter for files ending with some extension. This file filter is not
- * case sensitive.
+ * {@link FileFilter} for files ending with some extension. This
+ * {@link FileFilter} is not case sensitive.
  * 
  * @since 1.0
  */

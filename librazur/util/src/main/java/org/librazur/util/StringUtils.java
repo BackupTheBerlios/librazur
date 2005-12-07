@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtils.java,v 1.7 2005/12/07 14:46:13 romale Exp $
+ * $Id: StringUtils.java,v 1.8 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,7 +27,7 @@ import org.librazur.util.test.Assert;
 
 
 /**
- * String utilities.
+ * {@link String} utilities.
  * 
  * @since 1.0
  */
@@ -46,7 +46,7 @@ public final class StringUtils {
 
 
     /**
-     * Returns a default string if a string is <tt>null</tt>.
+     * Returns a default {@link String} if a {@link String} is <code>null</code>.
      */
     public static String defaultString(String str, String def) {
         return str == null ? def : str;
@@ -54,8 +54,8 @@ public final class StringUtils {
 
 
     /**
-     * Returns <tt>true</tt> is a string is null or is empty (same as
-     * <tt>trimToNull(str) == null).
+     * Returns <code>true</code> is a {@link String} is <code>null</code> or
+     * is empty (same as <code>trimToNull(str) == null)</code>.
      */
     public static boolean isBlank(String str) {
         return trimToNull(str) == null;
@@ -63,8 +63,9 @@ public final class StringUtils {
 
 
     /**
-     * Returns a new trimmed string. If the input string is <tt>null</tt>,
-     * empty or contains only white spaces, returns <tt>null</tt>.
+     * Returns a new trimmed {@link String}. If the input {@link String} is
+     * <code>null</code>, empty or contains only white spaces, returns
+     * <code>null</code>.
      */
     public static String trimToNull(String str) {
         if (str == null) {
@@ -79,7 +80,7 @@ public final class StringUtils {
 
     /**
      * Strips spaces at the end of a line. A space is a character as defined by
-     * <tt>Character.isSpace()</tt>.
+     * {@link Character#isWhitespace(char)}.
      * 
      * @since 1.1
      */
@@ -116,7 +117,7 @@ public final class StringUtils {
 
 
     /**
-     * Decodes a Base64 encoded string to a byte array.
+     * Decodes a Base64 encoded {@link String} to a byte array.
      * 
      * @since 1.2
      */
@@ -161,8 +162,8 @@ public final class StringUtils {
 
 
     /**
-     * Decodes a Hex encoded string to a byte array. Implementation based on
-     * StringUtils from <a href="http://melati.org">Melati project</a>.
+     * Decodes a Hex encoded {@link String} to a byte array. Implementation
+     * based on StringUtils from <a href="http://melati.org">Melati project</a>.
      * 
      * @since 1.2
      */

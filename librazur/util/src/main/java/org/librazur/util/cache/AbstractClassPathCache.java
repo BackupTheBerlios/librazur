@@ -1,5 +1,5 @@
 /**
- * $Id: AbstractClassPathCache.java,v 1.2 2005/12/05 14:48:43 romale Exp $
+ * $Id: AbstractClassPathCache.java,v 1.3 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,7 +27,7 @@ import java.net.URL;
 
 
 /**
- * Abstract implementation of <tt>Cache</tt>, which loads objects from the
+ * Abstract implementation of {@link Cache}, which loads objects from the
  * classpath.
  * 
  * @since 1.2

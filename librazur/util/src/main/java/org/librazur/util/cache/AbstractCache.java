@@ -1,5 +1,5 @@
 /**
- * $Id: AbstractCache.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: AbstractCache.java,v 1.4 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,8 +28,8 @@ import java.util.WeakHashMap;
 
 
 /**
- * Abstract implementation of <tt>Cache</tt>. Concrete implementations should
- * extend this class and implement the <tt>load()</tt> method.
+ * Abstract implementation of {@link Cache}. Concrete implementations should
+ * extend this class and implement the <code>load()</code> method.
  * 
  * @since 1.2
  */
@@ -60,7 +60,7 @@ public abstract class AbstractCache<T, K> implements Cache<T, K> {
     /**
      * Loads an object.
      * 
-     * @return <tt>null</tt> if the object couldn't be loaded
+     * @return <code>null</code> if the object couldn't be loaded
      */
     protected abstract T load(K key);
 }

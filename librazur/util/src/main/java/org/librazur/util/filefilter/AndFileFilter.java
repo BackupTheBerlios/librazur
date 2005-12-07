@@ -1,5 +1,5 @@
 /**
- * $Id: AndFileFilter.java,v 1.4 2005/12/07 14:47:21 romale Exp $
+ * $Id: AndFileFilter.java,v 1.5 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -33,8 +33,8 @@ import org.librazur.util.test.Assert;
 
 
 /**
- * Composite file filter where all file filters must return <tt>true</tt> in
- * order to accept a file.
+ * Composite {@link FileFilter} where all file filters must return
+ * <code>true</code> in order to accept a {@link File}.
  * 
  * @since 1.0
  */

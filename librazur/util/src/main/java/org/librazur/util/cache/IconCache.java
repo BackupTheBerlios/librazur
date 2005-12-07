@@ -1,5 +1,5 @@
 /**
- * $Id: IconCache.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: IconCache.java,v 1.4 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -30,7 +30,7 @@ import javax.swing.ImageIcon;
 
 
 /**
- * Swing's <tt>Icon</tt> cache.
+ * Swing's {@link Icon} {@link Cache}.
  * 
  * @since 1.2
  */

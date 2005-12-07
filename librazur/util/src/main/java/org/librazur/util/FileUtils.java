@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.9 2005/12/07 14:47:21 romale Exp $
+ * $Id: FileUtils.java,v 1.10 2005/12/07 15:52:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -83,7 +83,7 @@ public final class FileUtils {
 
 
     /**
-     * Quietly closes a <tt>FileLock</tt>.
+     * Quietly closes a {@link FileLock}.
      * 
      * @since 1.3
      */
@@ -100,8 +100,8 @@ public final class FileUtils {
 
     /**
      * Ensures that a directory exists, creating it if necessary. If
-     * <tt>file</tt> is actually a file (not a directory), this method ensures
-     * the directory containing the file exists.
+     * <code>file</code> is actually a file (not a directory), this method
+     * ensures the directory containing the file exists.
      */
     public static void ensureDirectoryExists(File dir) {
         Assert.isNotNull("dir", dir);
@@ -189,10 +189,10 @@ public final class FileUtils {
     /**
      * Tries to delete a directory or a file. The directory or the file may not
      * be deleted if some files have been opened by some other softwares
-     * (especially under platforms like Windows). If <tt>force</tt> is set to
-     * <tt>true</tt>, an <tt>IOException</tt> will be thrown if an error
-     * prevents the element to be deleted. Gracefully handles <tt>null</tt>
-     * files.
+     * (especially under platforms like Windows). If <code>force</code> is set
+     * to <code>true</code>, an {@link IOException} will be thrown if an
+     * error prevents the element to be deleted. Gracefully handles
+     * <code>null</code> files.
      * 
      * @since 1.1
      */
@@ -229,7 +229,7 @@ public final class FileUtils {
 
 
     /**
-     * Same as <tt>FileUtils.delete(file, false)</tt>.
+     * Same as <code>FileUtils.delete(file, false)</code>.
      */
     public static void delete(File file) throws IOException {
         delete(file, false);
@@ -237,7 +237,7 @@ public final class FileUtils {
 
 
     /**
-     * Unzips an input stream into a directory.
+     * Unzips an {@link InputStream} into a directory.
      */
     public static void unzip(InputStream input, File dir) throws IOException {
         Assert.isNotNull("input", input);
@@ -268,7 +268,7 @@ public final class FileUtils {
 
 
     /**
-     * Converts a file to an URL.
+     * Converts a {@link File} to an {@link URL}.
      */
     public static URL toURL(File file) {
         Assert.isNotNull("file", file);
@@ -282,7 +282,8 @@ public final class FileUtils {
 
 
     /**
-     * Converts a collection of files to a collection of URLs.
+     * Converts a {@link Collection} of files to a {@link Collection} of
+     * {@link URL} instances.
      */
     public static Collection<URL> toURL(Collection<File> files) {
         Assert.isNotNull("files", files);
