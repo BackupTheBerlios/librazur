@@ -1,5 +1,5 @@
 /**
- * $Id: SignJarMojo.java,v 1.4 2005/11/24 16:12:41 romale Exp $
+ * $Id: SignJarMojo.java,v 1.5 2005/12/07 16:08:38 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,12 +29,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import org.apache.maven.model.Dependency;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -45,14 +49,14 @@ import org.librazur.jar.JarSigner;
 
 /**
  * Signs JAR files.
- *
+ * 
  * @goal signjar
  * @description Signs JAR files.
  */
 public class SignJarMojo extends AbstractMojo {
     /**
      * Alias to sign under.
-     *
+     * 
      * @parameter expression="${signjar.alias}"
      * @required
      */
@@ -60,7 +64,7 @@ public class SignJarMojo extends AbstractMojo {
 
     /**
      * Password for keystore integrity.
-     *
+     * 
      * @parameter expression="${signjar.storepass}"
      * @required
      */
@@ -68,49 +72,49 @@ public class SignJarMojo extends AbstractMojo {
 
     /**
      * Keystore location.
-     *
+     * 
      * @parameter expression="${signjar.keystore}"
      */
     public String keystore;
 
     /**
      * Keystore type.
-     *
+     * 
      * @parameter expression="${signjar.storetype}"
      */
     public String storeType;
 
     /**
      * Password for private key (if different).
-     *
+     * 
      * @parameter expression="${signjar.keypass}"
      */
     public String keyPass;
 
     /**
      * Name of .SF/.DSA file.
-     *
+     * 
      * @parameter expression="${signjar.sigfile}"
      */
     public String sigFile;
 
     /**
      * Verbose output when signing.
-     *
+     * 
      * @parameter expression="${signjar.verbose}"
      */
     public boolean verbose;
 
     /**
      * Include the .SF file inside the signature block.
-     *
+     * 
      * @parameter expression="${signjar.internalsf}"
      */
     public boolean internalSF;
 
     /**
      * Don't compute hash of entire manifest.
-     *
+     * 
      * @parameter expression="${signjar.sectionsonly}"
      */
     public boolean sectionsOnly;
@@ -118,25 +122,53 @@ public class SignJarMojo extends AbstractMojo {
     /**
      * Flag to control whether the presence of a signature file means a JAR is
      * signed.
-     *
+     * 
      * @parameter expression="${signjar.lazy}"
      */
     public boolean lazy;
 
     /**
      * Whether to sign dependencies or not.
-     *
+     * 
      * @parameter expression="${signjar.signdependencies}"
      */
     public boolean signDependencies = true;
 
     /**
      * The project containing JAR files to sign.
-     *
+     * 
      * @parameter expression="${project}"
      * @required
      */
     public MavenProject project;
+
+    /**
+     * Artifact resolver, needed to download source jars for inclusion in
+     * classpath.
+     * 
+     * @component role="org.apache.maven.artifact.resolver.ArtifactResolver"
+     * @required
+     * @readonly
+     */
+    public ArtifactResolver artifactResolver;
+
+    /**
+     * Local Maven repository.
+     * 
+     * @parameter expression="${localRepository}"
+     * @required
+     * @readonly
+     */
+    public ArtifactRepository localRepository;
+
+    /**
+     * Remote repositories which will be searched for source attachments.
+     * 
+     * @parameter expression="${project.remoteArtifactRepositories}"
+     * @required
+     * @readonly
+     */
+    public List remoteArtifactRepositories;
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -157,12 +189,31 @@ public class SignJarMojo extends AbstractMojo {
                             + "when project packaging is set to 'jar'");
         }
 
+        getLog().info(project.getTestArtifacts().toString());
+        getLog().info("Size=" + project.getTestArtifacts().size());
+
         if (signDependencies) {
-            for (final Iterator i = project.getDependencies().iterator(); i
+            final Set artifacts = new HashSet();
+            
+            System.out.println(project.getDependencyArtifacts().toString());
+
+            for (final Iterator i = project.getDependencyArtifacts().iterator(); i
                     .hasNext();) {
-                final Dependency dep = (Dependency) i.next();
-                // TODO sign dependencies
+                final Artifact artifact = (Artifact) i.next();
+                if (artifact.isOptional() && !artifacts.contains(artifact)) {
+                    try {
+                        artifactResolver.resolve(artifact,
+                                remoteArtifactRepositories, localRepository);
+                    } catch (Exception e) {
+                        throw new MojoExecutionException(
+                                "Unable to resolve artifact: "
+                                        + artifact.getId(), e);
+                    }
+                    artifacts.add(artifact);
+                }
             }
+            
+            getLog().info(artifacts.toString());
         }
     }
 

@@ -1,5 +1,5 @@
 /**
- * $Id: FixcrlfMojo.java,v 1.3 2005/11/25 13:58:48 romale Exp $
+ * $Id: FixcrlfMojo.java,v 1.4 2005/12/07 16:08:36 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -72,8 +72,8 @@ public class FixcrlfMojo extends AbstractMojo {
     public boolean fixlast = true;
 
     /**
-     * Specifies how end-of-lines (EOL) characters are to be handled. Possible
-     * values are: mac, unix, dos. Default is unix.
+     * Specifies how end-of-lines (<code>EOL</code>) characters are to be
+     * handled. Possible values are: mac, unix, dos. Default is unix.
      * 
      * @parameter expression="${fixcrlf.eol}" default-value="unix"
      */
@@ -103,7 +103,7 @@ public class FixcrlfMojo extends AbstractMojo {
     public List excludes;
 
     /**
-     * The project whose project files to fix EOL.
+     * The project whose project files to fix <code>EOL</code>.
      * 
      * @parameter expression="${project}"
      * @required

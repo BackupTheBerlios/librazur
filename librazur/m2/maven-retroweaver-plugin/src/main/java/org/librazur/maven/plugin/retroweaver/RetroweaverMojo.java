@@ -1,5 +1,5 @@
 /**
- * $Id: RetroweaverMojo.java,v 1.3 2005/11/25 13:56:25 romale Exp $
+ * $Id: RetroweaverMojo.java,v 1.4 2005/12/07 16:08:39 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -53,7 +53,8 @@ public class RetroweaverMojo extends AbstractMojo {
     public String version;
 
     /**
-     * If <tt>true</tt>, RetroWeaver will work in lazy mode. Default is true.
+     * If <tt>true</tt>, RetroWeaver will work in lazy mode. Default is
+     * <code>true</code>.
      * 
      * @parameter expression="${retroweaver.lazy}" default-value="true"
      */
