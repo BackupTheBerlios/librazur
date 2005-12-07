@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.7 2005/12/05 14:48:43 romale Exp $
+ * $Id: IOUtils.java,v 1.8 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,6 +28,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+
+import org.librazur.util.test.Assert;
 
 
 /**
@@ -63,6 +65,9 @@ public final class IOUtils {
      */
     public static ByteBuffer read(ReadableByteChannel channel, ByteBuffer buffer)
             throws IOException {
+        Assert.isNotNull("channel", channel);
+        Assert.isNotNull("buffer", buffer);
+
         final ByteAccumulator acc = new ByteAccumulator();
         buffer.clear();
         while (channel.read(buffer) != -1) {
@@ -82,6 +87,8 @@ public final class IOUtils {
      * Reads all bytes from an input stream until EOF is reached.
      */
     public static byte[] read(InputStream input, int len) throws IOException {
+        Assert.isNotNull("input", input);
+
         final ByteBuffer buf = read(Channels.newChannel(input), ByteBuffer
                 .allocate(Math.max(len, 1024)));
         final byte[] data = new byte[buf.remaining()];
@@ -98,6 +105,8 @@ public final class IOUtils {
      * @since 1.3
      */
     public static String readString(InputStream input) throws IOException {
+        Assert.isNotNull("input", input);
+
         final StringBuilder buf = new StringBuilder();
 
         Reader reader = null;
@@ -131,6 +140,9 @@ public final class IOUtils {
      */
     public static void copy(InputStream input, OutputStream output)
             throws IOException {
+        Assert.isNotNull("input", input);
+        Assert.isNotNull("output", output);
+
         copy(Channels.newChannel(input), Channels.newChannel(output));
     }
 
@@ -155,6 +167,10 @@ public final class IOUtils {
      */
     public static void copy(ReadableByteChannel input,
             WritableByteChannel output, ByteBuffer buf) throws IOException {
+        Assert.isNotNull("input", input);
+        Assert.isNotNull("output", input);
+        Assert.isNotNull("buf", buf);
+
         buf.clear();
         while (input.read(buf) != -1) {
             buf.flip();
@@ -175,6 +191,8 @@ public final class IOUtils {
      * @since 1.3
      */
     public static InputStream newInputStream(final ByteBuffer buf) {
+        Assert.isNotNull("buf", buf);
+
         return new InputStream() {
             public synchronized int read() throws IOException {
                 if (!buf.hasRemaining()) {
@@ -216,6 +234,8 @@ public final class IOUtils {
      * @since 1.3
      */
     public static OutputStream newOutputStream(final ByteBuffer buf) {
+        Assert.isNotNull("buf", buf);
+
         return new OutputStream() {
             public synchronized void write(int b) throws IOException {
                 try {

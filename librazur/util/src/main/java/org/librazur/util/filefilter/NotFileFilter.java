@@ -1,5 +1,5 @@
 /**
- * $Id: NotFileFilter.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: NotFileFilter.java,v 1.4 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,6 +26,8 @@ package org.librazur.util.filefilter;
 import java.io.File;
 import java.io.FileFilter;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * File filter adapter which inverts the result of a <tt>FileFilter</tt>.
@@ -37,9 +39,8 @@ public class NotFileFilter implements FileFilter {
 
 
     public NotFileFilter(final FileFilter fileFilter) {
-        if (fileFilter == null) {
-            throw new NullPointerException("fileFilter");
-        }
+        Assert.isNotNull("fileFilter", fileFilter);
+
         this.fileFilter = fileFilter;
     }
 

@@ -1,5 +1,5 @@
 /**
- * $Id: DateUtils.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: DateUtils.java,v 1.4 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,6 +26,8 @@ package org.librazur.util;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import org.librazur.util.test.Assert;
 
 
 /**
@@ -95,6 +97,8 @@ public final class DateUtils {
      * </ul>
      */
     public static Date truncate(Date date, int field) {
+        Assert.isNotNull("date", date);
+
         final Calendar cal = new GregorianCalendar();
         cal.setTime(date);
 
@@ -131,6 +135,8 @@ public final class DateUtils {
      * href="http://en.wikipedia.org/wiki/Leap_Year">http://en.wikipedia.org/wiki/Leap_Year</a>.
      */
     public static boolean isLeapYear(Date date) {
+        Assert.isNotNull("date", date);
+
         final Calendar cal = new GregorianCalendar();
         cal.setTime(date);
 

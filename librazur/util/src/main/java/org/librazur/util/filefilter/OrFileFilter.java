@@ -1,5 +1,5 @@
 /**
- * $Id: OrFileFilter.java,v 1.4 2005/12/05 14:48:43 romale Exp $
+ * $Id: OrFileFilter.java,v 1.5 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * Composite file filter which accepts a file if one of the file filters returns
@@ -47,9 +49,8 @@ public class OrFileFilter implements FileFilter {
 
 
     public OrFileFilter(final Collection<FileFilter> fileFilters) {
-        if (fileFilters == null) {
-            throw new NullPointerException("fileFilters");
-        }
+        Assert.isNotNull("fileFilters", fileFilters);
+
         this.fileFilters = fileFilters;
     }
 

@@ -1,5 +1,5 @@
 /**
- * $Id: ReversedIterator.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: ReversedIterator.java,v 1.4 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * Reverse the order of an <tt>Iterator</tt>.
@@ -40,9 +42,7 @@ public class ReversedIterator<T> implements Iterator<T> {
 
 
     public ReversedIterator(final Iterator<T> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("iterator");
-        }
+        Assert.isNotNull("iterator", iterator);
 
         final List<T> elements = new ArrayList<T>();
         while (iterator.hasNext()) {

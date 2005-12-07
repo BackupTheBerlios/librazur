@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.8 2005/12/05 14:48:43 romale Exp $
+ * $Id: FileUtils.java,v 1.9 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -36,6 +36,8 @@ import java.util.Collection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * File utilities.
@@ -55,6 +57,9 @@ public final class FileUtils {
      * @since 1.3
      */
     public static void copy(File src, File dest) throws IOException {
+        Assert.isNotNull("src", src);
+        Assert.isNotNull("dest", dest);
+
         FileChannel input = null;
         FileChannel output = null;
         try {
@@ -99,6 +104,8 @@ public final class FileUtils {
      * the directory containing the file exists.
      */
     public static void ensureDirectoryExists(File dir) {
+        Assert.isNotNull("dir", dir);
+
         if (dir.isFile()) {
             // get the directory containing this file
             final File parent = dir.getParentFile();
@@ -121,6 +128,8 @@ public final class FileUtils {
      * Returns the content of a file.
      */
     public static String read(File file) throws IOException {
+        Assert.isNotNull("file", file);
+
         final StringBuilder text = new StringBuilder();
         final CharBuffer buf = CharBuffer.allocate(1024);
         final Reader reader = new InputStreamReader(new FileInputStream(file));
@@ -142,6 +151,9 @@ public final class FileUtils {
      * Writes data to a file.
      */
     public static void write(File file, ByteBuffer buf) throws IOException {
+        Assert.isNotNull("file", file);
+        Assert.isNotNull("buf", buf);
+
         final FileChannel out = new FileOutputStream(file).getChannel();
         try {
             while (buf.hasRemaining()) {
@@ -158,8 +170,10 @@ public final class FileUtils {
      */
     public static void write(File file, CharSequence str, String enc)
             throws IOException {
-        final ByteBuffer buf = Charset.forName(enc)
-                .encode(CharBuffer.wrap(str));
+        Assert.isNotBlank("enc", enc);
+
+        final ByteBuffer buf = Charset.forName(enc).encode(
+                CharBuffer.wrap(str == null ? StringUtils.EMPTY : str));
         write(file, buf);
     }
 
@@ -226,6 +240,8 @@ public final class FileUtils {
      * Unzips an input stream into a directory.
      */
     public static void unzip(InputStream input, File dir) throws IOException {
+        Assert.isNotNull("input", input);
+
         ensureDirectoryExists(dir);
 
         ZipInputStream zipInput = null;
@@ -255,6 +271,8 @@ public final class FileUtils {
      * Converts a file to an URL.
      */
     public static URL toURL(File file) {
+        Assert.isNotNull("file", file);
+
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
@@ -267,6 +285,8 @@ public final class FileUtils {
      * Converts a collection of files to a collection of URLs.
      */
     public static Collection<URL> toURL(Collection<File> files) {
+        Assert.isNotNull("files", files);
+
         final Collection<URL> urls = new ArrayList<URL>();
         for (final File file : files) {
             urls.add(toURL(file));

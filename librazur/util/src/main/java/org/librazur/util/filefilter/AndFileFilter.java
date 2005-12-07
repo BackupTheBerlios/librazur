@@ -1,5 +1,5 @@
 /**
- * $Id: AndFileFilter.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: AndFileFilter.java,v 1.4 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,6 +29,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * Composite file filter where all file filters must return <tt>true</tt> in
@@ -47,9 +49,8 @@ public class AndFileFilter implements FileFilter {
 
 
     public AndFileFilter(final Collection<FileFilter> fileFilters) {
-        if (fileFilters == null) {
-            throw new NullPointerException("fileFilters");
-        }
+        Assert.isNotNull("fileFilters", fileFilters);
+
         this.fileFilters = fileFilters;
     }
 

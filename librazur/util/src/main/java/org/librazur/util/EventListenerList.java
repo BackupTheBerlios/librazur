@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.5 2005/12/05 14:48:43 romale Exp $
+ * $Id: EventListenerList.java,v 1.6 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,6 +28,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
+import org.librazur.util.test.Assert;
+
 
 /**
  * Event listener list, with dynamic capabilities.
@@ -43,13 +45,9 @@ public class EventListenerList<T extends EventListener> {
 
 
     public EventListenerList(Class<? extends EventListener> type) {
-        if (type == null) {
-            throw new NullPointerException("type");
-        }
-        if (!EventListener.class.isAssignableFrom(type)) {
-            throw new IllegalArgumentException(
-                    "type must denote a class which implements EventListener");
-        }
+        Assert.isNotNull("type", type);
+        Assert.isInstanceOf(EventListener.class, type.getClass());
+
         this.type = type;
     }
 
@@ -58,6 +56,7 @@ public class EventListenerList<T extends EventListener> {
      * Adds a listener.
      */
     public void add(T l) {
+        Assert.isNotNull("l", l);
         listeners.add(l);
     }
 
@@ -82,6 +81,7 @@ public class EventListenerList<T extends EventListener> {
      * Fires an event on all the registered listeners.
      */
     public void fireEvent(String methodName, EventObject evt) {
+        Assert.isNotNull("methodName", methodName);
         if (listeners.isEmpty()) {
             return;
         }

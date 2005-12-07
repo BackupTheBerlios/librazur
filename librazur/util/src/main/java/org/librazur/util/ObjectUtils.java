@@ -1,5 +1,5 @@
 /**
- * $Id: ObjectUtils.java,v 1.4 2005/12/05 14:48:43 romale Exp $
+ * $Id: ObjectUtils.java,v 1.5 2005/12/07 14:47:21 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -27,6 +27,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.WeakHashMap;
+
+import org.librazur.util.test.Assert;
 
 
 /**
@@ -63,6 +65,9 @@ public final class ObjectUtils {
      * method.
      */
     public static Object property(Object obj, String name) {
+        Assert.isNotNull("obj", obj);
+        Assert.isNotNull("name", name);
+
         final Class clazz = obj.getClass();
         final String key = clazz.getName() + "." + name;
 
