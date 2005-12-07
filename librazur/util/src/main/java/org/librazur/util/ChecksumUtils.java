@@ -1,5 +1,5 @@
 /**
- * $Id: ChecksumUtils.java,v 1.3 2005/12/05 14:48:43 romale Exp $
+ * $Id: ChecksumUtils.java,v 1.4 2005/12/07 14:35:52 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import org.librazur.util.test.Assert;
 
 
 /**
@@ -91,6 +93,9 @@ public final class ChecksumUtils {
 
     private static byte[] doChecksum(InputStream input, String algorithm)
             throws IOException {
+        Assert.isNotNull("input", input);
+        Assert.isNotBlank("algorithm", algorithm);
+
         final MessageDigest md;
         try {
             md = MessageDigest.getInstance(algorithm);
