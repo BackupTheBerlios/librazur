@@ -1,5 +1,5 @@
 /**
- * $Id: RestrictedClassLoader.java,v 1.3 2005/11/24 10:10:55 romale Exp $
+ * $Id: RestrictedClassLoader.java,v 1.4 2005/12/07 15:16:14 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -29,7 +29,7 @@ import java.util.*;
 
 
 /**
- * Special <tt>ClassLoader</tt> allowing to enable or disable access to
+ * Special {@link ClassLoader} allowing to enable or disable access to
  * resources.
  */
 public class RestrictedClassLoader extends ClassLoader {

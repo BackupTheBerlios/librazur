@@ -1,5 +1,5 @@
 /**
- * $Id: JarLauncher.java,v 1.4 2005/11/24 10:11:17 romale Exp $
+ * $Id: JarLauncher.java,v 1.5 2005/12/07 15:16:14 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,7 +32,7 @@ import java.util.jar.JarFile;
 
 
 /**
- * Jar file launcher.
+ * JAR file launcher.
  */
 public class JarLauncher {
     private final File file;
@@ -48,9 +48,9 @@ public class JarLauncher {
 
 
     /**
-     * Runs the jar file by invoking the <tt>main()</tt> method in the class
-     * declared by the <tt>Main-Class</tt> attribute of the jar manifest, and
-     * passing the specified arguments.
+     * Runs the JAR file by invoking the <code>main()</code> method in the
+     * class declared by the <code>Main-Class</code> attribute of the JAR
+     * manifest, and passing the specified arguments.
      */
     public void launch(String... args) throws IOException,
             ClassNotFoundException, IllegalAccessException,

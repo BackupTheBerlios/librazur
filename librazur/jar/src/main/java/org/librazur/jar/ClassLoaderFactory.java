@@ -1,5 +1,5 @@
 /**
- * $Id: ClassLoaderFactory.java,v 1.2 2005/10/20 22:44:09 romale Exp $
+ * $Id: ClassLoaderFactory.java,v 1.3 2005/12/07 15:16:14 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,7 +24,7 @@ package org.librazur.jar;
 
 
 /**
- * <tt>ClassLoader</tt> factory.
+ * {@link ClassLoader} factory.
  */
 public interface ClassLoaderFactory {
     ClassLoader createClassLoader();

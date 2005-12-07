@@ -1,5 +1,5 @@
 /**
- * $Id: JarSigner.java,v 1.2 2005/11/24 09:05:30 romale Exp $
+ * $Id: JarSigner.java,v 1.3 2005/12/07 15:16:14 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * Signs JAR files. This class is an interface to the command line tool
- * <tt>jarsigner</tt>. This command must be available in the PATH.
+ * <code>jarsigner</code>. This command must be available in the PATH.
  */
 public class JarSigner {
     private final String alias;
@@ -59,8 +59,8 @@ public class JarSigner {
 
 
     /**
-     * Signs a JAR file. If <tt>jarsigner</tt> returns a non-zero value, a
-     * <tt>RuntimeException is thrown.
+     * Signs a JAR file. If <code>jarsigner</code> returns a non-zero value, a
+     * {@link java.lang.RuntimeException} is thrown.
      */
     public void sign(File jarFile, File signedJarFile) throws Exception {
         final List<String> args = new ArrayList<String>();

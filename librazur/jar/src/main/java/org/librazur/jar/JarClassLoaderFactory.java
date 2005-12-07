@@ -1,5 +1,5 @@
 /**
- * $Id: JarClassLoaderFactory.java,v 1.3 2005/10/20 22:44:09 romale Exp $
+ * $Id: JarClassLoaderFactory.java,v 1.4 2005/12/07 15:16:14 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -33,7 +33,7 @@ import java.util.List;
 
 
 /**
- * <tt>ClassLoaderFactory</tt> implementation for jar files.
+ * {@link ClassLoaderFactory} implementation for JAR files.
  */
 public class JarClassLoaderFactory implements ClassLoaderFactory {
     private List<URL> jarFiles = new ArrayList<URL>(1);

@@ -1,5 +1,5 @@
 /**
- * $Id: SystemClassLoaderFactory.java,v 1.3 2005/10/20 22:44:09 romale Exp $
+ * $Id: SystemClassLoaderFactory.java,v 1.4 2005/12/07 15:16:14 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -24,8 +24,8 @@ package org.librazur.jar;
 
 
 /**
- * <tt>ClassLoaderFactory</tt> implementation which delegates to the system
- * <tt<ClassLoader</tt>.
+ * {@link ClassLoaderFactory} implementation which delegates to the system
+ * {@link ClassLoader}.
  */
 public class SystemClassLoaderFactory implements ClassLoaderFactory {
     public ClassLoader createClassLoader() {

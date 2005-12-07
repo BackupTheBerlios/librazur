@@ -6,6 +6,7 @@ http://librazur.info
 =====
   - added MainClassLauncher
   - added JarSigner: interface to command line tool jarsigner
+  - fixed javadoc
   - updated site url and emails
 
  1.0.1 / 20051019
