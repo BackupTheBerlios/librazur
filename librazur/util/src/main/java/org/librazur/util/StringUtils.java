@@ -1,5 +1,5 @@
 /**
- * $Id: StringUtils.java,v 1.6 2005/12/05 14:48:43 romale Exp $
+ * $Id: StringUtils.java,v 1.7 2005/12/07 14:46:13 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -23,12 +23,20 @@
 package org.librazur.util;
 
 
+import org.librazur.util.test.Assert;
+
+
 /**
  * String utilities.
  * 
  * @since 1.0
  */
 public final class StringUtils {
+    /**
+     * @since 1.3.1
+     */
+    public static final String EMPTY = "";
+
     private static final char[] hexDigits = { '0', '1', '2', '3', '4', '5',
             '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
@@ -101,6 +109,8 @@ public final class StringUtils {
      * @since 1.2
      */
     public static String encodeBase64(byte[] data) {
+        Assert.isNotNull("data", data);
+
         return Base64.encodeBytes(data);
     }
 
@@ -111,6 +121,8 @@ public final class StringUtils {
      * @since 1.2
      */
     public static byte[] decodeBase64(String data) {
+        Assert.isNotBlank("data", data);
+
         return Base64.decode(data);
     }
 
@@ -122,6 +134,8 @@ public final class StringUtils {
      * @since 1.2
      */
     public static String encodeHex(byte[] data) {
+        Assert.isNotNull("data", data);
+
         StringBuffer it = new StringBuffer(data.length * 2);
 
         for (int i = 0; i < data.length; ++i) {
@@ -153,6 +167,8 @@ public final class StringUtils {
      * @since 1.2
      */
     public static byte[] decodeHex(String data) {
+        Assert.isNotBlank("data", data);
+
         int l = data.length() / 2;
         if (l * 2 != data.length())
             throw new IllegalArgumentException(
