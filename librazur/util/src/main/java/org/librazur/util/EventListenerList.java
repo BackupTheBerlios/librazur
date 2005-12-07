@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.7 2005/12/07 16:42:13 romale Exp $
+ * $Id: EventListenerList.java,v 1.8 2005/12/07 16:46:10 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -132,8 +132,7 @@ public class EventListenerList<T extends EventListener> {
             }
             if (method == null) {
                 throw new IllegalStateException("Class " + type.getName()
-                        + " doesn't have any method " + methodName
-                        + "(EventObject)");
+                        + " doesn't have any method " + methodName);
             }
             methodCache.put(methodName, method);
         }
