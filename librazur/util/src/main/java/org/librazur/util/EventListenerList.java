@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.6 2005/12/07 14:47:21 romale Exp $
+ * $Id: EventListenerList.java,v 1.7 2005/12/07 16:42:13 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -79,15 +79,16 @@ public class EventListenerList<T extends EventListener> {
 
     /**
      * Fires an event on all the registered listeners.
+     * 
+     * @since 1.3.1
      */
-    public void fireEvent(String methodName, EventObject evt) {
+    public void fireEvent(String methodName, Object... args) {
         Assert.isNotNull("methodName", methodName);
         if (listeners.isEmpty()) {
             return;
         }
 
         final Method method = getMethod(methodName);
-        final Object[] args = new Object[] { evt };
         for (T l : listeners) {
             try {
                 method.invoke(l, args);
@@ -98,6 +99,14 @@ public class EventListenerList<T extends EventListener> {
                 throw new IllegalStateException("Unexpected exception", e);
             }
         }
+    }
+
+
+    /**
+     * Fires an event on all the registered listeners.
+     */
+    public void fireEvent(String methodName, EventObject evt) {
+        fireEvent(methodName, new Object[] { evt });
     }
 
 

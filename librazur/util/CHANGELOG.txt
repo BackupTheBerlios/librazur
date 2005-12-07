@@ -9,6 +9,7 @@ http://librazur.info
     utilities
   - updated the whole library to use methods from Assert (isNotNull,
     isNotBlank, etc...)
+  - added fireEvent(methodName, ...) to EventListenerList
   - added Serializable to FileComparator
 
  1.3   / 20051205
