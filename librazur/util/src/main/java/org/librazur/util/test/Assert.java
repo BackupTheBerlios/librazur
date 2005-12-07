@@ -1,5 +1,5 @@
 /**
- * $Id: Assert.java,v 1.1 2005/12/07 14:33:24 romale Exp $
+ * $Id: Assert.java,v 1.2 2005/12/07 14:47:02 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -190,6 +190,18 @@ public class Assert {
         if (tested.compareTo(ref) >= 0) {
             throw new AssertionFailedException("Variable " + name
                     + " must be less than " + ref + ": " + tested);
+        }
+    }
+
+
+    public static void isInstanceOf(Class<?> ref, Class<?> tested) {
+        Assert.isNotNull("ref", ref);
+        Assert.isNotNull("tested", tested);
+
+        if (!ref.isAssignableFrom(tested)) {
+            throw new AssertionFailedException("Class "
+                    + tested.getClass().getName()
+                    + " does not extend from class " + ref.getClass().getName());
         }
     }
 

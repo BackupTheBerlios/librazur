@@ -1,5 +1,5 @@
 /**
- * $Id: AssertTest.java,v 1.1 2005/12/07 14:33:24 romale Exp $
+ * $Id: AssertTest.java,v 1.2 2005/12/07 14:47:02 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -195,6 +195,17 @@ public class AssertTest extends TestCase {
 
         try {
             Assert.isLessThanOrEqualTo("a", 1, 2);
+            fail("AssertionFailedException was expected");
+        } catch (AssertionFailedException e) {
+        }
+    }
+
+
+    public void testIsInstanceOf() {
+        Assert.isInstanceOf(CharSequence.class, String.class);
+
+        try {
+            Assert.isInstanceOf(CharSequence.class, Number.class);
             fail("AssertionFailedException was expected");
         } catch (AssertionFailedException e) {
         }
