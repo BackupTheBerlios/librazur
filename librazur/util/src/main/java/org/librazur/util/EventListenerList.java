@@ -1,5 +1,5 @@
 /**
- * $Id: EventListenerList.java,v 1.8 2005/12/07 16:46:10 romale Exp $
+ * $Id: EventListenerList.java,v 1.9 2005/12/08 09:46:10 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -32,9 +32,19 @@ import org.librazur.util.test.Assert;
 
 
 /**
- * Event listener list, with dynamic capabilities.
+ * Event listener list, with dynamic capabilities.<br/>
+ * <p>
+ * Please note:
+ * </p>
+ * <p>
+ * Since 1.3.1, {@link EventListenerList} is able to call any methods on an
+ * interface, whether it takes an {@link EventObject} as an argument or not.
+ * This implementation cannot work yet with several methods with the same name:
+ * make sure your {@link EventListener} does not have any overloaded methods
+ * with the same name.
+ * </p>
  * 
- * @param <T> <tt>EventListener</tt> type
+ * @param <T> {@link EventListener} interface
  * @since 1.0
  */
 public class EventListenerList<T extends EventListener> {
@@ -46,7 +56,6 @@ public class EventListenerList<T extends EventListener> {
 
     public EventListenerList(Class<? extends EventListener> type) {
         Assert.isNotNull("type", type);
-        Assert.isInstanceOf(EventListener.class, type.getClass());
 
         this.type = type;
     }
@@ -115,17 +124,15 @@ public class EventListenerList<T extends EventListener> {
         if (method == null) {
             for (final Method m : type.getMethods()) {
                 if (m.getName().equals(methodName)) {
-                    // a listener method must be public, and must take an
-                    // argument of type EventObject.
                     if (!Modifier.isPublic(m.getModifiers())) {
                         continue;
                     }
-                    final Class<?>[] args = m.getParameterTypes();
-                    if (args.length != 1) {
-                        continue;
-                    }
-                    if (!EventObject.class.isAssignableFrom(args[0])) {
-                        continue;
+
+                    if (method != null) {
+                        throw new IllegalStateException(
+                                "EventListenerList cannot call an event method "
+                                        + "if there are several methods "
+                                        + "with the same name: " + methodName);
                     }
                     method = m;
                 }
