@@ -1,5 +1,5 @@
 /**
- * $Id: AssertUtilsTest.java,v 1.1 2005/12/05 14:26:49 romale Exp $
+ * $Id: AssertUtilsTest.java,v 1.2 2005/12/08 09:20:31 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -26,6 +26,7 @@ package org.librazur.util;
 import junit.framework.TestCase;
 
 
+@SuppressWarnings("deprecation")
 public class AssertUtilsTest extends TestCase {
     public void testAssertNotNull() {
         AssertUtils.assertNotNull("msg", "hello");
