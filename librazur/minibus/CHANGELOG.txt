@@ -2,8 +2,8 @@ This is the CHANGELOG file for Librazur MiniBus.
 Copyright (c) 2005 Librazur.
 http://librazur.info
 
- CVS
-=====
+ 1.0.1 / 20051215
+==================
   - fixed javadoc
   - fixed typos
 
