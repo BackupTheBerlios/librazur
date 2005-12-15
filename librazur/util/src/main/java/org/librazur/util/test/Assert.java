@@ -1,5 +1,5 @@
 /**
- * $Id: Assert.java,v 1.4 2005/12/15 14:47:25 romale Exp $
+ * $Id: Assert.java,v 1.5 2005/12/15 16:27:54 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -46,12 +46,12 @@ public class Assert {
     public static final Tester NOT_EMPTY = not(EMPTY);
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value is not <code>null</code>.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isNotNull(String name, Object value) {
         if (NULL.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -60,12 +60,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value is <code>null</code>.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isNull(String name, Object value) {
         if (NOT_NULL.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -74,13 +74,13 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value is blank, as defined by
      * {@link org.librazur.util.StringUtils#isBlank(String)}.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isBlank(String name, Object value) {
         if (NOT_BLANK.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -89,13 +89,13 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value is not blank, as defined by
      * {@link org.librazur.util.StringUtils#isBlank(String)}.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isNotBlank(String name, Object value) {
         if (BLANK.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -104,12 +104,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value is <code>true</code>.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isTrue(String name, boolean value) {
         if (FALSE.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -118,12 +118,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value is <code>false</code>.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isFalse(String name, boolean value) {
         if (TRUE.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -132,12 +132,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a {@link Collection} is empty.
      * 
      * @param name name of the collection
      */
+    @SuppressWarnings("unchecked")
     public static void isEmpty(String name, Collection value) {
         if (NOT_EMPTY.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -146,12 +146,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a {@link Collection} is not empty.
      * 
      * @param name name of the collection
      */
+    @SuppressWarnings("unchecked")
     public static void isNotEmpty(String name, Collection value) {
         if (EMPTY.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -232,12 +232,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value if more than or equal to an other value.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isMoreThanOrEqualTo(String name, Object ref,
             Comparable tested) {
         Assert.isNotNull("ref", ref);
@@ -250,12 +250,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value if more than an other value.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isMoreThan(String name, Object ref, Comparable tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
@@ -267,12 +267,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value if less than or equal to an other value.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isLessThanOrEqualTo(String name, Object ref,
             Comparable tested) {
         Assert.isNotNull("ref", ref);
@@ -285,12 +285,12 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a value if less than an other value.
      * 
      * @param name name of the value
      */
+    @SuppressWarnings("unchecked")
     public static void isLessThan(String name, Object ref, Comparable tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
@@ -302,13 +302,13 @@ public class Assert {
     }
 
 
-    @SuppressWarnings("unchecked")
     /**
      * Asserts a {@link Class} is derived from or an interface from an other
      * {@link Class}.
      * 
      * @param name name of the variable
      */
+    @SuppressWarnings("unchecked")
     public static void isInstanceOf(String name, Class ref, Class tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
