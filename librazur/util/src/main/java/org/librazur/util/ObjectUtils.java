@@ -1,5 +1,5 @@
 /**
- * $Id: ObjectUtils.java,v 1.5 2005/12/07 14:47:21 romale Exp $
+ * $Id: ObjectUtils.java,v 1.6 2005/12/15 09:43:28 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -95,5 +95,40 @@ public final class ObjectUtils {
                 throw new IllegalStateException("Unexpected exception", e);
             }
         }
+    }
+
+
+    /**
+     * Returns <code>true</code> if two objects are the same. If
+     * <code>obj1</code> is <code>null</code> and <code>obj2</code> is
+     * <code>null</code>, returns <code>true</code> ; if either
+     * <code>obj1</code> or <code>obj2</code> is <code>null</code>, this
+     * methods returns <code>false</code>. Otherwise, this methods returns
+     * the result of <code>obj1.equals(obj2)</code>.
+     */
+    public static boolean equals(Object obj1, Object obj2) {
+        if (obj1 == null) {
+            if (obj2 == null) {
+                return true;
+            }
+            assert obj2 != null;
+            return false;
+        }
+
+        assert obj1 != null;
+        if (obj2 == null) {
+            return false;
+        }
+
+        assert obj2 != null;
+        return obj1.equals(obj2);
+    }
+
+
+    /**
+     * Returns a default value if an {@link Object} is <code>null</code>.
+     */
+    public static Object defaultIfNull(Object obj, Object def) {
+        return obj == null ? def : obj;
     }
 }

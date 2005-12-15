@@ -1,5 +1,5 @@
 /**
- * $Id: ObjectUtilsTest.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: ObjectUtilsTest.java,v 1.3 2005/12/15 09:43:28 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -57,5 +57,22 @@ public class ObjectUtilsTest extends TestCase {
             fail("IllegalArgumentException was expected");
         } catch (IllegalArgumentException e) {
         }
+    }
+
+
+    public void testEquals() {
+        assertTrue(ObjectUtils.equals(null, null));
+        assertFalse(ObjectUtils.equals("", null));
+        assertFalse(ObjectUtils.equals(null, ""));
+        assertTrue(ObjectUtils.equals("", ""));
+        assertTrue(ObjectUtils.equals(Boolean.TRUE, Boolean.TRUE));
+        assertFalse(ObjectUtils.equals(Boolean.FALSE, Boolean.TRUE));
+    }
+
+
+    public void testDefaultIfNull() {
+        final String def = "default";
+        assertSame(def, ObjectUtils.defaultIfNull(null, def));
+        assertNotSame(def, ObjectUtils.defaultIfNull("hello", def));
     }
 }
