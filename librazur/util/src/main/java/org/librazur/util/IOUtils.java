@@ -1,5 +1,5 @@
 /**
- * $Id: IOUtils.java,v 1.9 2005/12/07 15:52:31 romale Exp $
+ * $Id: IOUtils.java,v 1.10 2005/12/15 14:47:39 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -180,6 +180,8 @@ public final class IOUtils {
             output.write(buf);
 
             if (buf.hasRemaining()) {
+                // not all bytes were written: we'll write them in the next
+                // round
                 buf.compact();
             } else {
                 buf.clear();

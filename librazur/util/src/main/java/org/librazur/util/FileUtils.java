@@ -1,5 +1,5 @@
 /**
- * $Id: FileUtils.java,v 1.10 2005/12/07 15:52:31 romale Exp $
+ * $Id: FileUtils.java,v 1.11 2005/12/15 14:47:39 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -67,12 +67,20 @@ public final class FileUtils {
             output = new FileOutputStream(dest).getChannel();
 
             final long len = src.length();
+            // try to get a shared lock on the input file: we don't mind if
+            // other applications get a read-only lock, as long as they are not
+            // modifiying it
             input.lock(0, len, true);
+            // the output file size is set to the same value than the input file
+            // size
             output.truncate(len);
+            // get a lock full lock on the output file
             output.lock(0, len, false);
 
             int pos = 0;
             while (pos < len) {
+                // make use of transferTo() from FileChannel as it may use
+                // native calls from the OS to do the copy (possibly faster)
                 pos += input.transferTo(pos, len, output);
             }
         } finally {
@@ -253,6 +261,7 @@ public final class FileUtils {
                 final File fileOutput = new File(dir, entryName);
 
                 if (entryName.endsWith("/")) {
+                    // the entry is actually a directory
                     fileOutput.mkdirs();
                 } else {
                     fileOutputStream = new FileOutputStream(fileOutput);

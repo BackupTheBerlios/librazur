@@ -1,5 +1,5 @@
 /**
- * $Id: ByteAccumulator.java,v 1.6 2005/12/07 14:35:32 romale Exp $
+ * $Id: ByteAccumulator.java,v 1.7 2005/12/15 14:47:39 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -38,17 +38,28 @@ public class ByteAccumulator {
     private ByteBuffer buffer;
 
 
+    /**
+     * Creates a {@link ByteAccumulator} using the specified {@link ByteBuffer}.
+     */
     public ByteAccumulator(final ByteBuffer buffer) {
         Assert.isNotNull("buffer", buffer);
         this.buffer = buffer;
     }
 
 
+    /**
+     * Creates a {@link ByteAccumulator} with a non-direct {@link ByteBuffer}
+     * with a size of 1024 bytes.
+     */
     public ByteAccumulator() {
         this(1024);
     }
 
 
+    /**
+     * Creates a {@link ByteAccumulator} with a non-direct {@link ByteBuffer},
+     * with the specified size.
+     */
     public ByteAccumulator(int size) {
         this(ByteBuffer.allocate(size));
     }
