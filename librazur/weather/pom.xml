@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 <!--
-    $Id: pom.xml,v 1.3 2005/12/07 16:01:25 romale Exp $
+    $Id: pom.xml,v 1.4 2005/12/15 16:05:43 romale Exp $
 -->
   <parent>
     <groupId>org.librazur</groupId>
@@ -13,7 +13,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.librazur</groupId>
-  <artifactId>librazur-weather</artifactId>
+  <artifactId>weather</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>Librazur Weather</name>
@@ -25,6 +25,7 @@
   </scm>
 
   <build>
+    <finalName>org.librazur.weather-${pom.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -39,8 +40,8 @@
   <dependencies>
     <dependency>
       <groupId>org.librazur</groupId>
-      <artifactId>librazur-util</artifactId>
-      <version>1.3-SNAPSHOT</version>
+      <artifactId>util</artifactId>
+      <version>1.3.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
