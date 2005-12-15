@@ -1,5 +1,5 @@
 /**
- * $Id: AssertTest.java,v 1.3 2005/12/07 20:56:34 romale Exp $
+ * $Id: AssertTest.java,v 1.4 2005/12/15 14:46:56 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -122,9 +122,15 @@ public class AssertTest extends TestCase {
 
     public void testIsEqualTo() {
         Assert.isEqualTo("str", "Hello", "Hello");
+        Assert.isEqualTo("null", null, null);
 
         try {
             Assert.isEqualTo("str", 1, 2);
+            fail("AssertionFailedException was expected");
+        } catch (AssertionFailedException e) {
+        }
+        try {
+            Assert.isEqualTo("str", 1, null);
             fail("AssertionFailedException was expected");
         } catch (AssertionFailedException e) {
         }
@@ -133,9 +139,15 @@ public class AssertTest extends TestCase {
 
     public void testIsEqualTo2() {
         Assert.isEqualTo("str1", "Hello", "str2", "Hello");
+        Assert.isEqualTo("null1", null, "null2", null);
 
         try {
             Assert.isEqualTo("str1", "Bonjour", "str2", "Hola");
+            fail("AssertionFailedException was expected");
+        } catch (AssertionFailedException e) {
+        }
+        try {
+            Assert.isEqualTo("str1", "Bonjour", "str2", null);
             fail("AssertionFailedException was expected");
         } catch (AssertionFailedException e) {
         }
@@ -146,9 +158,15 @@ public class AssertTest extends TestCase {
         final Object obj = new Object();
         final Object clone = obj;
         Assert.isSameThan("obj", obj, "clone", clone);
+        Assert.isSameThan("null1", null, "null2", null);
 
         try {
             Assert.isSameThan("obj", obj, "badClone", new Object());
+            fail("AssertionFailedException was expected");
+        } catch (AssertionFailedException e) {
+        }
+        try {
+            Assert.isSameThan("obj", obj, "badClone", null);
             fail("AssertionFailedException was expected");
         } catch (AssertionFailedException e) {
         }
@@ -202,12 +220,13 @@ public class AssertTest extends TestCase {
 
 
     public void testIsInstanceOf() {
-        Assert.isInstanceOf(CharSequence.class, String.class);
-        Assert.isInstanceOf(Object.class, Object.class);
-        Assert.isInstanceOf(Class.class, Class.class);
+        Assert.isInstanceOf("CharSequence", CharSequence.class, String.class);
+        Assert.isInstanceOf("Object", Object.class, Object.class);
+        Assert.isInstanceOf("Class", Class.class, Class.class);
 
         try {
-            Assert.isInstanceOf(CharSequence.class, Number.class);
+            Assert.isInstanceOf("CharSequence", CharSequence.class,
+                    Number.class);
             fail("AssertionFailedException was expected");
         } catch (AssertionFailedException e) {
         }
