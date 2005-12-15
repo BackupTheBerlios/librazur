@@ -1,5 +1,5 @@
 /**
- * $Id: Assert.java,v 1.3 2005/12/07 20:56:08 romale Exp $
+ * $Id: Assert.java,v 1.4 2005/12/15 14:47:25 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -47,6 +47,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value is not <code>null</code>.
+     * 
+     * @param name name of the value
+     */
     public static void isNotNull(String name, Object value) {
         if (NULL.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -56,6 +61,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value is <code>null</code>.
+     * 
+     * @param name name of the value
+     */
     public static void isNull(String name, Object value) {
         if (NOT_NULL.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -65,6 +75,12 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value is blank, as defined by
+     * {@link org.librazur.util.StringUtils#isBlank(String)}.
+     * 
+     * @param name name of the value
+     */
     public static void isBlank(String name, Object value) {
         if (NOT_BLANK.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -74,6 +90,12 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value is not blank, as defined by
+     * {@link org.librazur.util.StringUtils#isBlank(String)}.
+     * 
+     * @param name name of the value
+     */
     public static void isNotBlank(String name, Object value) {
         if (BLANK.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -83,6 +105,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value is <code>true</code>.
+     * 
+     * @param name name of the value
+     */
     public static void isTrue(String name, boolean value) {
         if (FALSE.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -92,6 +119,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value is <code>false</code>.
+     * 
+     * @param name name of the value
+     */
     public static void isFalse(String name, boolean value) {
         if (TRUE.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -101,6 +133,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a {@link Collection} is empty.
+     * 
+     * @param name name of the collection
+     */
     public static void isEmpty(String name, Collection value) {
         if (NOT_EMPTY.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -110,6 +147,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a {@link Collection} is not empty.
+     * 
+     * @param name name of the collection
+     */
     public static void isNotEmpty(String name, Collection value) {
         if (EMPTY.test(value)) {
             throw new AssertionFailedException("Variable " + name
@@ -118,26 +160,72 @@ public class Assert {
     }
 
 
+    /**
+     * Asserts the value <code>obj1</code> is equal to the value
+     * <code>obj2</code>. Two <code>null</code> values are supposed to be
+     * equal.
+     * 
+     * @param name1 name of obj1
+     * @param name2 name of obj2
+     */
     public static void isEqualTo(String name1, Object obj1, String name2,
             Object obj2) {
-        if (obj1 != null && obj2 != null && !obj1.equals(obj2)) {
+        if (obj1 == null && obj2 == null) {
+            return;
+        }
+        if (obj1 == null) {
+            throw new AssertionFailedException("Variable " + name1
+                    + " is not equal to variable " + name2);
+        }
+        if (obj2 == null) {
+            throw new AssertionFailedException("Variable " + name1
+                    + " is not equal to variable " + name2);
+        }
+        if (!obj1.equals(obj2)) {
             throw new AssertionFailedException("Variable " + name1
                     + " is not equal to variable " + name2);
         }
     }
 
 
+    /**
+     * Asserts <code>obj1</code> is <code>obj2</code>, <i>ie</i> the same
+     * object. Two <code>null</code> values are supposed to be the same.
+     * 
+     * @param name1 name of obj1
+     * @param name2 name of obj2
+     */
     public static void isSameThan(String name1, Object obj1, String name2,
             Object obj2) {
-        if (obj1 != null && obj2 != null && obj1 != obj2) {
+        if (obj1 == null && obj2 == null) {
+            return;
+        }
+        if (obj1 != obj2) {
             throw new AssertionFailedException("Variable " + name1
                     + " and variable " + name2 + " are not the same");
         }
     }
 
 
+    /**
+     * Asserts an object is equal to an expected value. Two <code>null</code>
+     * values are supposed to be equal.
+     * 
+     * @param name name of the value
+     */
     public static void isEqualTo(String name, Object expected, Object tested) {
-        if (expected != null && tested != null && !expected.equals(tested)) {
+        if (expected == null && tested == null) {
+            return;
+        }
+        if (expected == null) {
+            throw new AssertionFailedException("Variable " + name
+                    + " should be equal to " + expected + ": " + tested);
+        }
+        if (tested == null) {
+            throw new AssertionFailedException("Variable " + name
+                    + " should be equal to " + expected + ": " + tested);
+        }
+        if (!expected.equals(tested)) {
             throw new AssertionFailedException("Variable " + name
                     + " should be equal to " + expected + ": " + tested);
         }
@@ -145,6 +233,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value if more than or equal to an other value.
+     * 
+     * @param name name of the value
+     */
     public static void isMoreThanOrEqualTo(String name, Object ref,
             Comparable tested) {
         Assert.isNotNull("ref", ref);
@@ -158,6 +251,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value if more than an other value.
+     * 
+     * @param name name of the value
+     */
     public static void isMoreThan(String name, Object ref, Comparable tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
@@ -170,6 +268,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value if less than or equal to an other value.
+     * 
+     * @param name name of the value
+     */
     public static void isLessThanOrEqualTo(String name, Object ref,
             Comparable tested) {
         Assert.isNotNull("ref", ref);
@@ -183,6 +286,11 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
+    /**
+     * Asserts a value if less than an other value.
+     * 
+     * @param name name of the value
+     */
     public static void isLessThan(String name, Object ref, Comparable tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
@@ -195,10 +303,16 @@ public class Assert {
 
 
     @SuppressWarnings("unchecked")
-    public static void isInstanceOf(Class ref, Class tested) {
+    /**
+     * Asserts a {@link Class} is derived from or an interface from an other
+     * {@link Class}.
+     * 
+     * @param name name of the variable
+     */
+    public static void isInstanceOf(String name, Class ref, Class tested) {
         Assert.isNotNull("ref", ref);
         Assert.isNotNull("tested", tested);
-        
+
         if (!ref.isAssignableFrom(tested)) {
             throw new AssertionFailedException("Class "
                     + tested.getClass().getName()
