@@ -4,6 +4,7 @@ http://librazur.info
 
  CVS
 =====
+  - added util.cache.TextCache
   - added new package util.test
   - replaced util.AssertUtils by util.test.Assert, leveraging the new util.test
     utilities
