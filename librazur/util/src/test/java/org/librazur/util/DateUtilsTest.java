@@ -1,5 +1,5 @@
 /**
- * $Id: DateUtilsTest.java,v 1.2 2005/10/20 22:44:31 romale Exp $
+ * $Id: DateUtilsTest.java,v 1.3 2006/01/14 22:53:33 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -89,6 +89,9 @@ public class DateUtilsTest extends TestCase {
 
         cal.set(Calendar.YEAR, 2000);
         assertTrue(DateUtils.isLeapYear(cal.getTime()));
+
+        cal.set(Calendar.YEAR, 2001);
+        assertFalse(DateUtils.isLeapYear(cal.getTime()));
     }
 
 
