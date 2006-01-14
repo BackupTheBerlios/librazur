@@ -1,5 +1,5 @@
 /**
- * $Id: ByteAccumulator.java,v 1.7 2005/12/15 14:47:39 romale Exp $
+ * $Id: ByteAccumulator.java,v 1.8 2006/01/14 23:06:35 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -35,6 +35,7 @@ import org.librazur.util.test.Assert;
  * @since 1.2
  */
 public class ByteAccumulator {
+    public static final int DEFAULT_BUFFER_SIZE = 1024;
     private ByteBuffer buffer;
 
 
@@ -52,7 +53,7 @@ public class ByteAccumulator {
      * with a size of 1024 bytes.
      */
     public ByteAccumulator() {
-        this(1024);
+        this(DEFAULT_BUFFER_SIZE);
     }
 
 
@@ -60,7 +61,7 @@ public class ByteAccumulator {
      * Creates a {@link ByteAccumulator} with a non-direct {@link ByteBuffer},
      * with the specified size.
      */
-    public ByteAccumulator(int size) {
+    public ByteAccumulator(final int size) {
         this(ByteBuffer.allocate(size));
     }
 
