@@ -1,5 +1,5 @@
 /**
- * $Id: DateUtils.java,v 1.5 2006/01/14 22:47:44 romale Exp $
+ * $Id: DateUtils.java,v 1.6 2006/01/14 22:55:29 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -143,13 +143,7 @@ public final class DateUtils {
         cal.setTime(date);
 
         final int year = cal.get(Calendar.YEAR);
-        if (year % 400 == 0 || year % 100 != 0) {
-            if (year % 4 == 0) {
-                return true;
-            }
-        }
-
-        return false;
+        return ((year % 400 == 0 || year % 100 != 0) && year % 4 == 0);
     }
 
 
