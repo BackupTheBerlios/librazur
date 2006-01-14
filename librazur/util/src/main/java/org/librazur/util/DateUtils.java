@@ -1,5 +1,5 @@
 /**
- * $Id: DateUtils.java,v 1.4 2005/12/07 14:47:21 romale Exp $
+ * $Id: DateUtils.java,v 1.5 2006/01/14 22:47:44 romale Exp $
  *
  * Librazur
  * http://librazur.info
@@ -92,8 +92,10 @@ public final class DateUtils {
     /**
      * Truncates a date at a given field. Examples:
      * <ul>
-     * <li>truncate(July 23, 2005, Calendar.MONTH) -> July 1st, 2005</li>
-     * <li>truncate(July 23, 2005 12:05, Calendar.HOUR) -> July 1st, 2005 12:00</li>
+     * <li><code>truncate(July 23, 2005, Calendar.MONTH)</code> = July 1st,
+     * 2005</li>
+     * <li><code>truncate(July 23, 2005 12:05, Calendar.HOUR)</code> = July
+     * 1st, 2005 12:00</li>
      * </ul>
      */
     public static Date truncate(Date date, int field) {
@@ -130,8 +132,8 @@ public final class DateUtils {
 
 
     /**
-     * Returns <tt>true</tt> if a date belongs to a leap year. Implementation
-     * based on <a
+     * Returns <code>true</code> if a date belongs to a leap year.
+     * Implementation based on <a
      * href="http://en.wikipedia.org/wiki/Leap_Year">http://en.wikipedia.org/wiki/Leap_Year</a>.
      */
     public static boolean isLeapYear(Date date) {
